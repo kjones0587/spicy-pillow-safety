@@ -11,29 +11,33 @@
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
   
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=3.0.0">
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between selection:bg-amber-500 selection:text-black font-sans antialiased overflow-x-hidden">
 
-  <!-- TOP HEADER / TIMELINE BAR -->
-  <header class="w-full border-b border-slate-800/80 bg-slate-900/60 backdrop-blur-md sticky top-0 z-50 px-4 py-3">
+  <!-- TOP HEADER / NAV BAR -->
+  <header class="w-full border-b border-slate-800/80 bg-slate-900/70 backdrop-blur-lg sticky top-0 z-50 px-4 py-3">
     <div class="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
-      <!-- Title & Status -->
+      <!-- Title & Live Status -->
       <div class="flex items-center gap-3">
-        <div class="w-9 h-9 rounded-xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400 font-bold">
+        <div class="w-10 h-10 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 font-bold shadow-lg shadow-amber-500/10">
           <i data-lucide="shield-alert" class="w-5 h-5"></i>
         </div>
         <div>
           <div class="flex items-center gap-2">
-            <span class="text-xs font-semibold uppercase tracking-wider text-amber-400 bg-amber-950/60 px-2 py-0.5 rounded border border-amber-800/60">
+            <span class="text-[11px] font-bold uppercase tracking-wider text-amber-400 bg-amber-950/70 px-2 py-0.5 rounded border border-amber-800/50">
               Help Desk Safety
             </span>
-            <span id="live-indicator" class="hidden items-center gap-1.5 text-xs text-emerald-400">
+            <!-- PROMINENT VERSION BADGE REQUESTED BY USER -->
+            <span id="version-badge" class="text-[11px] font-mono font-bold text-emerald-300 bg-emerald-950/80 px-2 py-0.5 rounded border border-emerald-500/50 shadow-sm shadow-emerald-500/20">
+              v3.0 • GuyNeural Audio
+            </span>
+            <span id="live-indicator" class="hidden items-center gap-1.5 text-xs text-emerald-400 font-medium">
               <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-              Auto-Playing
+              Playing
             </span>
           </div>
-          <h1 class="text-sm sm:text-base font-bold text-slate-100 flex items-center gap-1.5">
+          <h1 class="text-sm sm:text-base font-bold text-slate-100 mt-0.5">
             The "Spicy Pillow" Hazard & Thermal Runaway
           </h1>
         </div>
@@ -41,439 +45,372 @@
 
       <!-- Controls & Audio -->
       <div class="flex items-center gap-2">
-        <button id="audio-toggle-btn" class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition" title="Toggle Voiceover Narration">
+        <button id="audio-toggle-btn" class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition" title="Toggle Audio Voiceover">
           <i id="audio-icon" data-lucide="volume-2" class="w-4 h-4 text-amber-400"></i>
           <span id="audio-label">Voice On</span>
         </button>
 
-        <button id="play-pause-btn" class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition" title="Pause / Resume">
+        <button id="play-pause-btn" class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition" title="Pause / Resume">
           <i id="play-pause-icon" data-lucide="pause" class="w-4 h-4 text-emerald-400"></i>
           <span id="play-pause-label">Pause</span>
         </button>
 
-        <div class="text-xs font-mono text-slate-400 bg-slate-950/80 px-2.5 py-1.5 rounded-lg border border-slate-800">
-          <span id="timer-display">00:00</span> / <span id="total-time-display">02:30</span>
+        <div class="text-xs font-mono text-slate-400 bg-slate-950/80 px-2.5 py-1.5 rounded-xl border border-slate-800">
+          <span id="timer-display">00:00</span>
         </div>
       </div>
     </div>
 
     <!-- Chapter Progress Segments -->
     <div class="max-w-5xl mx-auto mt-2.5">
-      <div class="grid grid-cols-5 gap-1.5">
+      <div class="grid grid-cols-5 gap-2">
         <div class="chapter-seg-bar" data-seg="0">
           <div class="chapter-seg-fill"></div>
-          <span class="text-[10px] text-slate-400 truncate block mt-1">1. The Hook</span>
+          <span class="text-[10px] text-slate-400 font-medium truncate block mt-1">1. The Hook</span>
         </div>
         <div class="chapter-seg-bar" data-seg="1">
           <div class="chapter-seg-fill"></div>
-          <span class="text-[10px] text-slate-400 truncate block mt-1">2. Laptop Check</span>
+          <span class="text-[10px] text-slate-400 font-medium truncate block mt-1">2. 20s Laptop Audit</span>
         </div>
         <div class="chapter-seg-bar" data-seg="2">
           <div class="chapter-seg-fill"></div>
-          <span class="text-[10px] text-slate-400 truncate block mt-1">3. The Science</span>
+          <span class="text-[10px] text-slate-400 font-medium truncate block mt-1">3. Thermal Runaway</span>
         </div>
         <div class="chapter-seg-bar" data-seg="3">
           <div class="chapter-seg-fill"></div>
-          <span class="text-[10px] text-slate-400 truncate block mt-1">4. Safety Rules</span>
+          <span class="text-[10px] text-slate-400 font-medium truncate block mt-1">4. Safety SOP</span>
         </div>
         <div class="chapter-seg-bar" data-seg="4">
           <div class="chapter-seg-fill"></div>
-          <span class="text-[10px] text-slate-400 truncate block mt-1">5. Summary</span>
+          <span class="text-[10px] text-slate-400 font-medium truncate block mt-1">5. Summary</span>
         </div>
       </div>
     </div>
   </header>
 
-  <!-- MAIN DYNAMIC CONTENT CONTAINER -->
-  <main class="max-w-5xl mx-auto w-full px-4 py-6 flex-1 flex flex-col justify-center relative">
+  <!-- MAIN CINEMATIC PRESENTATION STAGE -->
+  <main class="max-w-4xl mx-auto w-full px-4 py-8 flex-1 flex flex-col justify-center relative">
 
-    <!-- SCREEN 0: INITIAL START MODAL / SPLASH (Ensures Browser Audio Permission) -->
-    <section id="start-screen" class="presentation-slide active flex flex-col items-center justify-center text-center py-8">
+    <!-- SCREEN 0: SPLASH SCREEN (Gets user click for browser audio permissions) -->
+    <section id="start-screen" class="presentation-slide active flex flex-col items-center justify-center text-center py-6">
       <div class="relative mb-6">
-        <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-3xl bg-gradient-to-tr from-amber-500/20 via-orange-500/10 to-transparent border border-amber-500/30 flex items-center justify-center shadow-2xl shadow-amber-500/10 animate-pulse">
-          <i data-lucide="flame" class="w-12 h-12 sm:w-14 sm:h-14 text-amber-400"></i>
+        <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-3xl bg-gradient-to-tr from-amber-500/20 via-orange-500/10 to-transparent border border-amber-500/40 flex items-center justify-center shadow-2xl shadow-amber-500/20 animate-pulse">
+          <i data-lucide="flame" class="w-12 h-12 text-amber-400"></i>
         </div>
-        <span class="absolute -bottom-2 -right-2 bg-red-500/90 text-white text-[11px] font-bold px-2 py-0.5 rounded-full shadow border border-red-400/40">
-          CRITICAL
+        <span class="absolute -bottom-2 -right-2 bg-red-500 text-white text-[11px] font-black tracking-wider uppercase px-2.5 py-0.5 rounded-full shadow-lg border border-red-400">
+          HAZARD ALERT
         </span>
       </div>
 
-      <span class="text-xs uppercase tracking-widest text-amber-400 font-semibold mb-2">24-Hour Help Desk • Weekly Safety Message</span>
-      <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-white max-w-2xl leading-tight">
+      <span class="text-xs uppercase tracking-widest text-amber-400 font-bold mb-2">24-Hour Help Desk • Weekly Safety Message</span>
+      <h2 class="text-3xl sm:text-5xl font-black tracking-tight text-white max-w-2xl leading-tight">
         The <span class="bg-gradient-to-r from-amber-400 via-orange-400 to-red-500 bg-clip-text text-transparent">"Spicy Pillow"</span> Hazard
       </h2>
-      <p class="mt-4 text-base sm:text-lg text-slate-300 max-w-xl">
-        Why your puffy laptop battery is a silent chemical hazard—and why remote help desk machines are at the highest risk.
+      
+      <p class="mt-4 text-base sm:text-lg text-slate-300 max-w-lg leading-relaxed">
+        Why your puffy laptop battery is a silent chemical hazard—and a hands-on 20-second test for your desk right now.
       </p>
 
       <div class="mt-8 flex flex-col sm:flex-row items-center gap-4">
-        <button id="start-btn" class="group relative px-8 py-4 rounded-xl bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-400 hover:to-orange-500 text-slate-950 font-bold text-base shadow-lg shadow-amber-500/25 transition-all transform hover:-translate-y-0.5 active:translate-y-0 flex items-center gap-2">
+        <button id="start-btn" class="group relative px-8 py-4 rounded-2xl bg-gradient-to-r from-amber-500 via-orange-500 to-red-500 hover:from-amber-400 hover:to-red-400 text-slate-950 font-black text-base shadow-xl shadow-amber-500/25 transition-all transform hover:-translate-y-1 active:translate-y-0 flex items-center gap-3">
           <i data-lucide="play" class="w-5 h-5 fill-slate-950"></i>
-          <span>Start 2-Minute Automated Briefing</span>
+          <span>Start Automated Briefing</span>
         </button>
       </div>
 
-      <div class="mt-6 flex items-center gap-4 text-xs text-slate-400">
-        <span class="flex items-center gap-1.5">
-          <i data-lucide="clock" class="w-4 h-4 text-slate-500"></i> ~2 min 20 sec
-        </span>
+      <div class="mt-8 flex items-center gap-4 text-xs text-slate-400 bg-slate-900/60 border border-slate-800 px-4 py-2 rounded-xl">
+        <span class="flex items-center gap-1.5"><i data-lucide="clock" class="w-4 h-4 text-amber-400"></i> ~2 min 15 sec</span>
         <span class="w-1 h-1 rounded-full bg-slate-700"></span>
-        <span class="flex items-center gap-1.5">
-          <i data-lucide="headphones" class="w-4 h-4 text-slate-500"></i> Automated Voice & Captions
-        </span>
+        <span class="flex items-center gap-1.5"><i data-lucide="mic" class="w-4 h-4 text-amber-400"></i> GuyNeural Voice</span>
         <span class="w-1 h-1 rounded-full bg-slate-700"></span>
-        <span class="flex items-center gap-1.5">
-          <i data-lucide="laptop" class="w-4 h-4 text-slate-500"></i> Includes Hands-On Laptop Test
-        </span>
+        <span class="flex items-center gap-1.5"><i data-lucide="laptop" class="w-4 h-4 text-amber-400"></i> Includes Hands-On Test</span>
       </div>
     </section>
 
-    <!-- CHAPTER 1: THE HOOK (What is a Spicy Pillow?) -->
-    <section id="slide-1" class="presentation-slide hidden">
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-        <div class="lg:col-span-7 space-y-4">
-          <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-semibold">
-            <i data-lucide="info" class="w-3.5 h-3.5"></i> Chapter 1: The Hidden Hazard
-          </div>
-          <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-            What is a <span class="text-amber-400">"Spicy Pillow"</span>?
-          </h2>
-          <p class="text-slate-300 text-base leading-relaxed">
-            In tech culture, a <strong class="text-amber-300">Spicy Pillow</strong> is the nickname for a swollen lithium-ion pouch cell battery that has expanded like a sealed bag of chips.
-          </p>
-          <div class="bg-slate-900/80 border border-slate-800 p-4 rounded-xl space-y-2">
-            <div class="flex items-start gap-3">
-              <i data-lucide="alert-triangle" class="w-5 h-5 text-amber-400 shrink-0 mt-0.5"></i>
-              <p class="text-sm text-slate-300">
-                <strong class="text-white">Why help desk workers are high-risk:</strong> Laptops docked 24/7 on continuous chargers, running multiple VMs, video queues, and heavy browser tabs keep batteries in high-temperature, high-voltage float charge for days.
-              </p>
-            </div>
-          </div>
-          <p class="text-sm text-slate-400 italic">
-            Over time, internal electrolyte decomposition generates volatile gases, ballooning the foil pouch until it presses directly against your trackpad and keyboard.
-          </p>
+    <!-- CHAPTER 1: THE HOOK (Clean, Visual, High-Impact) -->
+    <section id="slide-1" class="presentation-slide hidden flex-col items-center text-center space-y-6">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-bold">
+        <i data-lucide="help-circle" class="w-3.5 h-3.5"></i> Chapter 1: The Hidden Reaction
+      </div>
+
+      <h2 class="text-3xl sm:text-4xl font-black text-white tracking-tight">
+        What's Sitting Under Your Hands Right Now?
+      </h2>
+
+      <p class="text-base text-slate-300 max-w-xl leading-relaxed">
+        Docked for days on continuous chargers, high-voltage battery stress turns flat cells into a pressurized <strong class="text-amber-300">"Spicy Pillow"</strong>.
+      </p>
+
+      <!-- Centerpiece: Swelling Battery Visual Simulation -->
+      <div class="w-full max-w-md bg-slate-900/90 border border-slate-800 rounded-3xl p-6 shadow-2xl relative overflow-hidden">
+        <div class="flex justify-between items-center text-xs font-mono mb-4 text-slate-400">
+          <span>INTERNAL CELL STATUS</span>
+          <span id="ch1-cell-status" class="text-emerald-400 font-bold px-2 py-0.5 rounded bg-slate-950 border border-slate-800">
+            NORMAL (1.0 ATM)
+          </span>
         </div>
 
-        <!-- Animated Visual Comparison Graphic -->
-        <div class="lg:col-span-5 flex flex-col items-center justify-center p-6 bg-slate-900/50 rounded-2xl border border-slate-800">
-          <div class="w-full flex justify-between items-center text-xs text-slate-400 mb-4 px-2">
-            <span>Healthy Pouch</span>
-            <span class="text-red-400 font-bold flex items-center gap-1">
-              <i data-lucide="flame" class="w-3.5 h-3.5"></i> Swollen Cell
+        <!-- The Battery Core -->
+        <div class="relative h-32 flex items-center justify-center">
+          <div id="ch1-battery-box" class="w-64 h-16 rounded-xl bg-emerald-950/30 border-2 border-emerald-500/50 flex flex-col items-center justify-center transition-all duration-700 shadow-lg">
+            <span id="ch1-battery-title" class="text-xs font-bold text-emerald-300 flex items-center gap-1.5">
+              <i data-lucide="battery-charging" class="w-4 h-4"></i> Lithium-Ion Pouch Cell
+            </span>
+            <span id="ch1-battery-sub" class="text-[11px] font-mono text-emerald-400/80 mt-0.5">Flat Foil Envelope</span>
+          </div>
+        </div>
+
+        <div id="ch1-callout-text" class="text-xs text-slate-400 mt-2 italic transition-opacity duration-500">
+          Continuous heat & float charging decompose electrolytes into trapped volatile gas.
+        </div>
+      </div>
+    </section>
+
+    <!-- CHAPTER 2: THE 20-SECOND LIVE AUDIT (Streamlined, Spotlighted, Low-Cognitive Load) -->
+    <section id="slide-2" class="presentation-slide hidden flex-col items-center text-center space-y-6">
+      
+      <!-- Top Instruction -->
+      <div>
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-bold mb-2">
+          <i data-lucide="activity" class="w-3.5 h-3.5"></i> Chapter 2: Live Hands-On Audit
+        </div>
+        <h2 class="text-2xl sm:text-4xl font-black text-white">
+          Grab Your Laptop: 20-Second Check
+        </h2>
+        <p class="text-sm text-slate-300 mt-1 max-w-lg">
+          Place your laptop flat on your desk right now. Follow the spotlighted test:
+        </p>
+      </div>
+
+      <!-- Prominent 20-Second Countdown Dial -->
+      <div class="flex items-center gap-4 bg-slate-900/90 border border-amber-500/50 px-6 py-3 rounded-2xl shadow-xl">
+        <div class="relative w-16 h-16 flex items-center justify-center">
+          <svg class="w-16 h-16 -rotate-90">
+            <circle cx="32" cy="32" r="28" stroke="currentColor" stroke-width="4" class="text-slate-800" fill="transparent" />
+            <circle id="countdown-circle" cx="32" cy="32" r="28" stroke="currentColor" stroke-width="4" class="text-amber-400 transition-all duration-1000 ease-linear" stroke-dasharray="175.9" stroke-dashoffset="0" stroke-linecap="round" fill="transparent" />
+          </svg>
+          <span id="countdown-number" class="absolute text-2xl font-black font-mono text-amber-400">20</span>
+        </div>
+        <div class="text-left">
+          <div class="text-[10px] uppercase tracking-wider text-slate-400 font-bold">Current Focus</div>
+          <div id="test-step-indicator" class="text-base font-extrabold text-amber-300">1. The Wobble Check</div>
+        </div>
+      </div>
+
+      <!-- Spotlight Cards (Only ONE is in full focus at a time to eliminate clutter!) -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 w-full max-w-3xl text-left">
+        
+        <!-- Step 1: Wobble -->
+        <div id="card-check-1" class="focus-step-card active-focus border-2 border-amber-500/60 rounded-2xl p-4 bg-slate-900/90">
+          <div class="flex items-center justify-between mb-2">
+            <span class="w-7 h-7 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center font-bold text-xs">1</span>
+            <span class="text-[10px] font-mono text-amber-400 font-bold uppercase">Desk Surface</span>
+          </div>
+          <h3 class="text-sm font-bold text-white mb-1">Push the Corners</h3>
+          <p class="text-xs text-slate-300 leading-relaxed mb-3">
+            Press down on opposite corners. Does it rock or wobble like an uneven restaurant table?
+          </p>
+          <div class="h-16 bg-slate-950 rounded-xl border border-slate-800 flex items-center justify-center overflow-hidden">
+            <div id="wobble-laptop-graphic" class="w-28 h-5 bg-slate-700 rounded border border-slate-500 text-[10px] font-mono flex items-center justify-center text-slate-300">
+              [ Laptop Base ]
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 2: Trackpad -->
+        <div id="card-check-2" class="focus-step-card border-2 border-slate-800 rounded-2xl p-4 bg-slate-900/60">
+          <div class="flex items-center justify-between mb-2">
+            <span class="w-7 h-7 rounded-lg bg-slate-800 text-slate-400 flex items-center justify-center font-bold text-xs">2</span>
+            <span class="text-[10px] font-mono text-slate-400 font-bold uppercase">Tactile Switch</span>
+          </div>
+          <h3 class="text-sm font-bold text-white mb-1">Click Your Trackpad</h3>
+          <p class="text-xs text-slate-300 leading-relaxed mb-3">
+            Click it down. Crisp and clicky? Or does it feel shallow, stiff, or mushy?
+          </p>
+          <div class="h-16 bg-slate-950 rounded-xl border border-slate-800 flex items-center justify-center">
+            <div id="trackpad-graphic" class="w-20 h-8 rounded border border-slate-600 bg-slate-800 flex items-center justify-center text-[10px] font-mono text-slate-300">
+              <i data-lucide="mouse-pointer" class="w-3 h-3 mr-1 text-amber-400"></i> Click
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3: Seam / Port Gap -->
+        <div id="card-check-3" class="focus-step-card border-2 border-slate-800 rounded-2xl p-4 bg-slate-900/60">
+          <div class="flex items-center justify-between mb-2">
+            <span class="w-7 h-7 rounded-lg bg-slate-800 text-slate-400 flex items-center justify-center font-bold text-xs">3</span>
+            <span class="text-[10px] font-mono text-slate-400 font-bold uppercase">Chassis Seams</span>
+          </div>
+          <h3 class="text-sm font-bold text-white mb-1">Inspect Side Ports</h3>
+          <p class="text-xs text-slate-300 leading-relaxed mb-3">
+            Look at the seam along your USB ports. Any gap, warping, or popped screws?
+          </p>
+          <div class="h-16 bg-slate-950 rounded-xl border border-slate-800 flex items-center justify-center">
+            <span class="text-xs font-mono text-red-400 font-bold flex items-center gap-1">
+              <i data-lucide="split" class="w-3.5 h-3.5"></i> Seam Separation
             </span>
           </div>
-
-          <!-- Battery graphic -->
-          <div class="relative w-64 h-36 bg-slate-800 rounded-xl border border-slate-700 p-3 flex flex-col justify-between overflow-hidden shadow-xl">
-            <div class="flex justify-between items-center border-b border-slate-700/60 pb-1.5 text-[11px] text-slate-400">
-              <span class="flex items-center gap-1"><i data-lucide="battery-charging" class="w-3.5 h-3.5"></i> Li-ion Pouch</span>
-              <span id="ch1-battery-badge" class="font-mono text-emerald-400">NORMAL</span>
-            </div>
-            
-            <!-- Battery Core with expansion animation -->
-            <div id="ch1-battery-core" class="w-full h-16 rounded-lg bg-emerald-950/40 border border-emerald-500/40 flex items-center justify-center transition-all duration-1000">
-              <span id="ch1-battery-label" class="text-xs font-mono text-emerald-300">Pressure: Stable (1.0 atm)</span>
-            </div>
-
-            <div class="text-[10px] text-slate-500 flex justify-between">
-              <span>0% Expansion</span>
-              <span id="ch1-expansion-text" class="text-emerald-400">Safe</span>
-            </div>
-          </div>
-
-          <div class="mt-4 text-xs text-center text-slate-400">
-            Internal gas pressure can exert over <strong class="text-white">50+ PSI</strong> against your laptop chassis!
-          </div>
         </div>
+
       </div>
-    </section>
 
-    <!-- CHAPTER 2: HANDS-ON LAPTOP AUDIT (With continuous 20s narration!) -->
-    <section id="slide-2" class="presentation-slide hidden">
-      <div class="space-y-6">
-        <!-- Header & Instructions -->
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-4">
-          <div>
-            <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold mb-1">
-              <i data-lucide="hand-metal" class="w-3.5 h-3.5"></i> Chapter 2: Live Hands-On Check
-            </div>
-            <h2 class="text-2xl sm:text-3xl font-extrabold text-white">
-              The 20-Second Laptop Safety Audit
-            </h2>
-            <p class="text-sm text-slate-300 mt-1">
-              Hands on your machine right now. Follow the 3 physical checks as the timer counts down.
-            </p>
-          </div>
-
-          <!-- 20-Second Circular Countdown Timer -->
-          <div class="flex items-center gap-4 bg-slate-900/90 border border-amber-500/40 px-4 py-2.5 rounded-2xl shadow-lg shrink-0">
-            <div class="relative w-14 h-14 flex items-center justify-center">
-              <svg class="w-14 h-14 -rotate-90">
-                <circle cx="28" cy="28" r="24" stroke="currentColor" stroke-width="4" class="text-slate-800" fill="transparent" />
-                <circle id="countdown-circle" cx="28" cy="28" r="24" stroke="currentColor" stroke-width="4" class="text-amber-400 transition-all duration-1000 ease-linear" stroke-dasharray="150.8" stroke-dashoffset="0" stroke-linecap="round" fill="transparent" />
-              </svg>
-              <span id="countdown-number" class="absolute text-xl font-bold font-mono text-amber-400">20</span>
-            </div>
-            <div>
-              <div class="text-[11px] uppercase tracking-wider text-slate-400 font-bold">Active Test</div>
-              <div id="test-step-indicator" class="text-xs font-bold text-amber-300">1. The Wobble Test</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- 3 Interactive / Animated Inspection Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <!-- Test 1: The Wobble Check -->
-          <div id="card-check-1" class="check-card bg-slate-900/80 border-2 border-amber-500/60 rounded-xl p-4 transition-all duration-300">
-            <div class="flex items-center justify-between mb-3">
-              <div class="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center font-bold text-sm">1</div>
-              <span class="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-slate-800 text-amber-400 font-semibold">Desk Surface</span>
-            </div>
-            <h3 class="text-base font-bold text-white mb-1.5 flex items-center gap-1.5">
-              The Wobble Check
-            </h3>
-            <p class="text-xs text-slate-300 leading-relaxed mb-3">
-              Place laptop flat on a hard desk. Press alternating corners. Does it rock or wobble like a bad café table?
-            </p>
-            <div class="h-20 bg-slate-950 rounded-lg border border-slate-800 flex items-center justify-center p-2 relative overflow-hidden">
-              <div id="wobble-laptop-graphic" class="w-32 h-6 bg-slate-700 rounded-sm border border-slate-500 flex items-center justify-center text-[10px] font-mono text-slate-300 transition-transform">
-                [ Laptop Chassis ]
-              </div>
-            </div>
-            <div class="mt-2 text-[11px] text-amber-300/90 font-medium">
-              ⚠️ Bulge lifts the bottom rubber feet off the table!
-            </div>
-          </div>
-
-          <!-- Test 2: The Trackpad Check -->
-          <div id="card-check-2" class="check-card bg-slate-900/40 border border-slate-800 rounded-xl p-4 transition-all duration-300">
-            <div class="flex items-center justify-between mb-3">
-              <div class="w-8 h-8 rounded-lg bg-slate-800 text-slate-400 flex items-center justify-center font-bold text-sm">2</div>
-              <span class="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-slate-800 text-slate-400 font-semibold">Tactile Feel</span>
-            </div>
-            <h3 class="text-base font-bold text-white mb-1.5">
-              The Stiff Trackpad
-            </h3>
-            <p class="text-xs text-slate-300 leading-relaxed mb-3">
-              Click down on your trackpad. Does it click crisply with clean travel, or does it feel stiff, shallow, or mushy?
-            </p>
-            <div class="h-20 bg-slate-950 rounded-lg border border-slate-800 flex flex-col items-center justify-center p-2">
-              <div class="w-24 h-10 rounded border border-slate-600 bg-slate-800/80 flex items-center justify-center text-[11px] font-mono text-slate-300 shadow-inner">
-                <i data-lucide="mouse-pointer-click" class="w-3.5 h-3.5 mr-1 text-amber-400"></i> Trackpad
-              </div>
-            </div>
-            <div class="mt-2 text-[11px] text-slate-400 font-medium">
-              ⚠️ Pouch sits directly below the mechanical switch!
-            </div>
-          </div>
-
-          <!-- Test 3: The Seam / Port Gap -->
-          <div id="card-check-3" class="check-card bg-slate-900/40 border border-slate-800 rounded-xl p-4 transition-all duration-300">
-            <div class="flex items-center justify-between mb-3">
-              <div class="w-8 h-8 rounded-lg bg-slate-800 text-slate-400 flex items-center justify-center font-bold text-sm">3</div>
-              <span class="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-slate-800 text-slate-400 font-semibold">Chassis Seams</span>
-            </div>
-            <h3 class="text-base font-bold text-white mb-1.5">
-              Port & Seam Separation
-            </h3>
-            <p class="text-xs text-slate-300 leading-relaxed mb-3">
-              Look closely at the edge where the top and bottom chassis meet near your USB-C or charging ports.
-            </p>
-            <div class="h-20 bg-slate-950 rounded-lg border border-slate-800 flex items-center justify-center p-2">
-              <div class="flex items-center gap-1">
-                <div class="w-16 h-3 bg-slate-600 rounded-t-sm"></div>
-                <span class="text-[10px] text-red-400 font-mono">GAP &gt;&lt;</span>
-                <div class="w-16 h-3 bg-slate-600 rounded-b-sm"></div>
-              </div>
-            </div>
-            <div class="mt-2 text-[11px] text-slate-400 font-medium">
-              ⚠️ Screws stripping or plastic popping open!
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CHAPTER 3: THE SCIENCE OF THERMAL RUNAWAY -->
-    <section id="slide-3" class="presentation-slide hidden">
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-        <div class="lg:col-span-7 space-y-4">
-          <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-red-500/10 border border-red-500/30 text-red-400 text-xs font-semibold">
-            <i data-lucide="flame" class="w-3.5 h-3.5"></i> Chapter 3: The Threat
-          </div>
-          <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-            Thermal Runaway & The <span class="text-red-400">Soft Surface Trap</span>
-          </h2>
-          <p class="text-slate-300 text-base leading-relaxed">
-            A swollen battery is under internal mechanical stress. Once the microscopic separator membrane ruptures, it ignites a rapid exothermic chain reaction called <strong class="text-red-300">Thermal Runaway</strong>.
-          </p>
-
-          <div class="space-y-3">
-            <div class="flex items-start gap-3 bg-slate-900/90 border border-red-900/40 p-3 rounded-xl">
-              <i data-lucide="alert-octagon" class="w-5 h-5 text-red-400 shrink-0 mt-0.5"></i>
-              <div>
-                <h4 class="text-sm font-bold text-white">Self-Oxidizing Reaction (1,000°F+)</h4>
-                <p class="text-xs text-slate-300">
-                  Lithium cathode decomposition generates its own oxygen. Standard fire extinguishers and water cannot readily smother it, and the smoke releases toxic <strong>Hydrogen Fluoride (HF) gas</strong>.
-                </p>
-              </div>
-            </div>
-
-            <div class="flex items-start gap-3 bg-slate-900/90 border border-amber-900/40 p-3 rounded-xl">
-              <i data-lucide="bed" class="w-5 h-5 text-amber-400 shrink-0 mt-0.5"></i>
-              <div>
-                <h4 class="text-sm font-bold text-white">The #1 Remote Catalyst: Bed & Blanket Charging</h4>
-                <p class="text-xs text-slate-300">
-                  Resting a working laptop on blankets, comforters, or sofas completely seals the underside air intakes. Internal temperatures spike in minutes, accelerating battery off-gassing.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Animated Heat & Pressure Gauge -->
-        <div class="lg:col-span-5 bg-slate-900/80 border border-slate-800 rounded-2xl p-6 flex flex-col items-center">
-          <div class="w-full flex justify-between items-center text-xs text-slate-400 mb-2 font-mono">
-            <span>CORE TEMP</span>
-            <span id="temp-gauge-val" class="text-amber-400 font-bold text-sm">45°C Normal</span>
-          </div>
-
-          <!-- Vertical / Horizontal Thermometer Bar -->
-          <div class="w-full h-8 bg-slate-950 rounded-full border border-slate-800 p-1 flex items-center overflow-hidden">
-            <div id="temp-bar-fill" class="h-full rounded-full bg-gradient-to-r from-emerald-500 via-amber-500 to-red-600 transition-all duration-1000" style="width: 25%;"></div>
-          </div>
-
-          <div class="w-full grid grid-cols-4 text-[10px] text-slate-500 font-mono mt-2 text-center">
-            <span>25°C</span>
-            <span>60°C</span>
-            <span>90°C</span>
-            <span class="text-red-400 font-bold">150°C+ FIRE</span>
-          </div>
-
-          <div id="reaction-state-box" class="w-full mt-6 p-4 rounded-xl bg-slate-950 border border-slate-800 text-center">
-            <div id="reaction-state-title" class="text-xs font-bold text-emerald-400 uppercase tracking-wider mb-1">State: Safe Operation</div>
-            <p id="reaction-state-desc" class="text-xs text-slate-400">Normal thermal dissipation on a hard, flat surface.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CHAPTER 4: 24-HOUR HELP DESK SAFETY PROTOCOL -->
-    <section id="slide-4" class="presentation-slide hidden">
-      <div class="space-y-6">
-        <div>
-          <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-semibold mb-1">
-            <i data-lucide="shield-check" class="w-3.5 h-3.5"></i> Chapter 4: Standard Operating Procedure
-          </div>
-          <h2 class="text-2xl sm:text-3xl font-extrabold text-white">
-            Help Desk Protocol: If You Spot a Spicy Pillow
-          </h2>
-          <p class="text-sm text-slate-300 mt-1">
-            What to do immediately for your machine or when an end-user calls in with a bulging chassis:
-          </p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-          <!-- Card 1: Do Not Puncture -->
-          <div class="p-5 rounded-2xl bg-slate-900/90 border border-red-500/40 shadow-xl space-y-3 relative overflow-hidden">
-            <div class="w-10 h-10 rounded-xl bg-red-500/20 text-red-400 flex items-center justify-center font-bold">
-              <i data-lucide="ban" class="w-5 h-5"></i>
-            </div>
-            <h3 class="text-base font-bold text-white">1. DO NOT Press or Pierce</h3>
-            <p class="text-xs text-slate-300 leading-relaxed">
-              Never press the trackpad back down, clamp the case, tighten screws, or pierce the pouch with a tool. Even a pinprick introduces atmospheric oxygen and instantly sparks thermal runaway.
-            </p>
-            <div class="pt-2 border-t border-slate-800 text-[11px] text-red-400 font-semibold flex items-center gap-1">
-              <i data-lucide="x-circle" class="w-3.5 h-3.5"></i> Zero mechanical pressure!
-            </div>
-          </div>
-
-          <!-- Card 2: Disconnect & Quarantine -->
-          <div class="p-5 rounded-2xl bg-slate-900/90 border border-amber-500/40 shadow-xl space-y-3">
-            <div class="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center font-bold">
-              <i data-lucide="power-off" class="w-5 h-5"></i>
-            </div>
-            <h3 class="text-base font-bold text-white">2. Unplug & Quarantine</h3>
-            <p class="text-xs text-slate-300 leading-relaxed">
-              Unplug the charger immediately. Safely shut down the operating system. Relocate the machine to a hard, non-combustible surface (tile floor, granite counter, or metal baking sheet) away from drapes/paper.
-            </p>
-            <div class="pt-2 border-t border-slate-800 text-[11px] text-amber-400 font-semibold flex items-center gap-1">
-              <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> Stop electrical charging immediately!
-            </div>
-          </div>
-
-          <!-- Card 3: IT Swap / Disposal -->
-          <div class="p-5 rounded-2xl bg-slate-900/90 border border-emerald-500/40 shadow-xl space-y-3">
-            <div class="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold">
-              <i data-lucide="ticket" class="w-5 h-5"></i>
-            </div>
-            <h3 class="text-base font-bold text-white">3. Open IT Swap Ticket</h3>
-            <p class="text-xs text-slate-300 leading-relaxed">
-              Submit an emergency hardware swap ticket. IT will dispatch a replacement. <strong class="text-white">NEVER</strong> place swollen batteries in ordinary trash or standard curbside recycling.
-            </p>
-            <div class="pt-2 border-t border-slate-800 text-[11px] text-emerald-400 font-semibold flex items-center gap-1">
-              <i data-lucide="recycle" class="w-3.5 h-3.5"></i> Certified hazardous e-waste only!
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CHAPTER 5: WRAP UP & SIGN-OFF -->
-    <section id="slide-5" class="presentation-slide hidden text-center py-6">
-      <div class="max-w-xl mx-auto space-y-6">
-        <div class="w-20 h-20 rounded-full bg-emerald-500/20 border-2 border-emerald-500/40 text-emerald-400 flex items-center justify-center mx-auto shadow-2xl shadow-emerald-500/20">
-          <i data-lucide="check-circle" class="w-10 h-10"></i>
-        </div>
-
-        <div>
-          <span class="text-xs font-semibold uppercase tracking-wider text-emerald-400 bg-emerald-950/60 px-2.5 py-1 rounded border border-emerald-800/60">
-            Shift Safety Completed
-          </span>
-          <h2 class="text-3xl font-extrabold text-white mt-3">
-            Safety Briefing Complete!
-          </h2>
-          <p class="text-sm text-slate-300 mt-2">
-            You've completed the weekly safety check. You are clear to resume queue and support our users safely.
-          </p>
-        </div>
-
-        <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-5 text-left space-y-2 text-xs text-slate-300">
-          <div class="font-bold text-slate-100 text-sm mb-1 flex items-center gap-1.5">
-            <i data-lucide="list-checks" class="w-4 h-4 text-amber-400"></i> Quick Recap:
-          </div>
-          <p>✔️ Tested desk wobble, trackpad travel, and seam gaps.</p>
-          <p>✔️ Avoid charging work devices on beds, blankets, and couches.</p>
-          <p>✔️ Unplug and quarantine swollen batteries on non-combustible surfaces.</p>
-        </div>
-
-        <div class="flex items-center justify-center gap-4 pt-2">
-          <button id="replay-btn" class="px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-medium text-xs flex items-center gap-2 transition">
-            <i data-lucide="rotate-ccw" class="w-4 h-4"></i> Replay Briefing
+      <!-- Interactive Team Response Buttons (Attendees can click during meeting!) -->
+      <div class="w-full max-w-md bg-slate-900/70 border border-slate-800 p-3 rounded-2xl flex items-center justify-between gap-3">
+        <span class="text-xs text-slate-400 font-medium">How did yours do?</span>
+        <div class="flex items-center gap-2">
+          <button id="btn-result-pass" class="px-3 py-1.5 rounded-xl bg-emerald-950 hover:bg-emerald-900 text-emerald-300 border border-emerald-700/60 text-xs font-bold transition flex items-center gap-1">
+            <i data-lucide="check" class="w-3.5 h-3.5"></i> Flat & Crisp
+          </button>
+          <button id="btn-result-fail" class="px-3 py-1.5 rounded-xl bg-red-950 hover:bg-red-900 text-red-300 border border-red-700/60 text-xs font-bold transition flex items-center gap-1">
+            <i data-lucide="alert-circle" class="w-3.5 h-3.5"></i> It's Wobbling!
           </button>
         </div>
+      </div>
+      <div id="interactive-verdict-msg" class="hidden text-xs font-bold px-3 py-1 rounded-full"></div>
+    </section>
+
+    <!-- CHAPTER 3: THE DANGER / THERMAL RUNAWAY -->
+    <section id="slide-3" class="presentation-slide hidden flex-col items-center text-center space-y-6">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-500/10 border border-red-500/30 text-red-400 text-xs font-bold">
+        <i data-lucide="flame" class="w-3.5 h-3.5"></i> Chapter 3: Chemical Danger
+      </div>
+
+      <h2 class="text-3xl sm:text-4xl font-black text-white tracking-tight">
+        Why Care? <span class="text-red-400">Thermal Runaway</span>
+      </h2>
+
+      <p class="text-base text-slate-300 max-w-lg leading-relaxed">
+        Pressurized cells contain volatile organic solvents. A puncture or heat spike triggers a self-oxidizing reaction burning over <strong class="text-red-400">1,000°F</strong>.
+      </p>
+
+      <!-- Thermometer & Danger Highlights -->
+      <div class="w-full max-w-lg bg-slate-900/90 border border-red-900/40 rounded-3xl p-6 space-y-5 shadow-2xl">
+        
+        <div class="flex justify-between items-center text-xs font-mono">
+          <span class="text-slate-400">CORE TEMPERATURE</span>
+          <span id="temp-gauge-val" class="text-emerald-400 font-bold">25°C Safe</span>
+        </div>
+
+        <div class="w-full h-6 bg-slate-950 rounded-full border border-slate-800 p-1 flex items-center overflow-hidden">
+          <div id="temp-bar-fill" class="h-full rounded-full bg-gradient-to-r from-emerald-500 via-amber-500 to-red-600 transition-all duration-1000" style="width: 20%;"></div>
+        </div>
+
+        <!-- 3 Punchy Callout Badges -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-2">
+          <div class="p-3 rounded-xl bg-slate-950 border border-slate-800 text-left">
+            <div class="text-xs font-bold text-red-400 flex items-center gap-1.5 mb-1">
+              <i data-lucide="flame" class="w-3.5 h-3.5"></i> 1,000°F+
+            </div>
+            <p class="text-[11px] text-slate-400">Creates its own oxygen. Water won't smother it.</p>
+          </div>
+
+          <div class="p-3 rounded-xl bg-slate-950 border border-slate-800 text-left">
+            <div class="text-xs font-bold text-amber-400 flex items-center gap-1.5 mb-1">
+              <i data-lucide="skull" class="w-3.5 h-3.5"></i> Toxic Gas
+            </div>
+            <p class="text-[11px] text-slate-400">Releases hazardous Hydrogen Fluoride (HF) fumes.</p>
+          </div>
+
+          <div class="p-3 rounded-xl bg-slate-950 border border-slate-800 text-left">
+            <div class="text-xs font-bold text-orange-400 flex items-center gap-1.5 mb-1">
+              <i data-lucide="bed" class="w-3.5 h-3.5"></i> Bed Trap
+            </div>
+            <p class="text-[11px] text-slate-400">#1 Culprit: Charging on blankets blocks vents.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CHAPTER 4: HELP DESK PROTOCOL (Sequential Clean Cards) -->
+    <section id="slide-4" class="presentation-slide hidden flex-col items-center text-center space-y-6">
+      <div>
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-bold mb-2">
+          <i data-lucide="shield-check" class="w-3.5 h-3.5"></i> Chapter 4: Team Protocol
+        </div>
+        <h2 class="text-2xl sm:text-4xl font-black text-white">
+          3 Golden Rules If You Spot a Spicy Pillow
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 w-full max-w-3xl text-left">
+        <!-- Rule 1 -->
+        <div class="p-5 rounded-2xl bg-slate-900/90 border border-red-500/50 shadow-xl space-y-2">
+          <div class="w-9 h-9 rounded-xl bg-red-500/20 text-red-400 flex items-center justify-center font-bold">
+            <i data-lucide="ban" class="w-5 h-5"></i>
+          </div>
+          <h3 class="text-sm font-bold text-white">1. Never Press or Puncture</h3>
+          <p class="text-xs text-slate-300 leading-relaxed">
+            Never press the trackpad down, clamp it, or pierce the foil. Even a tiny prick sparks violent ignition.
+          </p>
+        </div>
+
+        <!-- Rule 2 -->
+        <div class="p-5 rounded-2xl bg-slate-900/90 border border-amber-500/50 shadow-xl space-y-2">
+          <div class="w-9 h-9 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center font-bold">
+            <i data-lucide="power-off" class="w-5 h-5"></i>
+          </div>
+          <h3 class="text-sm font-bold text-white">2. Unplug & Quarantine</h3>
+          <p class="text-xs text-slate-300 leading-relaxed">
+            Unplug charger immediately. Move laptop to a hard, non-flammable surface (metal tray, stone counter, tile).
+          </p>
+        </div>
+
+        <!-- Rule 3 -->
+        <div class="p-5 rounded-2xl bg-slate-900/90 border border-emerald-500/50 shadow-xl space-y-2">
+          <div class="w-9 h-9 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold">
+            <i data-lucide="ticket" class="w-5 h-5"></i>
+          </div>
+          <h3 class="text-sm font-bold text-white">3. Submit IT Swap Ticket</h3>
+          <p class="text-xs text-slate-300 leading-relaxed">
+            Request an emergency hardware swap. Must go to hazardous e-waste disposal, never regular trash.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CHAPTER 5: SUMMARY & SIGN-OFF -->
+    <section id="slide-5" class="presentation-slide hidden flex-col items-center text-center space-y-6">
+      <div class="w-20 h-20 rounded-full bg-emerald-500/20 border-2 border-emerald-500/50 text-emerald-400 flex items-center justify-center mx-auto shadow-2xl shadow-emerald-500/20">
+        <i data-lucide="check-circle-2" class="w-10 h-10"></i>
+      </div>
+
+      <div>
+        <span class="text-xs font-bold uppercase tracking-wider text-emerald-400 bg-emerald-950/70 px-3 py-1 rounded-full border border-emerald-800/60">
+          Weekly Safety Check Completed
+        </span>
+        <h2 class="text-3xl sm:text-4xl font-black text-white mt-3">
+          Briefing Complete!
+        </h2>
+        <p class="text-sm text-slate-300 mt-2 max-w-md">
+          You've audited your laptop, learned the warning signs, and reviewed the safe handling SOP.
+        </p>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <button id="replay-btn" class="px-6 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-bold text-xs flex items-center gap-2 transition">
+          <i data-lucide="rotate-ccw" class="w-4 h-4"></i> Replay Briefing
+        </button>
       </div>
     </section>
 
   </main>
 
-  <!-- LIVE CLOSED-CAPTION SUBTITLE BAR (Bottom Overlay) -->
-  <footer class="w-full bg-slate-900/90 border-t border-slate-800/80 px-4 py-3 backdrop-blur-md sticky bottom-0 z-40">
+  <!-- LIVE CLOSED-CAPTION SUBTITLE BAR -->
+  <footer class="w-full bg-slate-900/90 border-t border-slate-800 px-4 py-3 backdrop-blur-md sticky bottom-0 z-40">
     <div class="max-w-4xl mx-auto flex items-center gap-3">
       <div class="w-7 h-7 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center shrink-0">
         <i data-lucide="message-square-quote" class="w-4 h-4"></i>
       </div>
       <div class="flex-1 overflow-hidden">
-        <div class="text-[10px] font-mono uppercase text-slate-500">Live Captions / Narration</div>
+        <div class="text-[10px] font-mono uppercase text-slate-500">Live Narration</div>
         <p id="live-caption-text" class="text-xs sm:text-sm text-amber-200/90 font-medium truncate">
           Click "Start Automated Briefing" above to begin...
         </p>
       </div>
 
-      <!-- Navigation Arrows for Manual Overrides & Version Badge -->
+      <!-- Navigation Arrows for Manual Overrides & Persistent Version Indicator -->
       <div class="flex items-center gap-2 shrink-0">
-        <span class="text-[10px] font-mono text-emerald-400 bg-emerald-950/80 px-2 py-0.5 rounded border border-emerald-800">
-          v2.1 • Neural Voice
+        <span class="text-[10px] font-mono font-bold text-emerald-400 bg-emerald-950/80 px-2 py-0.5 rounded border border-emerald-700">
+          v3.0 • GuyNeural
         </span>
         <button id="prev-slide-btn" class="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition" title="Previous Slide">
           <i data-lucide="chevron-left" class="w-4 h-4"></i>
@@ -485,6 +422,6 @@
     </div>
   </footer>
 
-  <script src="app.js?v=2.1.0"></script>
+  <script src="app.js?v=3.0.0"></script>
 </body>
 </html>

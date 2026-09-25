@@ -1,9 +1,9 @@
 /**
- * Spicy Pillow Safety Briefing
- * Automated Presentation Controller with Studio-Grade Neural Human Voiceover
+ * Spicy Pillow Safety Briefing v3.0
+ * Cinematic Automated Presentation Controller
  */
 
-// Sound Effects Engine (Chimes and ticks via Web Audio API)
+// Sound Effects via Web Audio API
 class SoundFX {
   constructor() {
     this.ctx = null;
@@ -93,31 +93,31 @@ const chapters = [
     id: 1,
     name: "The Hook",
     audioSrc: "audio/chapter1.mp3",
-    caption: "Welcome team. Today's safety briefing covers the 'Spicy Pillow'—a swollen lithium-ion battery. Working 24-hour shifts, our laptops stay docked and under heavy load for days, causing internal electrolyte breakdown and trapped volatile gas."
+    caption: "Look down at your hands right now. Working long shifts, our laptops stay plugged in and hot for days, decomposing electrolytes into trapped volatile gas."
   },
   {
     id: 2,
     name: "Laptop Check",
     audioSrc: "audio/chapter2.mp3",
-    caption: "Hands-on audit! 20-second timer active. Place laptop on a flat desk. Check 1: Rock alternating corners for wobble. Check 2: Click the trackpad for stiff or mushy travel. Check 3: Inspect side seams near USB ports for gaps."
+    caption: "Live 20-second audit! 1: Push corners for wobble. 2: Click trackpad for stiff/shallow travel. 3: Inspect side seams near USB ports for gaps."
   },
   {
     id: 3,
     name: "The Science",
     audioSrc: "audio/chapter3.mp3",
-    caption: "Why is it dangerous? Punctured or overheated cells enter Thermal Runaway—burning above 1,000°F and generating their own oxygen. Charging on beds or blankets suffocates vents and is the #1 home office catalyst."
+    caption: "Why care? Punctures or heat trigger Thermal Runaway: burning above 1,000°F, creating its own oxygen. #1 Culprit: Working on beds and blankets."
   },
   {
     id: 4,
     name: "Safety Rules",
     audioSrc: "audio/chapter4.mp3",
-    caption: "Help Desk SOP: 1. NEVER press, clamp, or puncture the bulge. 2. Unplug charger immediately, shut down, and quarantine on a non-flammable surface (metal tray or tile floor). 3. Submit an IT hardware swap ticket for hazardous disposal."
+    caption: "Help Desk SOP: 1. Never squeeze or puncture. 2. Unplug immediately and quarantine on tile/metal tray. 3. Submit an IT hardware swap ticket."
   },
   {
     id: 5,
     name: "Summary",
     audioSrc: "audio/chapter5.mp3",
-    caption: "Safety Briefing Complete! You've verified your device, learned the warning signs, and reviewed the safe handling SOP. Stay safe and have a great shift!"
+    caption: "Audit Complete! You know what to look for and how to handle it safely. Keep your vents clear and have a fantastic shift!"
   }
 ];
 
@@ -152,7 +152,13 @@ class PresentationApp {
     this.audioLabel = document.getElementById('audio-label');
     this.audioIcon = document.getElementById('audio-icon');
 
-    // Slide 2: 20-second active test DOM
+    // Slide 1 Elements
+    this.ch1BatteryBox = document.getElementById('ch1-battery-box');
+    this.ch1CellStatus = document.getElementById('ch1-cell-status');
+    this.ch1BatteryTitle = document.getElementById('ch1-battery-title');
+    this.ch1BatterySub = document.getElementById('ch1-battery-sub');
+
+    // Slide 2 Elements
     this.countdownNumber = document.getElementById('countdown-number');
     this.countdownCircle = document.getElementById('countdown-circle');
     this.testStepIndicator = document.getElementById('test-step-indicator');
@@ -160,16 +166,13 @@ class PresentationApp {
     this.cardCheck1 = document.getElementById('card-check-1');
     this.cardCheck2 = document.getElementById('card-check-2');
     this.cardCheck3 = document.getElementById('card-check-3');
+    this.btnResultPass = document.getElementById('btn-result-pass');
+    this.btnResultFail = document.getElementById('btn-result-fail');
+    this.interactiveVerdictMsg = document.getElementById('interactive-verdict-msg');
 
-    // Slide 1 & 3 Graphic Elements
-    this.ch1BatteryCore = document.getElementById('ch1-battery-core');
-    this.ch1BatteryBadge = document.getElementById('ch1-battery-badge');
-    this.ch1BatteryLabel = document.getElementById('ch1-battery-label');
-    this.ch1ExpansionText = document.getElementById('ch1-expansion-text');
+    // Slide 3 Elements
     this.tempBarFill = document.getElementById('temp-bar-fill');
     this.tempGaugeVal = document.getElementById('temp-gauge-val');
-    this.reactionStateTitle = document.getElementById('reaction-state-title');
-    this.reactionStateDesc = document.getElementById('reaction-state-desc');
 
     this.bindEvents();
     this.initLucide();
@@ -187,9 +190,31 @@ class PresentationApp {
     this.audioToggleBtn.addEventListener('click', () => this.toggleAudio());
     document.getElementById('prev-slide-btn').addEventListener('click', () => this.prevChapter());
     document.getElementById('next-slide-btn').addEventListener('click', () => this.nextChapter());
+    
     const replayBtn = document.getElementById('replay-btn');
     if (replayBtn) {
       replayBtn.addEventListener('click', () => this.restart());
+    }
+
+    // Interactive Pass/Fail buttons for attendees
+    if (this.btnResultPass) {
+      this.btnResultPass.addEventListener('click', () => {
+        this.showInteractiveVerdict("✅ Laptop Passed! Battery is flat and healthy.", "bg-emerald-950 text-emerald-300 border border-emerald-700");
+        this.sound.playSuccess();
+      });
+    }
+    if (this.btnResultFail) {
+      this.btnResultFail.addEventListener('click', () => {
+        this.showInteractiveVerdict("⚠️ Hazard Detected! Unplug charger and notify IT immediately.", "bg-red-950 text-red-300 border border-red-700");
+        this.sound.playWarning();
+      });
+    }
+  }
+
+  showInteractiveVerdict(msg, colorClass) {
+    if (this.interactiveVerdictMsg) {
+      this.interactiveVerdictMsg.className = `text-xs font-bold px-4 py-2 rounded-xl mt-2 block ${colorClass}`;
+      this.interactiveVerdictMsg.innerText = msg;
     }
   }
 
@@ -203,9 +228,7 @@ class PresentationApp {
     this.liveIndicator.classList.remove('hidden');
     this.liveIndicator.classList.add('inline-flex');
 
-    // Start global wall clock timer
     this.startGlobalTimer();
-
     this.loadChapter(0);
   }
 
@@ -214,7 +237,7 @@ class PresentationApp {
     this.currentChapterIndex = index;
     const chapter = chapters[index];
 
-    // Stop previous audio
+    // Stop previous audio and timers
     if (this.currentAudio) {
       this.currentAudio.pause();
       this.currentAudio = null;
@@ -262,7 +285,6 @@ class PresentationApp {
     audio.muted = this.isMuted;
     this.currentAudio = audio;
 
-    // Track time to update the active chapter progress bar fill
     audio.addEventListener('timeupdate', () => {
       if (audio.duration) {
         const percent = Math.min(100, Math.round((audio.currentTime / audio.duration) * 100));
@@ -274,75 +296,72 @@ class PresentationApp {
       }
     });
 
-    // When audio finishes, advance to the next chapter automatically!
     audio.addEventListener('ended', () => {
       setTimeout(() => {
         if (this.isPlaying) {
           this.nextChapter();
         }
-      }, 800);
+      }, 700);
     });
 
     if (this.isPlaying) {
-      audio.play().catch(err => {
-        console.warn("Audio autoplay blocked or interrupted:", err);
-      });
+      audio.play().catch(err => console.warn("Autoplay blocked:", err));
     }
 
     this.initLucide();
   }
 
   handleSlideAnimations(index) {
-    // Reset animations
-    if (this.wobbleGraphic) this.wobbleGraphic.classList.remove('animate-wobble');
+    // Reset wobble
+    if (this.wobbleGraphic) this.wobbleGraphic.classList.remove('animate-wobble-active');
 
-    // Chapter 1: Swell after 3.5 seconds into the audio
+    // Chapter 1: Pouch swells when narrator mentions "Spicy Pillow" (~6s)
     if (index === 0) {
       setTimeout(() => {
-        if (this.currentChapterIndex === 0 && this.ch1BatteryCore) {
-          this.ch1BatteryCore.classList.add('swollen-battery-state');
-          this.ch1BatteryBadge.innerText = 'SWOLLEN';
-          this.ch1BatteryBadge.className = 'font-mono text-red-400 font-bold';
-          this.ch1BatteryLabel.innerText = 'Pressure: High (50+ PSI)';
-          this.ch1BatteryLabel.className = 'text-xs font-mono text-red-300 font-bold';
-          this.ch1ExpansionText.innerText = 'Critical Bulge';
-          this.ch1ExpansionText.className = 'text-red-400 font-bold';
+        if (this.currentChapterIndex === 0 && this.ch1BatteryBox) {
+          this.ch1BatteryBox.classList.add('swelling-battery-active');
+          if (this.ch1CellStatus) {
+            this.ch1CellStatus.innerText = "CRITICAL BULGE (50+ PSI)";
+            this.ch1CellStatus.className = "text-red-400 font-bold px-2 py-0.5 rounded bg-red-950/80 border border-red-800";
+          }
+          if (this.ch1BatteryTitle) {
+            this.ch1BatteryTitle.innerHTML = `<i data-lucide="alert-triangle" class="w-4 h-4 text-red-400"></i> Swollen "Spicy Pillow"`;
+            this.ch1BatteryTitle.className = "text-xs font-bold text-red-300 flex items-center gap-1.5";
+          }
+          if (this.ch1BatterySub) {
+            this.ch1BatterySub.innerText = "Internal Decomposition Gas";
+            this.ch1BatterySub.className = "text-[11px] font-mono text-red-400/90 mt-0.5";
+          }
+          this.initLucide();
         }
-      }, 3500);
+      }, 6000);
     }
 
-    // Chapter 2: The 20-Second Active Countdown starts at 6s mark into narration
+    // Chapter 2: The 20-Second Active Audit starts at ~4.5s mark
     if (index === 1) {
       this.resetCountdownUI();
       setTimeout(() => {
         if (this.currentChapterIndex === 1 && this.isPlaying) {
           this.runCountdown20s();
         }
-      }, 5500);
-    }
-
-    // Chapter 3: Heat Gauge Animation triggers at 4s mark
-    if (index === 2) {
-      setTimeout(() => {
-        if (this.currentChapterIndex === 2) {
-          if (this.tempBarFill) this.tempBarFill.style.width = '88%';
-          if (this.tempGaugeVal) {
-            this.tempGaugeVal.innerText = '150°C+ THERMAL RUNAWAY';
-            this.tempGaugeVal.className = 'text-red-400 font-bold text-sm animate-pulse';
-          }
-          if (this.reactionStateTitle) {
-            this.reactionStateTitle.innerText = 'State: Exothermic Rupture';
-            this.reactionStateTitle.className = 'text-xs font-bold text-red-400 uppercase tracking-wider mb-1';
-          }
-          if (this.reactionStateDesc) {
-            this.reactionStateDesc.innerText = 'Suffocated airflow on soft surfaces triggered rapid separator meltdown.';
-          }
-          this.sound.playWarning();
-        }
       }, 4500);
     }
 
-    // Chapter 5: Success chime
+    // Chapter 3: Heat Gauge Climbs at ~6s mark
+    if (index === 2) {
+      setTimeout(() => {
+        if (this.currentChapterIndex === 2) {
+          if (this.tempBarFill) this.tempBarFill.style.width = '92%';
+          if (this.tempGaugeVal) {
+            this.tempGaugeVal.innerText = '1,000°F+ THERMAL RUNAWAY';
+            this.tempGaugeVal.className = 'text-red-400 font-extrabold animate-pulse';
+          }
+          this.sound.playWarning();
+        }
+      }, 5500);
+    }
+
+    // Chapter 5: Completion
     if (index === 4) {
       this.sound.playSuccess();
     }
@@ -351,7 +370,7 @@ class PresentationApp {
   resetCountdownUI() {
     if (this.countdownNumber) {
       this.countdownNumber.innerText = '20';
-      this.countdownNumber.className = 'absolute text-xl font-bold font-mono text-amber-400';
+      this.countdownNumber.className = 'absolute text-2xl font-black font-mono text-amber-400';
     }
     if (this.countdownCircle) {
       this.countdownCircle.style.strokeDashoffset = '0';
@@ -360,18 +379,19 @@ class PresentationApp {
     }
     if (this.testStepIndicator) {
       this.testStepIndicator.innerText = 'Get Ready...';
-      this.testStepIndicator.className = 'text-xs font-bold text-amber-300';
+      this.testStepIndicator.className = 'text-base font-extrabold text-amber-300';
     }
-    this.updateActiveSubtest(1);
+    this.setFocusCard(1);
   }
 
   runCountdown20s() {
     let timeLeft = 20;
     const totalCountdown = 20;
-    const circumference = 2 * Math.PI * 24;
+    const circumference = 2 * Math.PI * 28; // ~175.9
 
-    if (this.testStepIndicator) this.testStepIndicator.innerText = '1. The Wobble Test';
-    if (this.wobbleGraphic) this.wobbleGraphic.classList.add('animate-wobble');
+    if (this.testStepIndicator) this.testStepIndicator.innerText = '1. Push Corners (Wobble)';
+    if (this.wobbleGraphic) this.wobbleGraphic.classList.add('animate-wobble-active');
+    this.setFocusCard(1);
 
     this.countdownInterval = setInterval(() => {
       if (!this.isPlaying) return;
@@ -386,28 +406,28 @@ class PresentationApp {
         this.countdownCircle.style.strokeDashoffset = offset;
       }
 
-      // Step 2: Trackpad Click (around 13s remaining)
+      // Spotlight Switch 1 -> 2: Trackpad Click (around 13s)
       if (timeLeft <= 13 && timeLeft > 6) {
-        this.updateActiveSubtest(2);
-        if (this.testStepIndicator) this.testStepIndicator.innerText = '2. Trackpad Click';
-        if (this.wobbleGraphic) this.wobbleGraphic.classList.remove('animate-wobble');
+        this.setFocusCard(2);
+        if (this.testStepIndicator) this.testStepIndicator.innerText = '2. Click Your Trackpad';
+        if (this.wobbleGraphic) this.wobbleGraphic.classList.remove('animate-wobble-active');
       } 
-      // Step 3: Seam / Port Gap (around 6s remaining)
+      // Spotlight Switch 2 -> 3: Seam & Ports (around 6s)
       else if (timeLeft <= 6 && timeLeft > 0) {
-        this.updateActiveSubtest(3);
-        if (this.testStepIndicator) this.testStepIndicator.innerText = '3. Casing Seams';
+        this.setFocusCard(3);
+        if (this.testStepIndicator) this.testStepIndicator.innerText = '3. Inspect Side Seams';
       } 
-      // Completed
+      // Test Completed
       else if (timeLeft <= 0) {
         clearInterval(this.countdownInterval);
         this.countdownInterval = null;
         if (this.testStepIndicator) {
           this.testStepIndicator.innerText = 'Audit Complete!';
-          this.testStepIndicator.className = 'text-xs font-bold text-emerald-400';
+          this.testStepIndicator.className = 'text-base font-extrabold text-emerald-400';
         }
         if (this.countdownNumber) {
           this.countdownNumber.innerText = '✓';
-          this.countdownNumber.className = 'absolute text-xl font-bold font-mono text-emerald-400';
+          this.countdownNumber.className = 'absolute text-2xl font-black font-mono text-emerald-400';
         }
         if (this.countdownCircle) {
           this.countdownCircle.classList.remove('text-amber-400');
@@ -418,13 +438,13 @@ class PresentationApp {
     }, 1000);
   }
 
-  updateActiveSubtest(num) {
+  setFocusCard(activeNum) {
     [this.cardCheck1, this.cardCheck2, this.cardCheck3].forEach((card, idx) => {
       if (!card) return;
-      if (idx + 1 === num) {
-        card.classList.add('active-subtest');
+      if (idx + 1 === activeNum) {
+        card.classList.add('active-focus');
       } else {
-        card.classList.remove('active-subtest');
+        card.classList.remove('active-focus');
       }
     });
   }
@@ -460,7 +480,7 @@ class PresentationApp {
     }
 
     if (this.isMuted) {
-      this.audioLabel.innerText = 'Captions Only';
+      this.audioLabel.innerText = 'Muted';
       this.audioIcon.setAttribute('data-lucide', 'volume-x');
       this.audioIcon.className = 'w-4 h-4 text-slate-400';
     } else {
@@ -513,7 +533,6 @@ class PresentationApp {
   }
 }
 
-// Initialize on DOM ready
 document.addEventListener('DOMContentLoaded', () => {
   window.presentationApp = new PresentationApp();
 });

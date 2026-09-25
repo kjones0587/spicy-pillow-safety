@@ -1,20 +1,124 @@
-/* Custom Styles & Keyframe Animations for Spicy Pillow Safety Presentation */
+/* Modern Cinematic Styling for Spicy Pillow Safety Briefing v3.0 */
 
-/* Segmented progress bar */
+@layer utilities {
+  .glow-amber {
+    box-shadow: 0 0 35px rgba(245, 158, 11, 0.25);
+  }
+  .glow-red {
+    box-shadow: 0 0 40px rgba(239, 68, 68, 0.35);
+  }
+  .glow-emerald {
+    box-shadow: 0 0 35px rgba(16, 185, 129, 0.25);
+  }
+}
+
+/* Slide presentation transitions */
+.presentation-slide {
+  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.presentation-slide.hidden {
+  display: none !important;
+  opacity: 0;
+  transform: scale(0.97) translateY(12px);
+}
+
+.presentation-slide.active {
+  display: flex !important;
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+/* Sequential focus cards inside slides */
+.focus-step-card {
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  opacity: 0.25;
+  transform: scale(0.96);
+  filter: grayscale(80%);
+}
+
+.focus-step-card.active-focus {
+  opacity: 1;
+  transform: scale(1.02);
+  filter: grayscale(0%);
+  border-color: #f59e0b !important;
+  box-shadow: 0 0 30px rgba(245, 158, 11, 0.2);
+  background-color: rgba(30, 41, 59, 0.95) !important;
+}
+
+/* Animated laptop wobble */
+@keyframes rockingLaptop {
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(-4deg) translateY(-3px); }
+  50% { transform: rotate(0deg); }
+  75% { transform: rotate(4deg) translateY(-3px); }
+  100% { transform: rotate(0deg); }
+}
+
+.animate-wobble-active {
+  animation: rockingLaptop 0.65s ease-in-out infinite;
+  transform-origin: 50% 90%;
+  border-color: #f59e0b !important;
+}
+
+/* Battery swelling animation */
+@keyframes swellToSpicy {
+  0% {
+    transform: scale(1);
+    background-color: rgba(16, 185, 129, 0.15);
+    border-color: rgba(16, 185, 129, 0.4);
+  }
+  60% {
+    transform: scale(1.22);
+    background-color: rgba(245, 158, 11, 0.25);
+    border-color: rgba(245, 158, 11, 0.6);
+  }
+  100% {
+    transform: scale(1.35);
+    background-color: rgba(239, 68, 68, 0.3);
+    border-color: rgba(239, 68, 68, 0.9);
+    box-shadow: 0 0 45px rgba(239, 68, 68, 0.45);
+  }
+}
+
+.swelling-battery-active {
+  animation: swellToSpicy 2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Trackpad tactile click */
+@keyframes trackpadPulse {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(3px); }
+}
+
+.animate-trackpad-click {
+  animation: trackpadPulse 0.8s ease-in-out infinite;
+}
+
+/* Fire alert pulse */
+@keyframes fireAlert {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 1; filter: drop-shadow(0 0 15px #ef4444); }
+}
+
+.fire-glow-pulse {
+  animation: fireAlert 1.2s infinite ease-in-out;
+}
+
+/* Progress Segment Bar */
 .chapter-seg-bar {
-  background-color: rgba(30, 41, 59, 0.8);
+  background-color: rgba(30, 41, 59, 0.7);
   height: 6px;
   border-radius: 9999px;
   overflow: hidden;
-  position: relative;
 }
 
 .chapter-seg-fill {
-  background: linear-gradient(90deg, #f59e0b, #ea580c);
+  background: linear-gradient(90deg, #f59e0b, #ef4444);
   height: 100%;
   width: 0%;
   border-radius: 9999px;
-  transition: width 0.3s ease-out;
+  transition: width 0.2s linear;
 }
 
 .chapter-seg-bar.completed .chapter-seg-fill {
@@ -23,89 +127,5 @@
 }
 
 .chapter-seg-bar.active .chapter-seg-fill {
-  background: linear-gradient(90deg, #f59e0b, #f97316);
-  box-shadow: 0 0 10px rgba(245, 158, 11, 0.5);
-}
-
-/* Slide visibility and transition animations */
-.presentation-slide {
-  transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
-}
-
-.presentation-slide.hidden {
-  display: none;
-  opacity: 0;
-  transform: translateY(10px);
-}
-
-.presentation-slide.active {
-  display: block;
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Laptop Wobble Keyframe */
-@keyframes laptopWobble {
-  0% { transform: rotate(0deg); }
-  25% { transform: rotate(-3.5deg) translateY(-2px); }
-  50% { transform: rotate(0deg); }
-  75% { transform: rotate(3.5deg) translateY(-2px); }
-  100% { transform: rotate(0deg); }
-}
-
-.animate-wobble {
-  animation: laptopWobble 0.7s ease-in-out infinite;
-  transform-origin: bottom center;
-  border-color: #f59e0b !important;
-}
-
-/* Swelling Battery Keyframe */
-@keyframes batterySwell {
-  0% {
-    transform: scaleY(1);
-    box-shadow: 0 0 0 rgba(239, 68, 68, 0);
-  }
-  50% {
-    transform: scaleY(1.4);
-    box-shadow: 0 0 25px rgba(239, 68, 68, 0.4);
-  }
-  100% {
-    transform: scaleY(1.4);
-    box-shadow: 0 0 25px rgba(239, 68, 68, 0.4);
-  }
-}
-
-.swollen-battery-state {
-  animation: batterySwell 1.5s forwards ease-out;
-  background-color: rgba(127, 29, 29, 0.6) !important;
-  border-color: rgba(239, 68, 68, 0.9) !important;
-}
-
-/* Pulsing red alert glow */
-@keyframes dangerPulse {
-  0%, 100% { box-shadow: 0 0 15px rgba(239, 68, 68, 0.2); }
-  50% { box-shadow: 0 0 30px rgba(239, 68, 68, 0.6); }
-}
-
-.danger-glow {
-  animation: dangerPulse 1.2s infinite;
-}
-
-/* Tactile Trackpad Click Animation */
-@keyframes trackpadStuck {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(1px); }
-}
-
-.animate-stuck-click {
-  animation: trackpadStuck 1s ease-in-out infinite;
-  border-color: #ef4444 !important;
-}
-
-/* Check card active highlight */
-.check-card.active-subtest {
-  border-color: #f59e0b !important;
-  background-color: rgba(30, 41, 59, 0.9) !important;
-  box-shadow: 0 0 20px rgba(245, 158, 11, 0.15);
-  transform: translateY(-2px);
+  box-shadow: 0 0 12px rgba(245, 158, 11, 0.6);
 }
