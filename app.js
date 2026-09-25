@@ -93,7 +93,7 @@ const chapters = [
     id: 1,
     name: "The Hook",
     audioSrc: "audio/chapter1.mp3",
-    caption: "Take a second and look down at your hands. Docked for days on continuous float charge, internal decomposition turns flat cells into a pressurized 'Spicy Pillow'."
+    caption: "Take a second and look down at your hands. We work 10-hour shifts, but our laptops stay docked 24/7—keeping batteries constantly float-charging under relentless heat and electrical stress."
   },
   {
     id: 2,

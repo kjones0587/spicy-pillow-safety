@@ -11,8 +11,9 @@ scripts = {
     "chapter1.mp3": (
         "Take a second and look down at your hands right now. "
         "Ever wonder what's sitting directly underneath that keyboard? "
-        "Working 24-hour shifts, our laptops stay docked, plugged into chargers, and running hot for days at a time. "
-        "Over time, that relentless heat and electrical stress can degrade the battery... "
+        "We usually work 10-hour shifts, but our laptops stay plugged into the dock 24/7—"
+        "keeping the battery constantly charging under relentless heat and electrical float stress. "
+        "Over time, that continuous charging can degrade the battery... "
         "turning it into what hardware engineers call, a Spicy Pillow. "
         "That's a lithium-ion pouch cell that has decomposed internally, "
         "trapping volatile, pressurized gases inside a thin foil casing."
