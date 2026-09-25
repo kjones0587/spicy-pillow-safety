@@ -9,8 +9,9 @@ PITCH = "+0Hz"
 
 scripts = {
     "chapter1.mp3": (
-        "Take a second and look down at your hands right now. "
-        "Ever wonder what's sitting directly underneath that keyboard? "
+        "Take a second and look over at your work laptop sitting on your desk. "
+        "Whether it's hooked up to your dock, closed, or running as a secondary screen, "
+        "ever wonder what's going on inside it? "
         "We usually work 10-hour shifts, but our laptops stay plugged into the dock 24/7—"
         "keeping the battery constantly charging under relentless heat and electrical float stress. "
         "Over time, that continuous charging can degrade the battery... "
@@ -20,7 +21,7 @@ scripts = {
     ),
     "chapter2.mp3": (
         "Let's do a live 20-second hardware audit together right now. "
-        "Grab your laptop, place it flat on your desk, and follow the screen. "
+        "Undock or slide your laptop onto a clear flat desk area, and follow the screen. "
         "First: push down on opposite corners. Does it rock or wobble like an uneven table? "
         "If it does, a swollen cell is bulging against the bottom plate. "
         "Second: click down on your trackpad. Does it click cleanly, or does it feel stiff, shallow, or mushy? "
