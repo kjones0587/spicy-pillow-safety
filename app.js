@@ -1,5 +1,5 @@
 /**
- * Spicy Pillow Safety Briefing v4.0 (Broadcast Edition)
+ * Spicy Pillow Safety Briefing v4.1 (Emergency Protocol Edition)
  * Optimized for Microsoft Teams Screen Sharing
  * Narrator: en-US-AndrewMultilingualNeural
  */
@@ -59,14 +59,14 @@ class SoundFX {
     const osc = this.ctx.createOscillator();
     const gain = this.ctx.createGain();
     osc.type = 'sawtooth';
-    osc.frequency.setValueAtTime(320, now);
-    osc.frequency.setValueAtTime(440, now + 0.1);
-    gain.gain.setValueAtTime(0.05, now);
-    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+    osc.frequency.setValueAtTime(280, now);
+    osc.frequency.setValueAtTime(420, now + 0.12);
+    gain.gain.setValueAtTime(0.07, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.45);
     osc.connect(gain);
     gain.connect(this.ctx.destination);
     osc.start(now);
-    osc.stop(now + 0.35);
+    osc.stop(now + 0.45);
   }
 
   playSuccess() {
@@ -109,15 +109,15 @@ const chapters = [
   },
   {
     id: 4,
-    name: "Safety Rules",
+    name: "Emergency Action",
     audioSrc: "audio/chapter4.mp3",
-    caption: "Help Desk SOP: 1. Never squeeze or puncture. 2. Unplug immediately and quarantine on tile or metal tray. 3. Submit an IT hardware swap ticket."
+    caption: "EMERGENCY DRILL: 1. EVACUATE TOXIC FUMES (White smoke has toxic HF gas). 2. NEVER touch or throw cups of water. 3. Close room door to contain fire and call 911 immediately!"
   },
   {
     id: 5,
     name: "Summary",
     audioSrc: "audio/chapter5.mp3",
-    caption: "Audit Complete! You now know the warning signs and safe handling protocol. Keep your cooling vents clear and have a great shift!"
+    caption: "Swelling SOP: If only swollen (not smoking), unplug, quarantine on tile/metal tray, and open IT swap ticket. Hardware safety briefing complete!"
   }
 ];
 
@@ -308,7 +308,7 @@ class BroadcastPresentation {
   handleSlideAnimations(index) {
     if (this.wobbleChassisBox) this.wobbleChassisBox.classList.remove('animate-rocking-chassis');
 
-    // Chapter 1: Battery swelling at 11s mark
+    // Chapter 1: Battery swelling at 9.5s mark
     if (index === 0) {
       setTimeout(() => {
         if (this.currentChapterIndex === 0 && this.ch1BatteryVisual) {
@@ -341,7 +341,6 @@ class BroadcastPresentation {
     // Chapter 2: Hardware Audit Viewfinder Timeline
     if (index === 1) {
       this.resetCountdownUI();
-      // Starts active test around 4.5s into audio
       setTimeout(() => {
         if (this.currentChapterIndex === 1 && this.isPlaying) {
           this.runCountdown20s();
@@ -349,7 +348,7 @@ class BroadcastPresentation {
       }, 4200);
     }
 
-    // Chapter 3: Heat Gauge Spikes at 8s mark
+    // Chapter 3: Heat Gauge Spikes at 7.5s mark
     if (index === 2) {
       setTimeout(() => {
         if (this.currentChapterIndex === 2) {
@@ -361,6 +360,11 @@ class BroadcastPresentation {
           this.sound.playWarning();
         }
       }, 7500);
+    }
+
+    // Chapter 4: Emergency Alarm Tone on active thermal runaway slide
+    if (index === 3) {
+      this.sound.playWarning();
     }
 
     // Chapter 5: Completion
@@ -389,7 +393,7 @@ class BroadcastPresentation {
   runCountdown20s() {
     let timeLeft = 20;
     const totalCountdown = 20;
-    const circumference = 2 * Math.PI * 28; // ~175.9
+    const circumference = 2 * Math.PI * 28;
 
     if (this.testStepIndicator) this.testStepIndicator.innerText = '1. The Wobble Test';
     if (this.wobbleChassisBox) this.wobbleChassisBox.classList.add('animate-rocking-chassis');
@@ -408,19 +412,14 @@ class BroadcastPresentation {
         this.countdownCircle.style.strokeDashoffset = offset;
       }
 
-      // Viewfinder Switch 1 -> 2: Trackpad Switch (around 13s)
       if (timeLeft <= 13 && timeLeft > 6) {
         this.setViewfinder(2);
         if (this.testStepIndicator) this.testStepIndicator.innerText = '2. Trackpad Mechanical Click';
         if (this.wobbleChassisBox) this.wobbleChassisBox.classList.remove('animate-rocking-chassis');
-      } 
-      // Viewfinder Switch 2 -> 3: Seam / Port Gap (around 6s)
-      else if (timeLeft <= 6 && timeLeft > 0) {
+      } else if (timeLeft <= 6 && timeLeft > 0) {
         this.setViewfinder(3);
         if (this.testStepIndicator) this.testStepIndicator.innerText = '3. Chassis Seams & USB Ports';
-      } 
-      // Test Finished
-      else if (timeLeft <= 0) {
+      } else if (timeLeft <= 0) {
         clearInterval(this.countdownInterval);
         this.countdownInterval = null;
         if (this.testStepIndicator) {
