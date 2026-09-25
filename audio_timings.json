@@ -2,94 +2,94 @@
   "chapter1.mp3": [
     [
       0.0,
-      5.375,
+      6.594,
       "Hey everyone, today's quick safety briefing is about something we see all too often on the help desk: the Spicy Pillow."
     ],
     [
-      5.457,
-      8.29,
+      7.546,
+      10.716,
       "Take a second and look over at your work laptop sitting on your desk."
     ],
     [
-      8.325,
-      13.503,
-      "Whether it's hooked up to your dock, closed, or running as a secondary screen, ever wonder what's going on inside it?"
+      11.563,
+      16.834,
+      "Whether it's hooked up to your dock, closed, or running as a secondary screen,  ever wonder what's going on inside it?"
     ],
     [
-      13.526,
-      21.421,
-      "We usually work 10-hour shifts, but our laptops stay plugged into the dock 24/7\u2014keeping the battery constantly charging under relentless heat and electrical float stress."
+      18.913,
+      28.05,
+      "We usually work 10-hour shifts, but our laptops stay plugged into the dock 24/7\u2014 keeping the battery constantly charging under relentless heat and electrical float stress."
     ],
     [
-      21.746,
-      24.672,
+      28.99,
+      32.345,
       "Over time, that continuous charging can degrade the battery..."
     ],
     [
-      24.846,
-      27.725,
+      32.961,
+      36.026,
       "turning it into what hardware engineers call, a Spicy Pillow."
     ],
     [
-      27.806,
-      34.598,
+      36.978,
+      44.536,
       "That's a lithium-ion pouch cell that has decomposed internally, trapping volatile, pressurized gases inside a thin foil casing."
     ]
   ],
   "chapter2.mp3": [
     [
       0.0,
-      2.937,
+      3.158,
       "Let's do a live 20-second hardware audit together right now."
     ],
     [
-      3.053,
-      7.419,
+      4.017,
+      8.173,
       "Undock or slide your laptop onto a clear flat desk area, and follow the screen."
     ],
     [
-      7.697,
-      9.578,
+      9.613,
+      11.912,
       "First: push down on opposite corners."
     ],
     [
-      9.705,
-      11.946,
+      13.154,
+      15.279,
       "Does it rock or wobble like an uneven table?"
     ],
     [
-      12.097,
-      15.243,
+      16.359,
+      19.493,
       "If it does, a swollen cell is bulging against the bottom plate."
     ],
     [
-      15.94,
-      17.809,
+      21.362,
+      23.545,
       "Second: click down on your trackpad."
     ],
     [
-      17.89,
-      21.118,
+      24.822,
+      28.015,
       "Does it click cleanly, or does it feel stiff, shallow, or mushy?"
     ],
     [
-      21.443,
-      24.717,
+      29.118,
+      32.032,
       "Swelling batteries push directly against that mechanical switch."
     ],
     [
-      24.926,
-      27.608,
+      33.889,
+      36.513,
       "And third: glance along your side USB ports."
     ],
     [
-      27.666,
-      29.141,
+      37.756,
+      39.16,
       "Are any seams popping apart?"
     ],
     [
-      29.292,
-      30.603,
+      40.646,
+      42.028,
       "Wrap up your check now."
     ]
   ],
@@ -100,92 +100,92 @@
       "Why is a spicy pillow such a serious safety hazard?"
     ],
     [
-      2.798,
-      6.084,
+      3.622,
+      6.827,
       "Inside that pressurized pouch is a volatile mix of organic solvents."
     ],
     [
-      6.107,
-      17.369,
-      "If that cell overheats or gets punctured, it triggers thermal runaway: a self-oxidizing chemical fire that burns hotter than 1,000 degrees, releases toxic hydrogen fluoride gas, and cannot easily be put out with water."
+      7.674,
+      17.45,
+      "If that cell overheats or gets punctured, it triggers thermal runaway:  a self-oxidizing chemical fire that burns hotter than 1,000 degrees, releases toxic hydrogen fluoride gas, and cannot easily be put out with water."
     ],
     [
-      17.427,
-      19.273,
+      19.621,
+      21.641,
       "And the number one culprit for remote workers?"
     ],
     [
-      19.447,
-      22.558,
+      22.523,
+      25.333,
       "Working while resting your laptop on a bed, couch, or blanket..."
     ],
     [
-      22.709,
-      25.17,
+      26.006,
+      28.282,
       "which completely suffocates the cooling vents."
     ]
   ],
   "chapter4.mp3": [
     [
       0.0,
-      4.18,
+      4.122,
       "Now, what should you do if your laptop unfortunately enters active thermal runaway?"
     ],
     [
-      4.214,
-      11.319,
-      "If you hear hissing, smell sweet chemicals, or see white smoke starting to pop: First: immediately isolate it from flammable materials."
+      5.074,
+      11.645,
+      "If you hear hissing, smell sweet chemicals, or see white smoke starting to pop:  First: immediately isolate it from flammable materials."
     ],
     [
-      11.389,
-      20.457,
+      13.735,
+      22.129,
       "If it's sitting next to curtains, bedding, or loose paper, move or slide it onto a hard, non-combustible surface like a granite countertop, tile floor, or metal baking sheet."
     ],
     [
-      20.631,
-      24.845,
+      22.999,
+      27.075,
       "Use oven mitts or a tool if it's hot\u2014never grab a burning battery with bare hands."
     ],
     [
-      25.124,
-      26.993,
+      28.921,
+      30.709,
       "Second: do not breathe the white smoke."
     ],
     [
-      27.167,
-      29.431,
+      31.544,
+      33.774,
       "It contains toxic hydrogen fluoride gas."
     ],
     [
-      29.501,
-      33.123,
+      34.609,
+      38.29,
       "And never throw a small cup of water on it, which can cause violent steam flare-ups."
     ],
     [
-      33.274,
-      39.195,
+      40.159,
+      46.069,
       "Third: close the room door behind you to contain the fumes and fire, evacuate, and call 911 immediately."
     ]
   ],
   "chapter5.mp3": [
     [
       0.0,
-      11.331,
-      "If your battery is only swollen but not smoking, the routine protocol is simple: disconnect the charger, power down, quarantine the machine on a tile or metal surface, and open an emergency IT replacement ticket."
+      11.657,
+      "If your battery is only swollen but not smoking, the routine protocol is simple:  disconnect the charger, power down, quarantine the machine on a tile or metal surface, and open an emergency IT replacement ticket."
     ],
     [
-      11.447,
-      12.713,
+      14.408,
+      15.546,
       "Hardware check complete!"
     ],
     [
-      12.887,
-      15.696,
+      16.487,
+      19.586,
       "You know what to look for and how to isolate a fire hazard safely."
     ],
     [
-      15.813,
-      18.761,
+      20.527,
+      23.871,
       "Keep your cooling vents clear, and have a safe, great shift!"
     ]
   ]
