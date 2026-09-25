@@ -1,5 +1,5 @@
 /**
- * Spicy Pillow Safety Briefing v4.1 (Emergency Protocol Edition)
+ * Spicy Pillow Safety Briefing v4.4 (Interactive Visual Edition)
  * Optimized for Microsoft Teams Screen Sharing
  * Narrator: en-US-AndrewMultilingualNeural
  */
@@ -141,6 +141,7 @@ class BroadcastPresentation {
       document.getElementById('slide-5')
     ];
     this.segTracks = document.querySelectorAll('.seg-track');
+    this.segTrackBtns = document.querySelectorAll('.seg-track-btn');
     this.liveCaptionText = document.getElementById('live-caption-text');
     this.liveIndicator = document.getElementById('live-indicator');
     this.timerDisplay = document.getElementById('timer-display');
@@ -155,6 +156,9 @@ class BroadcastPresentation {
     this.ch1BatteryTitle = document.getElementById('ch1-battery-title');
     this.ch1BatterySub = document.getElementById('ch1-battery-sub');
     this.ch1HudMsg = document.getElementById('ch1-hud-msg');
+    this.ch1GasAura = document.getElementById('ch1-gas-aura');
+    this.gaugeArc = document.getElementById('gauge-arc');
+    this.gaugePsiVal = document.getElementById('gauge-psi-val');
 
     // Slide 2 Viewfinder Elements
     this.countdownNumber = document.getElementById('countdown-number');
@@ -194,13 +198,34 @@ class BroadcastPresentation {
       replayBtn.addEventListener('click', () => this.restart());
     }
 
-    // Keyboard Shortcuts for Presenter (Space = Pause/Play, F = Fullscreen)
+    // CLICKABLE TIMELINE JUMPS: Click any progress segment to jump directly!
+    this.segTrackBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const chapterIdx = parseInt(btn.getAttribute('data-chapter'), 10);
+        if (!isNaN(chapterIdx)) {
+          if (!this.isPlaying) {
+            this.startScreen.classList.add('hidden');
+            this.startScreen.classList.remove('active');
+            this.liveIndicator.classList.remove('hidden');
+            this.liveIndicator.classList.add('inline-flex');
+            this.isPlaying = true;
+            this.startGlobalTimer();
+          }
+          this.loadChapter(chapterIdx);
+        }
+      });
+    });
+
+    // Keyboard Shortcuts: Space = Pause, F = Fullscreen, 1-5 = Direct Chapter Jumps
     window.addEventListener('keydown', (e) => {
       if (e.code === 'Space') {
         e.preventDefault();
         this.togglePlayPause();
       } else if (e.code === 'KeyF') {
         this.toggleFullscreen();
+      } else if (e.key >= '1' && e.key <= '5') {
+        const chapterIdx = parseInt(e.key, 10) - 1;
+        this.loadChapter(chapterIdx);
       }
     });
   }
@@ -306,36 +331,47 @@ class BroadcastPresentation {
   }
 
   handleSlideAnimations(index) {
-    if (this.wobbleChassisBox) this.wobbleChassisBox.classList.remove('animate-rocking-chassis');
+    if (this.wobbleChassisBox) this.wobbleChassisBox.classList.remove('animate-chassis-rocking');
 
-    // Chapter 1: Battery swelling at 9.5s mark
+    // Chapter 1: Battery swelling & pressure gauge at 9.5s mark
     if (index === 0) {
       setTimeout(() => {
         if (this.currentChapterIndex === 0 && this.ch1BatteryVisual) {
-          this.ch1BatteryVisual.classList.add('animate-battery-inflate');
+          this.ch1BatteryVisual.classList.add('animate-battery-inflate-active');
           this.ch1BatteryVisual.classList.remove('border-emerald-500/50');
           this.ch1BatteryVisual.classList.add('border-red-500/90');
 
+          if (this.ch1GasAura) this.ch1GasAura.classList.remove('hidden');
+
           if (this.ch1TelemetryBadge) {
-            this.ch1TelemetryBadge.innerText = "OVERPRESSURE: 54 PSI (CRITICAL)";
+            this.ch1TelemetryBadge.innerText = "OVERPRESSURE: 58 PSI (CRITICAL)";
             this.ch1TelemetryBadge.className = "text-red-400 font-bold px-2.5 py-0.5 rounded bg-red-950/80 border border-red-800 animate-pulse";
           }
           if (this.ch1BatteryTitle) {
             this.ch1BatteryTitle.innerHTML = `<i data-lucide="alert-octagon" class="w-4 h-4 text-red-400"></i> Swollen "Spicy Pillow"`;
-            this.ch1BatteryTitle.className = "text-sm font-black text-red-300 flex items-center gap-2 relative z-10";
+            this.ch1BatteryTitle.className = "text-xs font-black text-red-300 flex items-center gap-1.5";
           }
           if (this.ch1BatterySub) {
-            this.ch1BatterySub.innerText = "Internal Decomposition Gas Trapped";
-            this.ch1BatterySub.className = "text-xs font-mono text-red-400/90 mt-1 relative z-10";
+            this.ch1BatterySub.innerText = "Decomposition Gas Trapped (58 PSI)";
+            this.ch1BatterySub.className = "text-[10px] font-mono text-red-400/90 mt-0.5";
+          }
+          if (this.gaugePsiVal) {
+            this.gaugePsiVal.innerText = "58.4";
+            this.gaugePsiVal.className = "text-2xl font-black font-mono text-red-400 animate-pulse";
+          }
+          if (this.gaugeArc) {
+            this.gaugeArc.style.strokeDashoffset = "30";
+            this.gaugeArc.classList.remove('text-emerald-400');
+            this.gaugeArc.classList.add('text-red-400');
           }
           if (this.ch1HudMsg) {
-            this.ch1HudMsg.innerText = "⚠️ High mechanical pressure pushing against trackpad & casing seams!";
-            this.ch1HudMsg.className = "text-sm font-bold text-red-300 mt-2 bg-red-950/80 border border-red-800 p-3 rounded-xl";
+            this.ch1HudMsg.innerText = "⚠️ High mechanical bulge pressing directly against trackpad and casing screws!";
+            this.ch1HudMsg.className = "text-xs font-bold text-red-300 bg-red-950/80 border border-red-800 p-2.5 rounded-xl w-full text-center";
           }
           this.sound.playWarning();
           this.initLucide();
         }
-      }, 9500);
+      }, 9000);
     }
 
     // Chapter 2: Hardware Audit Viewfinder Timeline
@@ -352,7 +388,7 @@ class BroadcastPresentation {
     if (index === 2) {
       setTimeout(() => {
         if (this.currentChapterIndex === 2) {
-          if (this.tempBarFill) this.tempBarFill.style.width = '94%';
+          if (this.tempBarFill) this.tempBarFill.style.width = '95%';
           if (this.tempGaugeVal) {
             this.tempGaugeVal.innerText = '1,000°F+ THERMAL RUNAWAY';
             this.tempGaugeVal.className = 'text-red-400 font-extrabold animate-pulse';
@@ -396,7 +432,7 @@ class BroadcastPresentation {
     const circumference = 2 * Math.PI * 28;
 
     if (this.testStepIndicator) this.testStepIndicator.innerText = '1. The Wobble Test';
-    if (this.wobbleChassisBox) this.wobbleChassisBox.classList.add('animate-rocking-chassis');
+    if (this.wobbleChassisBox) this.wobbleChassisBox.classList.add('animate-chassis-rocking');
     this.setViewfinder(1);
 
     this.countdownInterval = setInterval(() => {
@@ -415,7 +451,7 @@ class BroadcastPresentation {
       if (timeLeft <= 13 && timeLeft > 6) {
         this.setViewfinder(2);
         if (this.testStepIndicator) this.testStepIndicator.innerText = '2. Trackpad Mechanical Click';
-        if (this.wobbleChassisBox) this.wobbleChassisBox.classList.remove('animate-rocking-chassis');
+        if (this.wobbleChassisBox) this.wobbleChassisBox.classList.remove('animate-chassis-rocking');
       } else if (timeLeft <= 6 && timeLeft > 0) {
         this.setViewfinder(3);
         if (this.testStepIndicator) this.testStepIndicator.innerText = '3. Chassis Seams & USB Ports';
