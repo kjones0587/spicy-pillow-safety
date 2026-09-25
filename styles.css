@@ -1,119 +1,107 @@
-/* Modern Cinematic Styling for Spicy Pillow Safety Briefing v3.0 */
+/* v4.0 Broadcast & Motion Graphics Styles for Teams Screen Sharing */
 
-@layer utilities {
-  .glow-amber {
-    box-shadow: 0 0 35px rgba(245, 158, 11, 0.25);
-  }
-  .glow-red {
-    box-shadow: 0 0 40px rgba(239, 68, 68, 0.35);
-  }
-  .glow-emerald {
-    box-shadow: 0 0 35px rgba(16, 185, 129, 0.25);
-  }
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700&display=swap');
+
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background-color: #07080d;
 }
 
-/* Slide presentation transitions */
-.presentation-slide {
+/* Subtle tech grid background */
+.tech-grid-bg {
+  background-image: 
+    radial-gradient(circle at 50% 20%, rgba(245, 158, 11, 0.08) 0%, transparent 60%),
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 100% 100%, 48px 48px, 48px 48px;
+}
+
+/* 16:9 Presentation Stage */
+.stage-container {
+  aspect-ratio: 16 / 9;
+  max-height: 82vh;
+}
+
+/* Slide visibility and fluid motion */
+.broadcast-slide {
   transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.presentation-slide.hidden {
+.broadcast-slide.hidden {
   display: none !important;
   opacity: 0;
-  transform: scale(0.97) translateY(12px);
+  transform: scale(0.96) translateY(16px);
 }
 
-.presentation-slide.active {
+.broadcast-slide.active {
   display: flex !important;
   opacity: 1;
   transform: scale(1) translateY(0);
 }
 
-/* Sequential focus cards inside slides */
-.focus-step-card {
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  opacity: 0.25;
-  transform: scale(0.96);
-  filter: grayscale(80%);
+/* Battery Swelling Animation */
+@keyframes batteryPouchInflate {
+  0% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 0 rgba(239, 68, 68, 0));
+  }
+  50% {
+    transform: scale(1.15) scaleY(1.3);
+    filter: drop-shadow(0 0 25px rgba(245, 158, 11, 0.5));
+  }
+  100% {
+    transform: scale(1.22) scaleY(1.45);
+    filter: drop-shadow(0 0 45px rgba(239, 68, 68, 0.7));
+  }
 }
 
-.focus-step-card.active-focus {
-  opacity: 1;
-  transform: scale(1.02);
-  filter: grayscale(0%);
-  border-color: #f59e0b !important;
-  box-shadow: 0 0 30px rgba(245, 158, 11, 0.2);
-  background-color: rgba(30, 41, 59, 0.95) !important;
+.animate-battery-inflate {
+  animation: batteryPouchInflate 2.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-/* Animated laptop wobble */
-@keyframes rockingLaptop {
+/* Rocking Laptop Animation */
+@keyframes rockingChassis {
   0% { transform: rotate(0deg); }
-  25% { transform: rotate(-4deg) translateY(-3px); }
+  25% { transform: rotate(-4.5deg) translateY(-4px); }
   50% { transform: rotate(0deg); }
-  75% { transform: rotate(4deg) translateY(-3px); }
+  75% { transform: rotate(4.5deg) translateY(-4px); }
   100% { transform: rotate(0deg); }
 }
 
-.animate-wobble-active {
-  animation: rockingLaptop 0.65s ease-in-out infinite;
+.animate-rocking-chassis {
+  animation: rockingChassis 0.65s ease-in-out infinite;
   transform-origin: 50% 90%;
-  border-color: #f59e0b !important;
 }
 
-/* Battery swelling animation */
-@keyframes swellToSpicy {
-  0% {
-    transform: scale(1);
-    background-color: rgba(16, 185, 129, 0.15);
-    border-color: rgba(16, 185, 129, 0.4);
-  }
-  60% {
-    transform: scale(1.22);
-    background-color: rgba(245, 158, 11, 0.25);
-    border-color: rgba(245, 158, 11, 0.6);
-  }
-  100% {
-    transform: scale(1.35);
-    background-color: rgba(239, 68, 68, 0.3);
-    border-color: rgba(239, 68, 68, 0.9);
-    box-shadow: 0 0 45px rgba(239, 68, 68, 0.45);
-  }
-}
-
-.swelling-battery-active {
-  animation: swellToSpicy 2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-/* Trackpad tactile click */
-@keyframes trackpadPulse {
+/* Stiff Trackpad Switch Animation */
+@keyframes trackpadMechanical {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(3px); }
+  50% { transform: translateY(2px); }
 }
 
-.animate-trackpad-click {
-  animation: trackpadPulse 0.8s ease-in-out infinite;
+.animate-trackpad-switch {
+  animation: trackpadMechanical 0.75s ease-in-out infinite;
 }
 
-/* Fire alert pulse */
-@keyframes fireAlert {
-  0%, 100% { opacity: 0.8; }
-  50% { opacity: 1; filter: drop-shadow(0 0 15px #ef4444); }
+/* Heat particles / flame pulse */
+@keyframes fireStrobe {
+  0%, 100% { opacity: 0.85; filter: drop-shadow(0 0 20px rgba(239, 68, 68, 0.4)); }
+  50% { opacity: 1; filter: drop-shadow(0 0 45px rgba(239, 68, 68, 0.9)); }
 }
 
-.fire-glow-pulse {
-  animation: fireAlert 1.2s infinite ease-in-out;
+.animate-fire-strobe {
+  animation: fireStrobe 1.2s infinite ease-in-out;
 }
 
 /* Progress Segment Bar */
-.chapter-seg-bar {
-  background-color: rgba(30, 41, 59, 0.7);
-  height: 6px;
+.seg-track {
+  background-color: rgba(30, 41, 59, 0.8);
+  height: 5px;
   border-radius: 9999px;
   overflow: hidden;
 }
 
-.chapter-seg-fill {
+.seg-fill {
   background: linear-gradient(90deg, #f59e0b, #ef4444);
   height: 100%;
   width: 0%;
@@ -121,11 +109,28 @@
   transition: width 0.2s linear;
 }
 
-.chapter-seg-bar.completed .chapter-seg-fill {
+.seg-track.completed .seg-fill {
   width: 100%;
   background: #10b981;
 }
 
-.chapter-seg-bar.active .chapter-seg-fill {
-  box-shadow: 0 0 12px rgba(245, 158, 11, 0.6);
+.seg-track.active .seg-fill {
+  box-shadow: 0 0 14px rgba(245, 158, 11, 0.7);
+}
+
+/* Spotlight Views for Chapter 2 */
+.viewfinder-card {
+  transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.viewfinder-card.inactive {
+  display: none;
+  opacity: 0;
+  transform: scale(0.95);
+}
+
+.viewfinder-card.active {
+  display: flex;
+  opacity: 1;
+  transform: scale(1);
 }

@@ -1,9 +1,9 @@
 /**
- * Spicy Pillow Safety Briefing v3.0
- * Cinematic Automated Presentation Controller
+ * Spicy Pillow Safety Briefing v4.0 (Broadcast Edition)
+ * Optimized for Microsoft Teams Screen Sharing
+ * Narrator: en-US-AndrewMultilingualNeural
  */
 
-// Sound Effects via Web Audio API
 class SoundFX {
   constructor() {
     this.ctx = null;
@@ -87,52 +87,51 @@ class SoundFX {
   }
 }
 
-// Chapter Definitions with Pre-rendered Human Voiceover MP3s
+// Chapter Definitions with Andrew Multilingual Neural Voice MP3s
 const chapters = [
   {
     id: 1,
     name: "The Hook",
     audioSrc: "audio/chapter1.mp3",
-    caption: "Look down at your hands right now. Working long shifts, our laptops stay plugged in and hot for days, decomposing electrolytes into trapped volatile gas."
+    caption: "Take a second and look down at your hands. Docked for days on continuous float charge, internal decomposition turns flat cells into a pressurized 'Spicy Pillow'."
   },
   {
     id: 2,
     name: "Laptop Check",
     audioSrc: "audio/chapter2.mp3",
-    caption: "Live 20-second audit! 1: Push corners for wobble. 2: Click trackpad for stiff/shallow travel. 3: Inspect side seams near USB ports for gaps."
+    caption: "Live 20-second hardware audit! Check 1: Push corners for wobble. Check 2: Click trackpad for stiff/shallow travel. Check 3: Inspect side USB port seams for gaps."
   },
   {
     id: 3,
     name: "The Science",
     audioSrc: "audio/chapter3.mp3",
-    caption: "Why care? Punctures or heat trigger Thermal Runaway: burning above 1,000°F, creating its own oxygen. #1 Culprit: Working on beds and blankets."
+    caption: "Why care? Punctures or heat trigger Thermal Runaway: a self-oxidizing reaction burning over 1,000°F. #1 Remote Culprit: Working on beds and blankets."
   },
   {
     id: 4,
     name: "Safety Rules",
     audioSrc: "audio/chapter4.mp3",
-    caption: "Help Desk SOP: 1. Never squeeze or puncture. 2. Unplug immediately and quarantine on tile/metal tray. 3. Submit an IT hardware swap ticket."
+    caption: "Help Desk SOP: 1. Never squeeze or puncture. 2. Unplug immediately and quarantine on tile or metal tray. 3. Submit an IT hardware swap ticket."
   },
   {
     id: 5,
     name: "Summary",
     audioSrc: "audio/chapter5.mp3",
-    caption: "Audit Complete! You know what to look for and how to handle it safely. Keep your vents clear and have a fantastic shift!"
+    caption: "Audit Complete! You now know the warning signs and safe handling protocol. Keep your cooling vents clear and have a great shift!"
   }
 ];
 
-class PresentationApp {
+class BroadcastPresentation {
   constructor() {
     this.sound = new SoundFX();
     this.currentChapterIndex = 0;
     this.isPlaying = false;
-    this.isMuted = false;
     this.totalElapsedSeconds = 0;
     this.globalTimerInterval = null;
     this.countdownInterval = null;
     this.currentAudio = null;
 
-    // DOM Elements
+    // DOM References
     this.startScreen = document.getElementById('start-screen');
     this.slides = [
       document.getElementById('slide-1'),
@@ -141,34 +140,30 @@ class PresentationApp {
       document.getElementById('slide-4'),
       document.getElementById('slide-5')
     ];
-    this.segBars = document.querySelectorAll('.chapter-seg-bar');
+    this.segTracks = document.querySelectorAll('.seg-track');
     this.liveCaptionText = document.getElementById('live-caption-text');
     this.liveIndicator = document.getElementById('live-indicator');
     this.timerDisplay = document.getElementById('timer-display');
     this.playPauseBtn = document.getElementById('play-pause-btn');
     this.playPauseLabel = document.getElementById('play-pause-label');
     this.playPauseIcon = document.getElementById('play-pause-icon');
-    this.audioToggleBtn = document.getElementById('audio-toggle-btn');
-    this.audioLabel = document.getElementById('audio-label');
-    this.audioIcon = document.getElementById('audio-icon');
+    this.fullscreenBtn = document.getElementById('fullscreen-btn');
 
     // Slide 1 Elements
-    this.ch1BatteryBox = document.getElementById('ch1-battery-box');
-    this.ch1CellStatus = document.getElementById('ch1-cell-status');
+    this.ch1BatteryVisual = document.getElementById('ch1-battery-visual');
+    this.ch1TelemetryBadge = document.getElementById('ch1-telemetry-badge');
     this.ch1BatteryTitle = document.getElementById('ch1-battery-title');
     this.ch1BatterySub = document.getElementById('ch1-battery-sub');
+    this.ch1HudMsg = document.getElementById('ch1-hud-msg');
 
-    // Slide 2 Elements
+    // Slide 2 Viewfinder Elements
     this.countdownNumber = document.getElementById('countdown-number');
     this.countdownCircle = document.getElementById('countdown-circle');
     this.testStepIndicator = document.getElementById('test-step-indicator');
-    this.wobbleGraphic = document.getElementById('wobble-laptop-graphic');
-    this.cardCheck1 = document.getElementById('card-check-1');
-    this.cardCheck2 = document.getElementById('card-check-2');
-    this.cardCheck3 = document.getElementById('card-check-3');
-    this.btnResultPass = document.getElementById('btn-result-pass');
-    this.btnResultFail = document.getElementById('btn-result-fail');
-    this.interactiveVerdictMsg = document.getElementById('interactive-verdict-msg');
+    this.wobbleChassisBox = document.getElementById('wobble-chassis-box');
+    this.viewfinder1 = document.getElementById('viewfinder-1');
+    this.viewfinder2 = document.getElementById('viewfinder-2');
+    this.viewfinder3 = document.getElementById('viewfinder-3');
 
     // Slide 3 Elements
     this.tempBarFill = document.getElementById('temp-bar-fill');
@@ -185,40 +180,40 @@ class PresentationApp {
   }
 
   bindEvents() {
-    document.getElementById('start-btn').addEventListener('click', () => this.startBriefing());
+    document.getElementById('start-btn').addEventListener('click', () => this.startBroadcast());
     this.playPauseBtn.addEventListener('click', () => this.togglePlayPause());
-    this.audioToggleBtn.addEventListener('click', () => this.toggleAudio());
     document.getElementById('prev-slide-btn').addEventListener('click', () => this.prevChapter());
     document.getElementById('next-slide-btn').addEventListener('click', () => this.nextChapter());
     
+    if (this.fullscreenBtn) {
+      this.fullscreenBtn.addEventListener('click', () => this.toggleFullscreen());
+    }
+
     const replayBtn = document.getElementById('replay-btn');
     if (replayBtn) {
       replayBtn.addEventListener('click', () => this.restart());
     }
 
-    // Interactive Pass/Fail buttons for attendees
-    if (this.btnResultPass) {
-      this.btnResultPass.addEventListener('click', () => {
-        this.showInteractiveVerdict("✅ Laptop Passed! Battery is flat and healthy.", "bg-emerald-950 text-emerald-300 border border-emerald-700");
-        this.sound.playSuccess();
-      });
-    }
-    if (this.btnResultFail) {
-      this.btnResultFail.addEventListener('click', () => {
-        this.showInteractiveVerdict("⚠️ Hazard Detected! Unplug charger and notify IT immediately.", "bg-red-950 text-red-300 border border-red-700");
-        this.sound.playWarning();
-      });
+    // Keyboard Shortcuts for Presenter (Space = Pause/Play, F = Fullscreen)
+    window.addEventListener('keydown', (e) => {
+      if (e.code === 'Space') {
+        e.preventDefault();
+        this.togglePlayPause();
+      } else if (e.code === 'KeyF') {
+        this.toggleFullscreen();
+      }
+    });
+  }
+
+  toggleFullscreen() {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(err => console.warn(err));
+    } else {
+      document.exitFullscreen().catch(err => console.warn(err));
     }
   }
 
-  showInteractiveVerdict(msg, colorClass) {
-    if (this.interactiveVerdictMsg) {
-      this.interactiveVerdictMsg.className = `text-xs font-bold px-4 py-2 rounded-xl mt-2 block ${colorClass}`;
-      this.interactiveVerdictMsg.innerText = msg;
-    }
-  }
-
-  startBriefing() {
+  startBroadcast() {
     this.sound.init();
     this.sound.playChime();
     this.isPlaying = true;
@@ -237,7 +232,7 @@ class PresentationApp {
     this.currentChapterIndex = index;
     const chapter = chapters[index];
 
-    // Stop previous audio and timers
+    // Stop existing audio and timers
     if (this.currentAudio) {
       this.currentAudio.pause();
       this.currentAudio = null;
@@ -247,7 +242,7 @@ class PresentationApp {
       this.countdownInterval = null;
     }
 
-    // Update Slide Visibility
+    // Slide visibility
     this.slides.forEach((slide, idx) => {
       if (idx === index) {
         slide.classList.remove('hidden');
@@ -258,10 +253,10 @@ class PresentationApp {
       }
     });
 
-    // Update Segment Progress Bars
-    this.segBars.forEach((bar, idx) => {
+    // Segment progress updates
+    this.segTracks.forEach((bar, idx) => {
       bar.classList.remove('active', 'completed');
-      const fill = bar.querySelector('.chapter-seg-fill');
+      const fill = bar.querySelector('.seg-fill');
       if (idx < index) {
         bar.classList.add('completed');
         fill.style.width = '100%';
@@ -273,24 +268,23 @@ class PresentationApp {
       }
     });
 
-    // Update Live Caption
+    // Caption update
     this.liveCaptionText.innerText = chapter.caption;
     this.sound.playChime();
 
-    // Trigger visual animations
+    // Trigger visual transitions
     this.handleSlideAnimations(index);
 
-    // Load & Play Neural Human Audio
+    // Audio Playback
     const audio = new Audio(chapter.audioSrc);
-    audio.muted = this.isMuted;
     this.currentAudio = audio;
 
     audio.addEventListener('timeupdate', () => {
       if (audio.duration) {
         const percent = Math.min(100, Math.round((audio.currentTime / audio.duration) * 100));
-        const activeBar = this.segBars[index];
+        const activeBar = this.segTracks[index];
         if (activeBar) {
-          const fill = activeBar.querySelector('.chapter-seg-fill');
+          const fill = activeBar.querySelector('.seg-fill');
           if (fill) fill.style.width = `${percent}%`;
         }
       }
@@ -305,60 +299,68 @@ class PresentationApp {
     });
 
     if (this.isPlaying) {
-      audio.play().catch(err => console.warn("Autoplay blocked:", err));
+      audio.play().catch(err => console.warn("Autoplay:", err));
     }
 
     this.initLucide();
   }
 
   handleSlideAnimations(index) {
-    // Reset wobble
-    if (this.wobbleGraphic) this.wobbleGraphic.classList.remove('animate-wobble-active');
+    if (this.wobbleChassisBox) this.wobbleChassisBox.classList.remove('animate-rocking-chassis');
 
-    // Chapter 1: Pouch swells when narrator mentions "Spicy Pillow" (~6s)
+    // Chapter 1: Battery swelling at 11s mark
     if (index === 0) {
       setTimeout(() => {
-        if (this.currentChapterIndex === 0 && this.ch1BatteryBox) {
-          this.ch1BatteryBox.classList.add('swelling-battery-active');
-          if (this.ch1CellStatus) {
-            this.ch1CellStatus.innerText = "CRITICAL BULGE (50+ PSI)";
-            this.ch1CellStatus.className = "text-red-400 font-bold px-2 py-0.5 rounded bg-red-950/80 border border-red-800";
+        if (this.currentChapterIndex === 0 && this.ch1BatteryVisual) {
+          this.ch1BatteryVisual.classList.add('animate-battery-inflate');
+          this.ch1BatteryVisual.classList.remove('border-emerald-500/50');
+          this.ch1BatteryVisual.classList.add('border-red-500/90');
+
+          if (this.ch1TelemetryBadge) {
+            this.ch1TelemetryBadge.innerText = "OVERPRESSURE: 54 PSI (CRITICAL)";
+            this.ch1TelemetryBadge.className = "text-red-400 font-bold px-2.5 py-0.5 rounded bg-red-950/80 border border-red-800 animate-pulse";
           }
           if (this.ch1BatteryTitle) {
-            this.ch1BatteryTitle.innerHTML = `<i data-lucide="alert-triangle" class="w-4 h-4 text-red-400"></i> Swollen "Spicy Pillow"`;
-            this.ch1BatteryTitle.className = "text-xs font-bold text-red-300 flex items-center gap-1.5";
+            this.ch1BatteryTitle.innerHTML = `<i data-lucide="alert-octagon" class="w-4 h-4 text-red-400"></i> Swollen "Spicy Pillow"`;
+            this.ch1BatteryTitle.className = "text-sm font-black text-red-300 flex items-center gap-2 relative z-10";
           }
           if (this.ch1BatterySub) {
-            this.ch1BatterySub.innerText = "Internal Decomposition Gas";
-            this.ch1BatterySub.className = "text-[11px] font-mono text-red-400/90 mt-0.5";
+            this.ch1BatterySub.innerText = "Internal Decomposition Gas Trapped";
+            this.ch1BatterySub.className = "text-xs font-mono text-red-400/90 mt-1 relative z-10";
           }
+          if (this.ch1HudMsg) {
+            this.ch1HudMsg.innerText = "⚠️ High mechanical pressure pushing against trackpad & casing seams!";
+            this.ch1HudMsg.className = "text-sm font-bold text-red-300 mt-2 bg-red-950/80 border border-red-800 p-3 rounded-xl";
+          }
+          this.sound.playWarning();
           this.initLucide();
         }
-      }, 6000);
+      }, 9500);
     }
 
-    // Chapter 2: The 20-Second Active Audit starts at ~4.5s mark
+    // Chapter 2: Hardware Audit Viewfinder Timeline
     if (index === 1) {
       this.resetCountdownUI();
+      // Starts active test around 4.5s into audio
       setTimeout(() => {
         if (this.currentChapterIndex === 1 && this.isPlaying) {
           this.runCountdown20s();
         }
-      }, 4500);
+      }, 4200);
     }
 
-    // Chapter 3: Heat Gauge Climbs at ~6s mark
+    // Chapter 3: Heat Gauge Spikes at 8s mark
     if (index === 2) {
       setTimeout(() => {
         if (this.currentChapterIndex === 2) {
-          if (this.tempBarFill) this.tempBarFill.style.width = '92%';
+          if (this.tempBarFill) this.tempBarFill.style.width = '94%';
           if (this.tempGaugeVal) {
             this.tempGaugeVal.innerText = '1,000°F+ THERMAL RUNAWAY';
             this.tempGaugeVal.className = 'text-red-400 font-extrabold animate-pulse';
           }
           this.sound.playWarning();
         }
-      }, 5500);
+      }, 7500);
     }
 
     // Chapter 5: Completion
@@ -379,9 +381,9 @@ class PresentationApp {
     }
     if (this.testStepIndicator) {
       this.testStepIndicator.innerText = 'Get Ready...';
-      this.testStepIndicator.className = 'text-base font-extrabold text-amber-300';
+      this.testStepIndicator.className = 'text-lg font-black text-amber-300';
     }
-    this.setFocusCard(1);
+    this.setViewfinder(1);
   }
 
   runCountdown20s() {
@@ -389,9 +391,9 @@ class PresentationApp {
     const totalCountdown = 20;
     const circumference = 2 * Math.PI * 28; // ~175.9
 
-    if (this.testStepIndicator) this.testStepIndicator.innerText = '1. Push Corners (Wobble)';
-    if (this.wobbleGraphic) this.wobbleGraphic.classList.add('animate-wobble-active');
-    this.setFocusCard(1);
+    if (this.testStepIndicator) this.testStepIndicator.innerText = '1. The Wobble Test';
+    if (this.wobbleChassisBox) this.wobbleChassisBox.classList.add('animate-rocking-chassis');
+    this.setViewfinder(1);
 
     this.countdownInterval = setInterval(() => {
       if (!this.isPlaying) return;
@@ -406,24 +408,24 @@ class PresentationApp {
         this.countdownCircle.style.strokeDashoffset = offset;
       }
 
-      // Spotlight Switch 1 -> 2: Trackpad Click (around 13s)
+      // Viewfinder Switch 1 -> 2: Trackpad Switch (around 13s)
       if (timeLeft <= 13 && timeLeft > 6) {
-        this.setFocusCard(2);
-        if (this.testStepIndicator) this.testStepIndicator.innerText = '2. Click Your Trackpad';
-        if (this.wobbleGraphic) this.wobbleGraphic.classList.remove('animate-wobble-active');
+        this.setViewfinder(2);
+        if (this.testStepIndicator) this.testStepIndicator.innerText = '2. Trackpad Mechanical Click';
+        if (this.wobbleChassisBox) this.wobbleChassisBox.classList.remove('animate-rocking-chassis');
       } 
-      // Spotlight Switch 2 -> 3: Seam & Ports (around 6s)
+      // Viewfinder Switch 2 -> 3: Seam / Port Gap (around 6s)
       else if (timeLeft <= 6 && timeLeft > 0) {
-        this.setFocusCard(3);
-        if (this.testStepIndicator) this.testStepIndicator.innerText = '3. Inspect Side Seams';
+        this.setViewfinder(3);
+        if (this.testStepIndicator) this.testStepIndicator.innerText = '3. Chassis Seams & USB Ports';
       } 
-      // Test Completed
+      // Test Finished
       else if (timeLeft <= 0) {
         clearInterval(this.countdownInterval);
         this.countdownInterval = null;
         if (this.testStepIndicator) {
-          this.testStepIndicator.innerText = 'Audit Complete!';
-          this.testStepIndicator.className = 'text-base font-extrabold text-emerald-400';
+          this.testStepIndicator.innerText = 'Hardware Audit Finished!';
+          this.testStepIndicator.className = 'text-lg font-black text-emerald-400';
         }
         if (this.countdownNumber) {
           this.countdownNumber.innerText = '✓';
@@ -438,15 +440,11 @@ class PresentationApp {
     }, 1000);
   }
 
-  setFocusCard(activeNum) {
-    [this.cardCheck1, this.cardCheck2, this.cardCheck3].forEach((card, idx) => {
-      if (!card) return;
-      if (idx + 1 === activeNum) {
-        card.classList.add('active-focus');
-      } else {
-        card.classList.remove('active-focus');
-      }
-    });
+  setViewfinder(step) {
+    if (this.viewfinder1) this.viewfinder1.className = step === 1 ? 'viewfinder-card active flex-col items-center space-y-4' : 'viewfinder-card inactive';
+    if (this.viewfinder2) this.viewfinder2.className = step === 2 ? 'viewfinder-card active flex-col items-center space-y-4' : 'viewfinder-card inactive';
+    if (this.viewfinder3) this.viewfinder3.className = step === 3 ? 'viewfinder-card active flex-col items-center space-y-4' : 'viewfinder-card inactive';
+    this.initLucide();
   }
 
   togglePlayPause() {
@@ -467,26 +465,6 @@ class PresentationApp {
       if (this.currentAudio) {
         this.currentAudio.pause();
       }
-    }
-    this.initLucide();
-  }
-
-  toggleAudio() {
-    this.isMuted = !this.isMuted;
-    this.sound.enabled = !this.isMuted;
-
-    if (this.currentAudio) {
-      this.currentAudio.muted = this.isMuted;
-    }
-
-    if (this.isMuted) {
-      this.audioLabel.innerText = 'Muted';
-      this.audioIcon.setAttribute('data-lucide', 'volume-x');
-      this.audioIcon.className = 'w-4 h-4 text-slate-400';
-    } else {
-      this.audioLabel.innerText = 'Voice On';
-      this.audioIcon.setAttribute('data-lucide', 'volume-2');
-      this.audioIcon.className = 'w-4 h-4 text-amber-400';
     }
     this.initLucide();
   }
@@ -534,5 +512,5 @@ class PresentationApp {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  window.presentationApp = new PresentationApp();
+  window.broadcastPresentation = new BroadcastPresentation();
 });
