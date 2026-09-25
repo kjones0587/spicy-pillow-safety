@@ -1,11 +1,23 @@
-import asyncio
-import os
-import edge_tts
+#!/usr/bin/env python3
+"""
+Google Gemini 2.0 Audio Generator for Spicy Pillow Safety Briefing
+Generates human-like conversational audio using Gemini 2.0 Flash native audio output.
 
-# en-US-AndrewMultilingualNeural: Exceptional clarity and natural inflection
-VOICE = "en-US-AndrewMultilingualNeural"
-RATE = "+1%"
-PITCH = "+0Hz"
+Usage:
+  python generate_gemini.py --api-key YOUR_GEMINI_API_KEY
+  or set environment variable: GEMINI_API_KEY=YOUR_KEY
+"""
+
+import os
+import sys
+import argparse
+import urllib.request
+import json
+import base64
+
+# Gemini 2.0 Prebuilt Voices: Puck (Friendly male), Charon (Calm male), Aoede (Warm female), Kore, Fenrir
+DEFAULT_VOICE = "Puck"
+MODEL = "gemini-2.0-flash"
 
 scripts = {
     "chapter1.mp3": (
@@ -59,14 +71,80 @@ scripts = {
     )
 }
 
-async def generate():
-    os.makedirs("audio", exist_ok=True)
+def generate_chapter(filename, text, voice_name, api_key, output_dir="audio"):
+    os.makedirs(output_dir, exist_ok=True)
+    out_path = os.path.join(output_dir, filename)
+    url = f"https://generativelanguage.googleapis.com/v1beta/models/{MODEL}:generateContent?key={api_key}"
+
+    prompt = (
+        f"Please read the following script out loud in a natural, friendly, conversational coworker tone. "
+        f"Do not add any greetings or conversational intro of your own; speak only the provided text:\n\n{text}"
+    )
+
+    payload = {
+        "contents": [{
+            "parts": [{"text": prompt}]
+        }],
+        "generationConfig": {
+            "responseModalities": ["AUDIO"],
+            "speechConfig": {
+                "voiceConfig": {
+                    "prebuiltVoiceConfig": {
+                        "voiceName": voice_name
+                    }
+                }
+            }
+        }
+    }
+
+    req = urllib.request.Request(
+        url,
+        data=json.dumps(payload).encode("utf-8"),
+        headers={"Content-Type": "application/json"}
+    )
+
+    try:
+        with urllib.request.urlopen(req) as resp:
+            data = json.loads(resp.read().decode("utf-8"))
+            candidates = data.get("candidates", [])
+            if not candidates:
+                print(f"No candidates returned for {filename}")
+                return
+
+            parts = candidates[0].get("content", {}).get("parts", [])
+            for part in parts:
+                inline_data = part.get("inlineData", {})
+                if inline_data.get("mimeType", "").startswith("audio/"):
+                    audio_b64 = inline_data.get("data")
+                    audio_bytes = base64.b64decode(audio_b64)
+                    with open(out_path, "wb") as f:
+                        f.write(audio_bytes)
+                    print(f"Saved {out_path} ({len(audio_bytes)} bytes)")
+                    return
+
+            print(f"No audio inlineData found in response for {filename}")
+    except urllib.error.HTTPError as e:
+        err = e.read().decode("utf-8", errors="ignore")
+        print(f"Gemini API Error [{e.code}]: {err}")
+        sys.exit(1)
+
+def main():
+    parser = argparse.ArgumentParser(description="Generate audio via Gemini 2.0 Audio API")
+    parser.add_argument("--api-key", default=os.environ.get("GEMINI_API_KEY"), help="Google Gemini API Key")
+    parser.add_argument("--voice", default=DEFAULT_VOICE, choices=["Puck", "Charon", "Aoede", "Kore", "Fenrir"])
+    args = parser.parse_args()
+
+    api_key = args.api_key
+    if not api_key:
+        print("Error: No Gemini API Key provided.")
+        print("Provide via --api-key YOUR_KEY or set GEMINI_API_KEY environment variable.")
+        sys.exit(1)
+
     for filename, text in scripts.items():
-        filepath = os.path.join("audio", filename)
-        print(f"Generating {filepath} with {VOICE}...")
-        communicate = edge_tts.Communicate(text, VOICE, rate=RATE, pitch=PITCH)
-        await communicate.save(filepath)
-        print(f"Saved {filepath} ({os.path.getsize(filepath)} bytes)")
+        print(f"Synthesizing {filename} with Gemini voice {args.voice}...")
+        generate_chapter(filename, text, args.voice, api_key)
+
+    print("\nAll chapters successfully generated with Gemini 2.0 Audio!")
 
 if __name__ == "__main__":
-    asyncio.run(generate())
+    main()

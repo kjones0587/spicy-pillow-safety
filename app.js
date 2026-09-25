@@ -93,7 +93,7 @@ const chapters = [
     id: 1,
     name: "The Hook",
     audioSrc: "audio/chapter1.mp3",
-    caption: "Look over at your work laptop. Whether docked, closed, or running as a secondary screen, laptops docked 24/7 constantly float-charge batteries under continuous heat and electrical stress."
+    caption: "Hey everyone! Today's quick safety briefing is about something we see all too often on the help desk: the 'Spicy Pillow'. Whether docked 24/7 or closed, continuous charging causes battery expansion."
   },
   {
     id: 2,
@@ -124,10 +124,11 @@ const chapters = [
 // Exact sentence-synchronized kinetic typography cues for all 5 chapters
 const kineticCues = {
   0: [
-    { time: 0, text: "Look over at your work laptop sitting on your desk...", icon: "laptop", color: "emerald" },
-    { time: 10.06, text: "Docked 24/7 on continuous float charge & electrical stress", icon: "zap", color: "amber" },
-    { time: 21.91, text: "Continuous charging degrades cell → Turns into a 'Spicy Pillow'", icon: "flame", color: "red" },
-    { time: 29.54, text: "Decomposed electrolyte traps volatile flammable gas at 58.4 PSI!", icon: "alert-triangle", color: "red" }
+    { time: 0, text: "Hey everyone! Today's safety briefing is about the 'Spicy Pillow' hazard...", icon: "shield-alert", color: "amber" },
+    { time: 7.41, text: "Look over at your work laptop sitting on your desk...", icon: "laptop", color: "emerald" },
+    { time: 17.48, text: "Docked 24/7 on continuous float charge & electrical stress", icon: "zap", color: "amber" },
+    { time: 28.99, text: "Continuous charging degrades cell → Turns into a 'Spicy Pillow'", icon: "flame", color: "red" },
+    { time: 36.82, text: "Decomposed electrolyte traps volatile flammable gas at 58.4 PSI!", icon: "alert-triangle", color: "red" }
   ],
   1: [
     { time: 0, text: "Live 20-Second Hardware Audit: Slide laptop onto a clear flat desk area...", icon: "scan", color: "emerald" },

@@ -1,11 +1,30 @@
-import asyncio
-import os
-import edge_tts
+#!/usr/bin/env python3
+"""
+ElevenLabs Audio Generator for Spicy Pillow Safety Briefing
+Produces hyper-realistic, human-cadence audio with natural breaths.
 
-# en-US-AndrewMultilingualNeural: Exceptional clarity and natural inflection
-VOICE = "en-US-AndrewMultilingualNeural"
-RATE = "+1%"
-PITCH = "+0Hz"
+Usage:
+  python generate_elevenlabs.py --api-key YOUR_API_KEY
+  or set environment variable: ELEVENLABS_API_KEY=YOUR_KEY
+"""
+
+import os
+import sys
+import argparse
+import urllib.request
+import json
+
+# Pre-selected expressive conversational voices
+VOICES = {
+    "adam": "pNInz6obpgDQGcFmaJgB",      # Deep, friendly, natural American male (Recommended)
+    "brian": "nPczCjzI2devNBz1zQrb",     # Conversational narrator
+    "rachel": "21m00Tcm4TlvDq8ikWAM",    # Calm, natural female
+    "drew": "29vD33N1CtxCmqQRPOHJ",      # Confident, friendly male
+    "callum": "N2lVS1w4EtoT3dr4eOWO",    # Conversational male
+}
+
+DEFAULT_VOICE = "adam"
+MODEL_ID = "eleven_turbo_v2_5" # Fast, natural, high quality
 
 scripts = {
     "chapter1.mp3": (
@@ -59,14 +78,63 @@ scripts = {
     )
 }
 
-async def generate():
-    os.makedirs("audio", exist_ok=True)
+def generate_chapter(filename, text, voice_id, api_key, output_dir="audio"):
+    os.makedirs(output_dir, exist_ok=True)
+    out_path = os.path.join(output_dir, filename)
+    url = f"https://api.elevenlabs.io/v1/text-to-speech/{voice_id}"
+
+    payload = {
+        "text": text,
+        "model_id": MODEL_ID,
+        "voice_settings": {
+            "stability": 0.5,
+            "similarity_boost": 0.8,
+            "style": 0.35,
+            "use_speaker_boost": True
+        }
+    }
+
+    req = urllib.request.Request(
+        url,
+        data=json.dumps(payload).encode("utf-8"),
+        headers={
+            "xi-api-key": api_key,
+            "Content-Type": "application/json",
+            "Accept": "audio/mpeg"
+        }
+    )
+
+    try:
+        with urllib.request.urlopen(req) as resp:
+            audio_data = resp.read()
+            with open(out_path, "wb") as f:
+                f.write(audio_data)
+            print(f"Successfully generated {out_path} ({len(audio_data)} bytes)")
+    except urllib.error.HTTPError as e:
+        err_msg = e.read().decode("utf-8", errors="ignore")
+        print(f"ElevenLabs API Error [{e.code}]: {err_msg}")
+        sys.exit(1)
+
+def main():
+    parser = argparse.ArgumentParser(description="Generate Spicy Pillow Safety Audio using ElevenLabs")
+    parser.add_argument("--api-key", default=os.environ.get("ELEVENLABS_API_KEY"), help="ElevenLabs API Key")
+    parser.add_argument("--voice", default=DEFAULT_VOICE, choices=list(VOICES.keys()), help="Voice name")
+    args = parser.parse_args()
+
+    api_key = args.api_key
+    if not api_key:
+        print("Error: No ElevenLabs API Key provided.")
+        print("Provide via --api-key YOUR_KEY or set ELEVENLABS_API_KEY environment variable.")
+        sys.exit(1)
+
+    voice_id = VOICES.get(args.voice, VOICES[DEFAULT_VOICE])
+    print(f"Using ElevenLabs voice: {args.voice} (ID: {voice_id})")
+
     for filename, text in scripts.items():
-        filepath = os.path.join("audio", filename)
-        print(f"Generating {filepath} with {VOICE}...")
-        communicate = edge_tts.Communicate(text, VOICE, rate=RATE, pitch=PITCH)
-        await communicate.save(filepath)
-        print(f"Saved {filepath} ({os.path.getsize(filepath)} bytes)")
+        print(f"\nSynthesizing {filename}...")
+        generate_chapter(filename, text, voice_id, api_key)
+
+    print("\nAll chapters successfully generated with ElevenLabs!")
 
 if __name__ == "__main__":
-    asyncio.run(generate())
+    main()
