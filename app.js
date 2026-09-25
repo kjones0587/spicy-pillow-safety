@@ -1,5 +1,5 @@
 /**
- * Spicy Pillow Safety Briefing v4.7 (Exact Voice-Synced Scrubber Edition)
+ * Spicy Pillow Safety Briefing v4.8 (Bulletproof Voice-Synced Edition)
  * Optimized for Microsoft Teams Screen Sharing
  * Narrator: en-US-AndrewMultilingualNeural
  */
@@ -163,10 +163,13 @@ class BroadcastPresentation {
     this.isPlaying = false;
     this.totalElapsedSeconds = 0;
     this.globalTimerInterval = null;
-    this.currentAudio = null;
     this.lastCueIndex = -1;
     this.lastAuditStep = -1;
     this.lastTickSecond = -1;
+
+    // Single Persistent Audio Element for unbroken cross-slide playback
+    this.audio = new Audio();
+    this.audio.preload = 'auto';
 
     // DOM References
     this.startScreen = document.getElementById('start-screen');
@@ -202,6 +205,7 @@ class BroadcastPresentation {
     this.tempBarFill = document.getElementById('temp-bar-fill');
     this.tempGaugeVal = document.getElementById('temp-gauge-val');
 
+    this.setupAudioListeners();
     this.bindEvents();
     this.initLucide();
   }
@@ -210,6 +214,51 @@ class BroadcastPresentation {
     if (window.lucide) {
       window.lucide.createIcons();
     }
+  }
+
+  setupAudioListeners() {
+    // AUDIO TIMEUPDATE: Synchronizes timeline bar, kinetic typography, audit steps & heat gauges
+    this.audio.addEventListener('timeupdate', () => {
+      if (!this.audio.duration) return;
+      const index = this.currentChapterIndex;
+      const percent = Math.min(100, Math.round((this.audio.currentTime / this.audio.duration) * 100));
+      const activeBar = this.segTracks[index];
+      if (activeBar) {
+        const fill = activeBar.querySelector('.seg-fill');
+        if (fill) fill.style.width = `${percent}%`;
+      }
+
+      // Kinetic typography synced to exact sentence milestones
+      this.updateKineticTypography(index, this.audio.currentTime);
+
+      // Slide 2: Direct voice-synced audit controller
+      if (index === 1) {
+        this.syncSlide2Audit(this.audio.currentTime);
+      }
+
+      // Slide 3: Thermal runaway temperature spike
+      if (index === 2) {
+        this.syncSlide3Heat(this.audio.currentTime);
+      }
+    });
+
+    this.audio.addEventListener('ended', () => {
+      setTimeout(() => {
+        if (this.isPlaying) {
+          this.nextChapter();
+        }
+      }, 700);
+    });
+
+    this.audio.addEventListener('error', (e) => {
+      console.warn("Audio playback error:", e);
+      // Graceful fallback: If audio fails to load or decode, advance after 10s
+      if (this.isPlaying) {
+        setTimeout(() => {
+          if (this.isPlaying) this.nextChapter();
+        }, 10000);
+      }
+    });
   }
 
   bindEvents() {
@@ -244,8 +293,8 @@ class BroadcastPresentation {
           this.startGlobalTimer();
         }
 
-        if (this.currentChapterIndex === idx && this.currentAudio && this.currentAudio.duration) {
-          this.currentAudio.currentTime = this.currentAudio.duration * ratio;
+        if (this.currentChapterIndex === idx && this.audio && this.audio.duration) {
+          this.audio.currentTime = this.audio.duration * ratio;
         } else {
           this.loadChapter(idx, ratio);
         }
@@ -316,12 +365,6 @@ class BroadcastPresentation {
     this.lastTickSecond = -1;
     const chapter = chapters[index];
 
-    // Stop existing audio
-    if (this.currentAudio) {
-      this.currentAudio.pause();
-      this.currentAudio = null;
-    }
-
     // Slide visibility
     this.slides.forEach((slide, idx) => {
       if (idx === index) {
@@ -333,7 +376,7 @@ class BroadcastPresentation {
       }
     });
 
-    // Segment progress updates
+    // Segment progress bar updates
     this.segTracks.forEach((bar, idx) => {
       bar.classList.remove('active', 'completed');
       const fill = bar.querySelector('.seg-fill');
@@ -349,63 +392,47 @@ class BroadcastPresentation {
     });
 
     // Caption update
-    this.liveCaptionText.innerText = chapter.caption;
+    if (this.liveCaptionText) {
+      this.liveCaptionText.innerText = chapter.caption;
+    }
     this.sound.playChime();
 
-    // Trigger visual transitions
-    this.handleSlideEntry(index);
-
-    // Audio Playback with Precision Seeking
-    const audio = new Audio(chapter.audioSrc);
-    this.currentAudio = audio;
-
-    const applySeek = () => {
-      if (seekRatio > 0 && audio.duration) {
-        audio.currentTime = audio.duration * seekRatio;
-      }
-    };
-
-    if (audio.readyState >= 1) {
-      applySeek();
-    } else {
-      audio.addEventListener('loadedmetadata', applySeek, { once: true });
+    // Trigger visual transitions safely with try-catch so playback never blocks
+    try {
+      this.handleSlideEntry(index);
+    } catch (err) {
+      console.warn("handleSlideEntry warning:", err);
     }
 
-    // AUDIO TIMEUPDATE CONTROLLER: High-Precision Sync for Visuals, Steps & Countdown
-    audio.addEventListener('timeupdate', () => {
-      if (audio.duration) {
-        const percent = Math.min(100, Math.round((audio.currentTime / audio.duration) * 100));
-        const activeBar = this.segTracks[index];
-        if (activeBar) {
-          const fill = activeBar.querySelector('.seg-fill');
-          if (fill) fill.style.width = `${percent}%`;
+    // Audio Playback with Persistent Audio Element
+    try {
+      this.audio.pause();
+      this.audio.src = chapter.audioSrc;
+      this.audio.currentTime = 0;
+      this.audio.load();
+
+      const applySeek = () => {
+        if (seekRatio > 0 && this.audio.duration) {
+          this.audio.currentTime = this.audio.duration * seekRatio;
         }
+      };
 
-        // Kinetic typography synced to exact sentence milestones
-        this.updateKineticTypography(index, audio.currentTime);
+      if (this.audio.readyState >= 1) {
+        applySeek();
+      } else {
+        this.audio.addEventListener('loadedmetadata', applySeek, { once: true });
+      }
 
-        // Slide 2: Direct voice-synced audit controller
-        if (index === 1) {
-          this.syncSlide2Audit(audio.currentTime);
-        }
-
-        // Slide 3: Thermal runaway temperature spike
-        if (index === 2) {
-          this.syncSlide3Heat(audio.currentTime);
+      if (this.isPlaying) {
+        const playPromise = this.audio.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(err => {
+            console.warn("Autoplay note:", err);
+          });
         }
       }
-    });
-
-    audio.addEventListener('ended', () => {
-      setTimeout(() => {
-        if (this.isPlaying) {
-          this.nextChapter();
-        }
-      }, 700);
-    });
-
-    if (this.isPlaying) {
-      audio.play().catch(err => console.warn("Autoplay:", err));
+    } catch (err) {
+      console.error("Audio initialization error:", err);
     }
 
     this.initLucide();
@@ -457,178 +484,182 @@ class BroadcastPresentation {
    * [34.95s - 36.16s] Wrap up your check now.
    */
   syncSlide2Audit(currentTime) {
-    const totalCountdown = 20;
-    const circumference = 2 * Math.PI * 24; // ~150.8
+    try {
+      const totalCountdown = 20;
+      const circumference = 2 * Math.PI * 24; // ~150.8
 
-    // Tick sound every integer second during active audit
-    const currentIntSec = Math.floor(currentTime);
-    if (currentTime >= 8.59 && currentTime < 34.95 && currentIntSec !== this.lastTickSecond) {
-      this.lastTickSecond = currentIntSec;
-      if (this.isPlaying) {
-        this.sound.playTick();
+      // Tick sound every integer second during active audit
+      const currentIntSec = Math.floor(currentTime);
+      if (currentTime >= 8.59 && currentTime < 34.95 && currentIntSec !== this.lastTickSecond) {
+        this.lastTickSecond = currentIntSec;
+        if (this.isPlaying) {
+          this.sound.playTick();
+        }
       }
-    }
 
-    if (currentTime < 8.59) {
-      // PREPARE STAGE
-      if (this.countdownNumber) {
-        this.countdownNumber.innerText = '20';
-        this.countdownNumber.className = 'absolute text-2xl font-black font-mono text-amber-400';
+      if (currentTime < 8.59) {
+        // PREPARE STAGE
+        if (this.countdownNumber) {
+          this.countdownNumber.innerText = '20';
+          this.countdownNumber.className = 'absolute text-2xl font-black font-mono text-amber-400';
+        }
+        this.setCountdownCircle(0, 'text-amber-400 transition-all duration-300');
+        if (this.testStepIndicator) {
+          this.testStepIndicator.innerText = 'Prepare: Place Laptop Flat on Desk';
+          this.testStepIndicator.className = 'text-sm sm:text-base font-extrabold text-amber-300 truncate';
+        }
+        this.setStepStatus(1, 'ready');
+        this.setStepStatus(2, 'standby');
+        this.setStepStatus(3, 'standby');
+        this.lastAuditStep = 0;
       }
-      if (this.countdownCircle) {
-        this.countdownCircle.style.strokeDashoffset = '0';
-        this.countdownCircle.className = 'text-amber-400 transition-all duration-300';
-      }
-      if (this.testStepIndicator) {
-        this.testStepIndicator.innerText = 'Prepare: Place Laptop Flat on Desk';
-        this.testStepIndicator.className = 'text-sm sm:text-base font-extrabold text-amber-300';
-      }
-      this.setStepStatus(1, 'ready');
-      this.setStepStatus(2, 'standby');
-      this.setStepStatus(3, 'standby');
-      this.lastAuditStep = 0;
-    }
-    else if (currentTime >= 8.59 && currentTime < 18.35) {
-      // STEP 1 ACTIVE: WOBBLE TEST
-      if (this.lastAuditStep !== 1) {
-        this.lastAuditStep = 1;
-        this.sound.playChime();
-      }
-      const remaining = Math.max(0, Math.ceil(20 * (1 - (currentTime - 8.59) / (34.95 - 8.59))));
-      if (this.countdownNumber) {
-        this.countdownNumber.innerText = remaining;
-        this.countdownNumber.className = 'absolute text-2xl font-black font-mono text-amber-400';
-      }
-      if (this.countdownCircle) {
+      else if (currentTime >= 8.59 && currentTime < 18.35) {
+        // STEP 1 ACTIVE: WOBBLE TEST
+        if (this.lastAuditStep !== 1) {
+          this.lastAuditStep = 1;
+          this.sound.playChime();
+        }
+        const remaining = Math.max(0, Math.ceil(20 * (1 - (currentTime - 8.59) / (34.95 - 8.59))));
+        if (this.countdownNumber) {
+          this.countdownNumber.innerText = remaining;
+          this.countdownNumber.className = 'absolute text-2xl font-black font-mono text-amber-400';
+        }
         const offset = circumference - (remaining / totalCountdown) * circumference;
-        this.countdownCircle.style.strokeDashoffset = offset;
-        this.countdownCircle.className = 'text-amber-400 transition-all duration-150';
+        this.setCountdownCircle(offset, 'text-amber-400 transition-all duration-150');
+        if (this.testStepIndicator) {
+          this.testStepIndicator.innerText = 'Step 1 of 3: Opposite Corner Wobble Check';
+          this.testStepIndicator.className = 'text-sm sm:text-base font-extrabold text-amber-300 truncate';
+        }
+        this.setStepStatus(1, 'active');
+        this.setStepStatus(2, 'standby');
+        this.setStepStatus(3, 'standby');
       }
-      if (this.testStepIndicator) {
-        this.testStepIndicator.innerText = 'Step 1 of 3: Opposite Corner Wobble Check';
-        this.testStepIndicator.className = 'text-sm sm:text-base font-extrabold text-amber-300';
-      }
-      this.setStepStatus(1, 'active');
-      this.setStepStatus(2, 'standby');
-      this.setStepStatus(3, 'standby');
-    }
-    else if (currentTime >= 18.35 && currentTime < 29.58) {
-      // STEP 2 ACTIVE: TRACKPAD CLICK
-      if (this.lastAuditStep !== 2) {
-        this.lastAuditStep = 2;
-        this.sound.playChime();
-      }
-      const remaining = Math.max(0, Math.ceil(20 * (1 - (currentTime - 8.59) / (34.95 - 8.59))));
-      if (this.countdownNumber) {
-        this.countdownNumber.innerText = remaining;
-        this.countdownNumber.className = 'absolute text-2xl font-black font-mono text-amber-400';
-      }
-      if (this.countdownCircle) {
+      else if (currentTime >= 18.35 && currentTime < 29.58) {
+        // STEP 2 ACTIVE: TRACKPAD CLICK
+        if (this.lastAuditStep !== 2) {
+          this.lastAuditStep = 2;
+          this.sound.playChime();
+        }
+        const remaining = Math.max(0, Math.ceil(20 * (1 - (currentTime - 8.59) / (34.95 - 8.59))));
+        if (this.countdownNumber) {
+          this.countdownNumber.innerText = remaining;
+          this.countdownNumber.className = 'absolute text-2xl font-black font-mono text-amber-400';
+        }
         const offset = circumference - (remaining / totalCountdown) * circumference;
-        this.countdownCircle.style.strokeDashoffset = offset;
-        this.countdownCircle.className = 'text-amber-400 transition-all duration-150';
+        this.setCountdownCircle(offset, 'text-amber-400 transition-all duration-150');
+        if (this.testStepIndicator) {
+          this.testStepIndicator.innerText = 'Step 2 of 3: Trackpad Mechanical Travel';
+          this.testStepIndicator.className = 'text-sm sm:text-base font-extrabold text-amber-300 truncate';
+        }
+        this.setStepStatus(1, 'passed');
+        this.setStepStatus(2, 'active');
+        this.setStepStatus(3, 'standby');
       }
-      if (this.testStepIndicator) {
-        this.testStepIndicator.innerText = 'Step 2 of 3: Trackpad Mechanical Travel';
-        this.testStepIndicator.className = 'text-sm sm:text-base font-extrabold text-amber-300';
-      }
-      this.setStepStatus(1, 'passed');
-      this.setStepStatus(2, 'active');
-      this.setStepStatus(3, 'standby');
-    }
-    else if (currentTime >= 29.58 && currentTime < 34.95) {
-      // STEP 3 ACTIVE: SEAMS & PORTS
-      if (this.lastAuditStep !== 3) {
-        this.lastAuditStep = 3;
-        this.sound.playChime();
-      }
-      const remaining = Math.max(0, Math.ceil(20 * (1 - (currentTime - 8.59) / (34.95 - 8.59))));
-      if (this.countdownNumber) {
-        this.countdownNumber.innerText = remaining;
-        this.countdownNumber.className = 'absolute text-2xl font-black font-mono text-amber-400';
-      }
-      if (this.countdownCircle) {
+      else if (currentTime >= 29.58 && currentTime < 34.95) {
+        // STEP 3 ACTIVE: SEAMS & PORTS
+        if (this.lastAuditStep !== 3) {
+          this.lastAuditStep = 3;
+          this.sound.playChime();
+        }
+        const remaining = Math.max(0, Math.ceil(20 * (1 - (currentTime - 8.59) / (34.95 - 8.59))));
+        if (this.countdownNumber) {
+          this.countdownNumber.innerText = remaining;
+          this.countdownNumber.className = 'absolute text-2xl font-black font-mono text-amber-400';
+        }
         const offset = circumference - (remaining / totalCountdown) * circumference;
-        this.countdownCircle.style.strokeDashoffset = offset;
-        this.countdownCircle.className = 'text-amber-400 transition-all duration-150';
+        this.setCountdownCircle(offset, 'text-amber-400 transition-all duration-150');
+        if (this.testStepIndicator) {
+          this.testStepIndicator.innerText = 'Step 3 of 3: Chassis Seams & USB Ports';
+          this.testStepIndicator.className = 'text-sm sm:text-base font-extrabold text-amber-300 truncate';
+        }
+        this.setStepStatus(1, 'passed');
+        this.setStepStatus(2, 'passed');
+        this.setStepStatus(3, 'active');
       }
-      if (this.testStepIndicator) {
-        this.testStepIndicator.innerText = 'Step 3 of 3: Chassis Seams & USB Ports';
-        this.testStepIndicator.className = 'text-sm sm:text-base font-extrabold text-amber-300';
+      else {
+        // AUDIT COMPLETE (currentTime >= 34.95)
+        if (this.lastAuditStep !== 4) {
+          this.lastAuditStep = 4;
+          this.sound.playSuccess();
+        }
+        if (this.countdownNumber) {
+          this.countdownNumber.innerText = '✓';
+          this.countdownNumber.className = 'absolute text-2xl font-black font-mono text-emerald-400';
+        }
+        this.setCountdownCircle(0, 'text-emerald-400 transition-all duration-300');
+        if (this.testStepIndicator) {
+          this.testStepIndicator.innerText = 'Hardware Audit Finished: All 3 Checks Verified!';
+          this.testStepIndicator.className = 'text-sm sm:text-base font-extrabold text-emerald-400 truncate';
+        }
+        this.setStepStatus(1, 'passed');
+        this.setStepStatus(2, 'passed');
+        this.setStepStatus(3, 'passed');
       }
-      this.setStepStatus(1, 'passed');
-      this.setStepStatus(2, 'passed');
-      this.setStepStatus(3, 'active');
-    }
-    else {
-      // AUDIT COMPLETE (currentTime >= 34.95)
-      if (this.lastAuditStep !== 4) {
-        this.lastAuditStep = 4;
-        this.sound.playSuccess();
-      }
-      if (this.countdownNumber) {
-        this.countdownNumber.innerText = '✓';
-        this.countdownNumber.className = 'absolute text-2xl font-black font-mono text-emerald-400';
-      }
-      if (this.countdownCircle) {
-        this.countdownCircle.style.strokeDashoffset = '0';
-        this.countdownCircle.className = 'text-emerald-400 transition-all duration-300';
-      }
-      if (this.testStepIndicator) {
-        this.testStepIndicator.innerText = 'Hardware Audit Finished: All 3 Checks Verified!';
-        this.testStepIndicator.className = 'text-sm sm:text-base font-extrabold text-emerald-400';
-      }
-      this.setStepStatus(1, 'passed');
-      this.setStepStatus(2, 'passed');
-      this.setStepStatus(3, 'passed');
+    } catch (err) {
+      console.warn("syncSlide2Audit warning:", err);
     }
   }
 
-  setStepStatus(stepNum, status) {
-    const elem = this[`viewStep${stepNum}`];
-    const badge = this[`stepBadge${stepNum}`];
-    if (!elem) return;
+  // Safe SVG Circle attribute manipulation (prevents SVGAnimatedString read-only TypeError)
+  setCountdownCircle(dashOffset, colorClass) {
+    if (!this.countdownCircle) return;
+    this.countdownCircle.style.strokeDashoffset = dashOffset;
+    this.countdownCircle.setAttribute('class', colorClass);
+  }
 
-    if (status === 'active') {
-      elem.className = 'p-4 rounded-2xl bg-amber-950/80 border-2 border-amber-500 shadow-xl shadow-amber-500/20 transition-all duration-200 transform scale-[1.01]';
-      if (badge) {
-        badge.innerText = 'TESTING NOW';
-        badge.className = 'text-[10px] font-mono px-2.5 py-0.5 rounded-full font-bold uppercase bg-amber-500 text-black shadow animate-pulse';
+  setStepStatus(stepNum, status) {
+    try {
+      const elem = this[`viewStep${stepNum}`] || document.getElementById(`view-step-${stepNum}`);
+      const badge = this[`stepBadge${stepNum}`] || document.getElementById(`step-badge-${stepNum}`);
+      if (!elem) return;
+
+      if (status === 'active') {
+        elem.className = 'p-4 rounded-2xl bg-amber-950/80 border-2 border-amber-500 shadow-xl shadow-amber-500/20 transition-all duration-200 transform scale-[1.01]';
+        if (badge) {
+          badge.innerText = 'TESTING NOW';
+          badge.className = 'text-[10px] font-mono px-2.5 py-0.5 rounded-full font-bold uppercase bg-amber-500 text-black shadow animate-pulse';
+        }
+      } else if (status === 'ready') {
+        elem.className = 'p-4 rounded-2xl bg-slate-900/90 border border-amber-500/40 transition-all duration-200';
+        if (badge) {
+          badge.innerText = 'READY';
+          badge.className = 'text-[10px] font-mono px-2.5 py-0.5 rounded-full font-bold uppercase bg-amber-950 text-amber-300 border border-amber-800';
+        }
+      } else if (status === 'passed') {
+        elem.className = 'p-4 rounded-2xl bg-slate-950/90 border border-emerald-500/60 shadow-md shadow-emerald-500/10 transition-all duration-200';
+        if (badge) {
+          badge.innerText = '✓ CHECKED';
+          badge.className = 'text-[10px] font-mono px-2.5 py-0.5 rounded-full font-bold uppercase bg-emerald-950 text-emerald-400 border border-emerald-700';
+        }
+      } else { // standby
+        elem.className = 'p-4 rounded-2xl bg-slate-950/50 border border-slate-800/80 opacity-40 transition-all duration-200';
+        if (badge) {
+          badge.innerText = 'STANDBY';
+          badge.className = 'text-[10px] font-mono px-2.5 py-0.5 rounded-full font-bold uppercase bg-slate-900 text-slate-400 border border-slate-800';
+        }
       }
-    } else if (status === 'ready') {
-      elem.className = 'p-4 rounded-2xl bg-slate-900/90 border border-amber-500/40 transition-all duration-200';
-      if (badge) {
-        badge.innerText = 'READY';
-        badge.className = 'text-[10px] font-mono px-2.5 py-0.5 rounded-full font-bold uppercase bg-amber-950 text-amber-300 border border-amber-800';
-      }
-    } else if (status === 'passed') {
-      elem.className = 'p-4 rounded-2xl bg-slate-950/90 border border-emerald-500/60 shadow-md shadow-emerald-500/10 transition-all duration-200';
-      if (badge) {
-        badge.innerText = '✓ CHECKED';
-        badge.className = 'text-[10px] font-mono px-2.5 py-0.5 rounded-full font-bold uppercase bg-emerald-950 text-emerald-400 border border-emerald-700';
-      }
-    } else { // standby
-      elem.className = 'p-4 rounded-2xl bg-slate-950/50 border border-slate-800/80 opacity-40 transition-all duration-200';
-      if (badge) {
-        badge.innerText = 'STANDBY';
-        badge.className = 'text-[10px] font-mono px-2.5 py-0.5 rounded-full font-bold uppercase bg-slate-900 text-slate-400 border border-slate-800';
-      }
+    } catch (err) {
+      console.warn("setStepStatus warning:", err);
     }
   }
 
   syncSlide3Heat(currentTime) {
-    if (currentTime >= 8.16) {
-      if (this.tempBarFill) this.tempBarFill.style.width = '96%';
-      if (this.tempGaugeVal) {
-        this.tempGaugeVal.innerText = '1,000°F+ THERMAL RUNAWAY';
-        this.tempGaugeVal.className = 'text-red-400 font-extrabold animate-pulse';
+    try {
+      if (currentTime >= 8.16) {
+        if (this.tempBarFill) this.tempBarFill.style.width = '96%';
+        if (this.tempGaugeVal) {
+          this.tempGaugeVal.innerText = '1,000°F+ THERMAL RUNAWAY';
+          this.tempGaugeVal.className = 'text-red-400 font-extrabold animate-pulse';
+        }
+      } else {
+        if (this.tempBarFill) this.tempBarFill.style.width = '35%';
+        if (this.tempGaugeVal) {
+          this.tempGaugeVal.innerText = '135°F NORMAL DOCKED';
+          this.tempGaugeVal.className = 'text-amber-400 font-bold';
+        }
       }
-    } else {
-      if (this.tempBarFill) this.tempBarFill.style.width = '35%';
-      if (this.tempGaugeVal) {
-        this.tempGaugeVal.innerText = '135°F NORMAL DOCKED';
-        this.tempGaugeVal.className = 'text-amber-400 font-bold';
-      }
+    } catch (err) {
+      console.warn("syncSlide3Heat warning:", err);
     }
   }
 
@@ -655,16 +686,16 @@ class BroadcastPresentation {
       this.playPauseIcon.setAttribute('data-lucide', 'pause');
       this.playPauseIcon.className = 'w-4 h-4 text-emerald-400';
       this.liveIndicator.classList.remove('hidden');
-      if (this.currentAudio) {
-        this.currentAudio.play();
+      if (this.audio) {
+        this.audio.play().catch(err => console.warn(err));
       }
     } else {
       this.playPauseLabel.innerText = 'Resume';
       this.playPauseIcon.setAttribute('data-lucide', 'play');
       this.playPauseIcon.className = 'w-4 h-4 text-amber-400';
       this.liveIndicator.classList.add('hidden');
-      if (this.currentAudio) {
-        this.currentAudio.pause();
+      if (this.audio) {
+        this.audio.pause();
       }
     }
     this.initLucide();
