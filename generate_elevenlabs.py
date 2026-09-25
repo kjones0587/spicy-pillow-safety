@@ -14,16 +14,18 @@ import argparse
 import urllib.request
 import json
 
-# Pre-selected expressive conversational voices
+# Pre-selected expressive conversational voices & user cloned voice
 VOICES = {
-    "adam": "pNInz6obpgDQGcFmaJgB",      # Deep, friendly, natural American male (Recommended)
+    "kellen": "4Pguum1zwitzLyLZqu4e",    # User Cloned Voice (Default)
+    "will": "bIHbv24MWmeRgasZH58o",      # Relaxed Optimist
+    "adam": "pNInz6obpgDQGcFmaJgB",      # Deep, friendly, natural American male
     "brian": "nPczCjzI2devNBz1zQrb",     # Conversational narrator
     "rachel": "21m00Tcm4TlvDq8ikWAM",    # Calm, natural female
     "drew": "29vD33N1CtxCmqQRPOHJ",      # Confident, friendly male
     "callum": "N2lVS1w4EtoT3dr4eOWO",    # Conversational male
 }
 
-DEFAULT_VOICE = "adam"
+DEFAULT_VOICE = "kellen"
 MODEL_ID = "eleven_turbo_v2_5" # Fast, natural, high quality
 
 scripts = {

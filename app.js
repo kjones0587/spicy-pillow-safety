@@ -1,7 +1,7 @@
 /**
- * Spicy Pillow Safety Briefing v5.2 (ElevenLabs Will Edition)
+ * Spicy Pillow Safety Briefing v5.3 (Kellen Cloned Voice Edition)
  * Optimized for Microsoft Teams Screen Sharing
- * Narrator: ElevenLabs Will (Relaxed Optimist - Turbo v2.5)
+ * Narrator: Kellen (ElevenLabs Cloned Voice - Turbo v2.5)
  */
 
 class SoundFX {
@@ -87,7 +87,7 @@ class SoundFX {
   }
 }
 
-// Chapter Definitions with Andrew Multilingual Neural Voice MP3s
+// Chapter Definitions with ElevenLabs Audio
 const chapters = [
   {
     id: 1,
@@ -121,39 +121,39 @@ const chapters = [
   }
 ];
 
-// Exact sentence-synchronized kinetic typography cues for all 5 chapters (ElevenLabs Will Edition)
+// Exact sentence-synchronized kinetic typography cues for all 5 chapters (Kellen Cloned Voice Edition)
 const kineticCues = {
   0: [
     { time: 0, text: "Hey everyone! Today's safety briefing is about the 'Spicy Pillow' hazard...", icon: "shield-alert", color: "amber" },
-    { time: 7.26, text: "Look over at your work laptop sitting on your desk...", icon: "laptop", color: "emerald" },
-    { time: 19.13, text: "Docked 24/7 on continuous float charge & electrical stress", icon: "zap", color: "amber" },
-    { time: 29.73, text: "Continuous charging degrades cell → Turns into a 'Spicy Pillow'", icon: "flame", color: "red" },
-    { time: 39.14, text: "Decomposed electrolyte traps volatile flammable gas at 58.4 PSI!", icon: "alert-triangle", color: "red" }
+    { time: 5.46, text: "Look over at your work laptop sitting on your desk...", icon: "laptop", color: "emerald" },
+    { time: 13.53, text: "Docked 24/7 on continuous float charge & electrical stress", icon: "zap", color: "amber" },
+    { time: 21.75, text: "Continuous charging degrades cell → Turns into a 'Spicy Pillow'", icon: "flame", color: "red" },
+    { time: 27.81, text: "Decomposed electrolyte traps volatile flammable gas at 58.4 PSI!", icon: "alert-triangle", color: "red" }
   ],
   1: [
     { time: 0, text: "Live 20-Second Hardware Audit: Slide laptop onto a clear flat desk area...", icon: "scan", color: "emerald" },
-    { time: 9.10, text: "CHECK 1: Push opposite corners — Does the chassis rock or wobble?", icon: "help-circle", color: "amber" },
-    { time: 19.47, text: "CHECK 2: Click down on trackpad — Is mechanical click travel stiff or mushy?", icon: "mouse-pointer-click", color: "amber" },
-    { time: 29.96, text: "CHECK 3: Inspect side USB ports — Are casing seams popping or screws bowing?", icon: "split", color: "red" },
-    { time: 35.98, text: "AUDIT COMPLETE: All 3 physical inspection checks verified!", icon: "check-circle", color: "emerald" }
+    { time: 7.70, text: "CHECK 1: Push opposite corners — Does the chassis rock or wobble?", icon: "help-circle", color: "amber" },
+    { time: 15.94, text: "CHECK 2: Click down on trackpad — Is mechanical click travel stiff or mushy?", icon: "mouse-pointer-click", color: "amber" },
+    { time: 24.93, text: "CHECK 3: Inspect side USB ports — Are casing seams popping or screws bowing?", icon: "split", color: "red" },
+    { time: 29.29, text: "AUDIT COMPLETE: All 3 physical inspection checks verified!", icon: "check-circle", color: "emerald" }
   ],
   2: [
     { time: 0, text: "Inside that pouch: pressurized volatile organic solvents...", icon: "flask-conical", color: "amber" },
-    { time: 8.41, text: "THERMAL RUNAWAY: Self-oxidizing fire burning hotter than 1,000°F!", icon: "flame", color: "red" },
-    { time: 15.50, text: "Releases toxic HF acid gas — Standard water will NOT extinguish!", icon: "skull", color: "red" },
-    { time: 22.41, text: "#1 REMOTE WORKER TRAP: Beds, couches, & blankets suffocate cooling vents 100%", icon: "bed", color: "red" }
+    { time: 6.11, text: "THERMAL RUNAWAY: Self-oxidizing fire burning hotter than 1,000°F!", icon: "flame", color: "red" },
+    { time: 12.00, text: "Releases toxic HF acid gas — Standard water will NOT extinguish!", icon: "skull", color: "red" },
+    { time: 17.43, text: "#1 REMOTE WORKER TRAP: Beds, couches, & blankets suffocate cooling vents 100%", icon: "bed", color: "red" }
   ],
   3: [
     { time: 0, text: "ACTIVE EMERGENCY: Hissing, sweet chemical odor, or white smoke popping...", icon: "siren", color: "red" },
-    { time: 4.60, text: "PRIORITY 1: Move away from curtains & bedding → Granite, tile, or metal sheet", icon: "shield-alert", color: "amber" },
-    { time: 22.99, text: "Use oven mitts or tools if hot — Never touch a burning battery bare-handed!", icon: "shield-alert", color: "amber" },
-    { time: 29.15, text: "PRIORITY 2: Toxic HF smoke! Never throw small cups of water (steam flare-ups)", icon: "wind", color: "red" },
-    { time: 39.50, text: "PRIORITY 3: Close room door to contain fire, evacuate people & pets, call 911!", icon: "door-closed", color: "emerald" }
+    { time: 4.21, text: "PRIORITY 1: Move away from curtains & bedding → Granite, tile, or metal sheet", icon: "shield-alert", color: "amber" },
+    { time: 20.63, text: "Use oven mitts or tools if hot — Never touch a burning battery bare-handed!", icon: "shield-alert", color: "amber" },
+    { time: 25.12, text: "PRIORITY 2: Toxic HF smoke! Never throw small cups of water (steam flare-ups)", icon: "wind", color: "red" },
+    { time: 33.27, text: "PRIORITY 3: Close room door to contain fire, evacuate people & pets, call 911!", icon: "door-closed", color: "emerald" }
   ],
   4: [
     { time: 0, text: "Routine Swelling: Unplug charger, quarantine on tile/metal, submit IT ticket", icon: "ticket", color: "amber" },
-    { time: 13.18, text: "HARDWARE AUDIT COMPLETE: You know how to identify and isolate battery hazards", icon: "check-circle", color: "emerald" },
-    { time: 18.25, text: "Keep cooling vents clear, and have a safe, productive shift!", icon: "check-circle-2", color: "emerald" }
+    { time: 11.45, text: "HARDWARE AUDIT COMPLETE: You know how to identify and isolate battery hazards", icon: "check-circle", color: "emerald" },
+    { time: 15.81, text: "Keep cooling vents clear, and have a safe, productive shift!", icon: "check-circle-2", color: "emerald" }
   ]
 };
 
@@ -475,13 +475,13 @@ class BroadcastPresentation {
   }
 
   /**
-   * EXACT SLIDE 2 VOICE SYNCHRONIZATION (ElevenLabs Will Edition)
+   * EXACT SLIDE 2 VOICE SYNCHRONIZATION (Kellen Cloned Voice Edition)
    * Timings derived directly from ElevenLabs with-timestamps character alignment:
-   * [ 0.00s -  8.41s] Let's do a live 20-second hardware audit... Undock/slide...
-   * [ 9.10s - 18.66s] First: push down on opposite corners. Wobble test.
-   * [19.47s - 29.52s] Second: click down on your trackpad. Stiff/mushy travel.
-   * [29.96s - 35.38s] And third: glance along your side USB ports. Popping seams.
-   * [35.98s - 37.38s] Wrap up your check now.
+   * [ 0.00s -  7.70s] Let's do a live 20-second hardware audit... Undock/slide...
+   * [ 7.70s - 15.94s] First: push down on opposite corners. Wobble test.
+   * [15.94s - 24.93s] Second: click down on your trackpad. Stiff/mushy travel.
+   * [24.93s - 29.29s] And third: glance along your side USB ports. Popping seams.
+   * [29.29s - 30.60s] Wrap up your check now.
    */
   syncSlide2Audit(currentTime) {
     try {
@@ -490,14 +490,14 @@ class BroadcastPresentation {
 
       // Tick sound every integer second during active audit
       const currentIntSec = Math.floor(currentTime);
-      if (currentTime >= 9.10 && currentTime < 35.98 && currentIntSec !== this.lastTickSecond) {
+      if (currentTime >= 7.70 && currentTime < 29.29 && currentIntSec !== this.lastTickSecond) {
         this.lastTickSecond = currentIntSec;
         if (this.isPlaying) {
           this.sound.playTick();
         }
       }
 
-      if (currentTime < 9.10) {
+      if (currentTime < 7.70) {
         // PREPARE STAGE
         if (this.countdownNumber) {
           this.countdownNumber.innerText = '20';
@@ -513,13 +513,13 @@ class BroadcastPresentation {
         this.setStepStatus(3, 'standby');
         this.lastAuditStep = 0;
       }
-      else if (currentTime >= 9.10 && currentTime < 19.47) {
+      else if (currentTime >= 7.70 && currentTime < 15.94) {
         // STEP 1 ACTIVE: WOBBLE TEST
         if (this.lastAuditStep !== 1) {
           this.lastAuditStep = 1;
           this.sound.playChime();
         }
-        const remaining = Math.max(0, Math.ceil(20 * (1 - (currentTime - 9.10) / (35.98 - 9.10))));
+        const remaining = Math.max(0, Math.ceil(20 * (1 - (currentTime - 7.70) / (29.29 - 7.70))));
         if (this.countdownNumber) {
           this.countdownNumber.innerText = remaining;
           this.countdownNumber.className = 'absolute text-2xl font-black font-mono text-amber-400';
@@ -534,13 +534,13 @@ class BroadcastPresentation {
         this.setStepStatus(2, 'standby');
         this.setStepStatus(3, 'standby');
       }
-      else if (currentTime >= 19.47 && currentTime < 29.96) {
+      else if (currentTime >= 15.94 && currentTime < 24.93) {
         // STEP 2 ACTIVE: TRACKPAD CLICK
         if (this.lastAuditStep !== 2) {
           this.lastAuditStep = 2;
           this.sound.playChime();
         }
-        const remaining = Math.max(0, Math.ceil(20 * (1 - (currentTime - 9.10) / (35.98 - 9.10))));
+        const remaining = Math.max(0, Math.ceil(20 * (1 - (currentTime - 7.70) / (29.29 - 7.70))));
         if (this.countdownNumber) {
           this.countdownNumber.innerText = remaining;
           this.countdownNumber.className = 'absolute text-2xl font-black font-mono text-amber-400';
@@ -555,13 +555,13 @@ class BroadcastPresentation {
         this.setStepStatus(2, 'active');
         this.setStepStatus(3, 'standby');
       }
-      else if (currentTime >= 29.96 && currentTime < 35.98) {
+      else if (currentTime >= 24.93 && currentTime < 29.29) {
         // STEP 3 ACTIVE: SEAMS & PORTS
         if (this.lastAuditStep !== 3) {
           this.lastAuditStep = 3;
           this.sound.playChime();
         }
-        const remaining = Math.max(0, Math.ceil(20 * (1 - (currentTime - 9.10) / (35.98 - 9.10))));
+        const remaining = Math.max(0, Math.ceil(20 * (1 - (currentTime - 7.70) / (29.29 - 7.70))));
         if (this.countdownNumber) {
           this.countdownNumber.innerText = remaining;
           this.countdownNumber.className = 'absolute text-2xl font-black font-mono text-amber-400';
@@ -577,7 +577,7 @@ class BroadcastPresentation {
         this.setStepStatus(3, 'active');
       }
       else {
-        // AUDIT COMPLETE (currentTime >= 35.98)
+        // AUDIT COMPLETE (currentTime >= 29.29)
         if (this.lastAuditStep !== 4) {
           this.lastAuditStep = 4;
           this.sound.playSuccess();
@@ -645,7 +645,7 @@ class BroadcastPresentation {
 
   syncSlide3Heat(currentTime) {
     try {
-      if (currentTime >= 8.41) {
+      if (currentTime >= 8.28) {
         if (this.tempBarFill) this.tempBarFill.style.width = '96%';
         if (this.tempGaugeVal) {
           this.tempGaugeVal.innerText = '1,000°F+ THERMAL RUNAWAY';

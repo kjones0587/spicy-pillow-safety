@@ -1,0 +1,192 @@
+{
+  "chapter1.mp3": [
+    [
+      0.0,
+      5.375,
+      "Hey everyone, today's quick safety briefing is about something we see all too often on the help desk: the Spicy Pillow."
+    ],
+    [
+      5.457,
+      8.29,
+      "Take a second and look over at your work laptop sitting on your desk."
+    ],
+    [
+      8.325,
+      13.503,
+      "Whether it's hooked up to your dock, closed, or running as a secondary screen, ever wonder what's going on inside it?"
+    ],
+    [
+      13.526,
+      21.421,
+      "We usually work 10-hour shifts, but our laptops stay plugged into the dock 24/7\u2014keeping the battery constantly charging under relentless heat and electrical float stress."
+    ],
+    [
+      21.746,
+      24.672,
+      "Over time, that continuous charging can degrade the battery..."
+    ],
+    [
+      24.846,
+      27.725,
+      "turning it into what hardware engineers call, a Spicy Pillow."
+    ],
+    [
+      27.806,
+      34.598,
+      "That's a lithium-ion pouch cell that has decomposed internally, trapping volatile, pressurized gases inside a thin foil casing."
+    ]
+  ],
+  "chapter2.mp3": [
+    [
+      0.0,
+      2.937,
+      "Let's do a live 20-second hardware audit together right now."
+    ],
+    [
+      3.053,
+      7.419,
+      "Undock or slide your laptop onto a clear flat desk area, and follow the screen."
+    ],
+    [
+      7.697,
+      9.578,
+      "First: push down on opposite corners."
+    ],
+    [
+      9.705,
+      11.946,
+      "Does it rock or wobble like an uneven table?"
+    ],
+    [
+      12.097,
+      15.243,
+      "If it does, a swollen cell is bulging against the bottom plate."
+    ],
+    [
+      15.94,
+      17.809,
+      "Second: click down on your trackpad."
+    ],
+    [
+      17.89,
+      21.118,
+      "Does it click cleanly, or does it feel stiff, shallow, or mushy?"
+    ],
+    [
+      21.443,
+      24.717,
+      "Swelling batteries push directly against that mechanical switch."
+    ],
+    [
+      24.926,
+      27.608,
+      "And third: glance along your side USB ports."
+    ],
+    [
+      27.666,
+      29.141,
+      "Are any seams popping apart?"
+    ],
+    [
+      29.292,
+      30.603,
+      "Wrap up your check now."
+    ]
+  ],
+  "chapter3.mp3": [
+    [
+      0.0,
+      2.647,
+      "Why is a spicy pillow such a serious safety hazard?"
+    ],
+    [
+      2.798,
+      6.084,
+      "Inside that pressurized pouch is a volatile mix of organic solvents."
+    ],
+    [
+      6.107,
+      17.369,
+      "If that cell overheats or gets punctured, it triggers thermal runaway: a self-oxidizing chemical fire that burns hotter than 1,000 degrees, releases toxic hydrogen fluoride gas, and cannot easily be put out with water."
+    ],
+    [
+      17.427,
+      19.273,
+      "And the number one culprit for remote workers?"
+    ],
+    [
+      19.447,
+      22.558,
+      "Working while resting your laptop on a bed, couch, or blanket..."
+    ],
+    [
+      22.709,
+      25.17,
+      "which completely suffocates the cooling vents."
+    ]
+  ],
+  "chapter4.mp3": [
+    [
+      0.0,
+      4.18,
+      "Now, what should you do if your laptop unfortunately enters active thermal runaway?"
+    ],
+    [
+      4.214,
+      11.319,
+      "If you hear hissing, smell sweet chemicals, or see white smoke starting to pop: First: immediately isolate it from flammable materials."
+    ],
+    [
+      11.389,
+      20.457,
+      "If it's sitting next to curtains, bedding, or loose paper, move or slide it onto a hard, non-combustible surface like a granite countertop, tile floor, or metal baking sheet."
+    ],
+    [
+      20.631,
+      24.845,
+      "Use oven mitts or a tool if it's hot\u2014never grab a burning battery with bare hands."
+    ],
+    [
+      25.124,
+      26.993,
+      "Second: do not breathe the white smoke."
+    ],
+    [
+      27.167,
+      29.431,
+      "It contains toxic hydrogen fluoride gas."
+    ],
+    [
+      29.501,
+      33.123,
+      "And never throw a small cup of water on it, which can cause violent steam flare-ups."
+    ],
+    [
+      33.274,
+      39.195,
+      "Third: close the room door behind you to contain the fumes and fire, evacuate, and call 911 immediately."
+    ]
+  ],
+  "chapter5.mp3": [
+    [
+      0.0,
+      11.331,
+      "If your battery is only swollen but not smoking, the routine protocol is simple: disconnect the charger, power down, quarantine the machine on a tile or metal surface, and open an emergency IT replacement ticket."
+    ],
+    [
+      11.447,
+      12.713,
+      "Hardware check complete!"
+    ],
+    [
+      12.887,
+      15.696,
+      "You know what to look for and how to isolate a fire hazard safely."
+    ],
+    [
+      15.813,
+      18.761,
+      "Keep your cooling vents clear, and have a safe, great shift!"
+    ]
+  ]
+}
