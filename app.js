@@ -111,7 +111,7 @@ const chapters = [
     id: 4,
     name: "Emergency Action",
     audioSrc: "audio/chapter4.mp3",
-    caption: "EMERGENCY DRILL: 1. EVACUATE TOXIC FUMES (White smoke has toxic HF gas). 2. NEVER touch or throw cups of water. 3. Close room door to contain fire and call 911 immediately!"
+    caption: "EMERGENCY PROTOCOL: 1. Move away from curtains/bedding onto granite, tile, or metal sheet (use oven mitts). 2. Do not inhale white smoke (HF gas); no cups of water. 3. Close door to contain fire and call 911!"
   },
   {
     id: 5,
