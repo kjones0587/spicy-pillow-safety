@@ -1,5 +1,5 @@
 /**
- * Spicy Pillow Safety Briefing v5.1 (ElevenLabs Will Edition)
+ * Spicy Pillow Safety Briefing v5.2 (ElevenLabs Will Edition)
  * Optimized for Microsoft Teams Screen Sharing
  * Narrator: ElevenLabs Will (Relaxed Optimist - Turbo v2.5)
  */

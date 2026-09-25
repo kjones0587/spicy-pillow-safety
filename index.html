@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Safety Briefing: The "Spicy Pillow" Hazard (Broadcast Edition v4.7)</title>
+  <title>Safety Briefing: The "Spicy Pillow" Hazard (Broadcast Edition v5.2)</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔋</text></svg>">
   
   <!-- Tailwind CSS via CDN -->
@@ -11,7 +11,7 @@
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
   
-  <link rel="stylesheet" href="styles.css?v=5.1.0">
+  <link rel="stylesheet" href="styles.css?v=5.2.0">
 </head>
 <body class="bg-[#06070c] text-slate-100 min-h-screen flex flex-col justify-between selection:bg-amber-500 selection:text-black font-sans antialiased tech-grid-bg overflow-x-hidden">
 
@@ -28,9 +28,9 @@
             <span class="text-[11px] font-extrabold uppercase tracking-wider text-amber-400 bg-amber-950/80 px-2 py-0.5 rounded border border-amber-800/50">
               Help Desk Safety
             </span>
-            <!-- PROMINENT VERSION BADGE (v5.1 ElevenLabs Will Edition) -->
+            <!-- PROMINENT VERSION BADGE (v5.2) -->
             <span id="version-badge" class="text-[11px] font-mono font-bold text-emerald-400 bg-emerald-950/90 px-2.5 py-0.5 rounded border border-emerald-500/50 shadow-sm shadow-emerald-500/20">
-              v5.1
+              v5.2
             </span>
             <span id="live-indicator" class="hidden items-center gap-1.5 text-xs text-emerald-400 font-medium">
               <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
@@ -43,16 +43,24 @@
         </div>
       </div>
 
-      <!-- Teams Broadcast Controls -->
-      <div class="flex items-center gap-3">
+      <!-- Teams Broadcast Controls (All in Header) -->
+      <div class="flex items-center gap-2">
         <button id="fullscreen-btn" class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-700/80 transition" title="Toggle Fullscreen (Press F)">
           <i data-lucide="maximize-2" class="w-4 h-4 text-slate-400"></i>
-          <span>Fullscreen</span>
+          <span class="hidden sm:inline">Fullscreen</span>
+        </button>
+
+        <button id="prev-slide-btn" class="p-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-700/80 transition" title="Previous Slide">
+          <i data-lucide="chevron-left" class="w-4 h-4"></i>
         </button>
 
         <button id="play-pause-btn" class="flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-bold rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition" title="Pause / Resume (Spacebar)">
           <i id="play-pause-icon" data-lucide="pause" class="w-4 h-4 text-emerald-400"></i>
           <span id="play-pause-label">Pause</span>
+        </button>
+
+        <button id="next-slide-btn" class="p-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-700/80 transition" title="Next Slide">
+          <i data-lucide="chevron-right" class="w-4 h-4"></i>
         </button>
 
         <div class="text-xs font-mono font-bold text-slate-300 bg-slate-950/90 px-3 py-1.5 rounded-xl border border-slate-800">
@@ -491,34 +499,6 @@
 
   </main>
 
-  <!-- LIVE TEAMS CAPTION BAR -->
-  <footer class="w-full bg-slate-950/95 border-t border-slate-800/80 px-4 sm:px-8 py-3.5 backdrop-blur-xl sticky bottom-0 z-40">
-    <div class="max-w-6xl mx-auto flex items-center gap-4">
-      <div class="w-8 h-8 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center shrink-0">
-        <i data-lucide="message-square-quote" class="w-4 h-4"></i>
-      </div>
-      <div class="flex-1 overflow-hidden">
-        <div class="text-[10px] font-mono uppercase text-slate-500 font-bold">Live Screen-Share Narration</div>
-        <p id="live-caption-text" class="text-xs sm:text-sm text-amber-200/90 font-medium truncate">
-          Click "Launch Screen-Share Briefing" to begin...
-        </p>
-      </div>
-
-      <!-- Presenter Controls & Version Badge (v5.1) -->
-      <div class="flex items-center gap-2.5 shrink-0">
-        <span class="text-[11px] font-mono font-bold text-emerald-400 bg-emerald-950/90 px-2.5 py-1 rounded-xl border border-emerald-500/50 shadow-sm shadow-emerald-500/20">
-          v5.1
-        </span>
-        <button id="prev-slide-btn" class="p-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 transition" title="Previous Slide">
-          <i data-lucide="chevron-left" class="w-4 h-4"></i>
-        </button>
-        <button id="next-slide-btn" class="p-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 transition" title="Next Slide">
-          <i data-lucide="chevron-right" class="w-4 h-4"></i>
-        </button>
-      </div>
-    </div>
-  </footer>
-
-  <script src="app.js?v=5.1.0"></script>
+  <script src="app.js?v=5.2.0"></script>
 </body>
 </html>
