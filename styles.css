@@ -1,4 +1,4 @@
-/* v4.6 Kinetic Typography & Full Scrubbing Styles */
+/* v4.7 Layout Expansion & Exact Voice Sync Styles */
 
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700&display=swap');
 
@@ -10,22 +10,23 @@ body {
 /* Tech grid background */
 .tech-grid-bg {
   background-image: 
-    radial-gradient(circle at 50% 15%, rgba(245, 158, 11, 0.1) 0%, transparent 65%),
-    radial-gradient(circle at 80% 80%, rgba(239, 68, 68, 0.06) 0%, transparent 50%),
-    linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
-  background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px;
+    radial-gradient(circle at 50% 15%, rgba(245, 158, 11, 0.12) 0%, transparent 70%),
+    radial-gradient(circle at 80% 80%, rgba(239, 68, 68, 0.08) 0%, transparent 55%),
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 48px 48px, 48px 48px;
 }
 
 /* Slide visibility and transitions */
 .broadcast-slide {
-  transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  width: 100%;
 }
 
 .broadcast-slide.hidden {
   display: none !important;
   opacity: 0;
-  transform: scale(0.96) translateY(14px);
+  transform: scale(0.97) translateY(12px);
 }
 
 .broadcast-slide.active {
@@ -39,8 +40,8 @@ body {
    ========================================================= */
 
 .seg-track {
-  background-color: rgba(30, 41, 59, 0.8);
-  height: 9px;
+  background-color: rgba(30, 41, 59, 0.85);
+  height: 10px;
   border-radius: 9999px;
   overflow: hidden;
   cursor: pointer;
@@ -50,8 +51,8 @@ body {
 
 .seg-track:hover {
   background-color: rgba(51, 65, 85, 0.95);
-  transform: scaleY(1.35);
-  box-shadow: 0 0 12px rgba(245, 158, 11, 0.3);
+  transform: scaleY(1.4);
+  box-shadow: 0 0 14px rgba(245, 158, 11, 0.35);
 }
 
 .seg-fill {
@@ -79,7 +80,7 @@ body {
 @keyframes kineticFadeSlideIn {
   0% {
     opacity: 0;
-    transform: translateY(12px) scale(0.96);
+    transform: translateY(10px) scale(0.97);
   }
   100% {
     opacity: 1;
@@ -88,44 +89,52 @@ body {
 }
 
 .kinetic-callout-box {
-  animation: kineticFadeSlideIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: kineticFadeSlideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 /* Highlight border glows */
 .border-glow-emerald {
-  border-color: rgba(16, 185, 129, 0.8) !important;
+  border-color: rgba(16, 185, 129, 0.85) !important;
   box-shadow: 0 0 25px rgba(16, 185, 129, 0.25);
 }
 
 .border-glow-amber {
-  border-color: rgba(245, 158, 11, 0.85) !important;
+  border-color: rgba(245, 158, 11, 0.9) !important;
   box-shadow: 0 0 30px rgba(245, 158, 11, 0.3);
 }
 
 .border-glow-red {
-  border-color: rgba(239, 68, 68, 0.9) !important;
+  border-color: rgba(239, 68, 68, 0.95) !important;
   box-shadow: 0 0 35px rgba(239, 68, 68, 0.4);
 }
 
 /* Scanning line animation across hero image */
 @keyframes scanlineSweep {
   0% { transform: translateY(-100%); opacity: 0; }
-  30% { opacity: 0.8; }
-  70% { opacity: 0.8; }
-  100% { transform: translateY(250%); opacity: 0; }
+  30% { opacity: 0.85; }
+  70% { opacity: 0.85; }
+  100% { transform: translateY(260%); opacity: 0; }
 }
 
 .animate-scanline {
-  animation: scanlineSweep 3.5s infinite ease-in-out;
+  animation: scanlineSweep 3.2s infinite ease-in-out;
 }
 
 /* Pulse alert ring */
 @keyframes pulseRing {
-  0% { transform: scale(0.95); opacity: 0.6; }
-  50% { transform: scale(1.05); opacity: 1; filter: drop-shadow(0 0 15px rgba(239, 68, 68, 0.8)); }
-  100% { transform: scale(0.95); opacity: 0.6; }
+  0% { transform: scale(0.96); opacity: 0.6; }
+  50% { transform: scale(1.04); opacity: 1; filter: drop-shadow(0 0 15px rgba(239, 68, 68, 0.8)); }
+  100% { transform: scale(0.96); opacity: 0.6; }
 }
 
 .animate-pulse-ring {
   animation: pulseRing 1.5s infinite ease-in-out;
+}
+
+/* Glassmorphism stage card */
+.stage-card {
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(51, 65, 85, 0.6);
 }

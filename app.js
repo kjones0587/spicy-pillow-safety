@@ -1,5 +1,5 @@
 /**
- * Spicy Pillow Safety Briefing v4.6 (Kinetic Typography & Scrubber Edition)
+ * Spicy Pillow Safety Briefing v4.7 (Exact Voice-Synced Scrubber Edition)
  * Optimized for Microsoft Teams Screen Sharing
  * Narrator: en-US-AndrewMultilingualNeural
  */
@@ -45,7 +45,7 @@ class SoundFX {
     const gain = this.ctx.createGain();
     osc.type = 'triangle';
     osc.frequency.setValueAtTime(750, now);
-    gain.gain.setValueAtTime(0.04, now);
+    gain.gain.setValueAtTime(0.035, now);
     gain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
     osc.connect(gain);
     gain.connect(this.ctx.destination);
@@ -121,34 +121,38 @@ const chapters = [
   }
 ];
 
-// Kinetic Typography Cues (Time-synchronized dynamic text highlights)
+// Exact sentence-synchronized kinetic typography cues for all 5 chapters
 const kineticCues = {
   0: [
     { time: 0, text: "Look over at your work laptop sitting on your desk...", icon: "laptop", color: "emerald" },
-    { time: 3.5, text: "Docked 24/7 on continuous float charge & electrical stress", icon: "zap", color: "amber" },
-    { time: 7.8, text: "Internal electrolyte breakdown into volatile trapped gas", icon: "flame", color: "red" },
-    { time: 11.2, text: "THE 'SPICY PILLOW' — Expanding under 58.4 PSI pressure!", icon: "alert-triangle", color: "red" }
+    { time: 10.06, text: "Docked 24/7 on continuous float charge & electrical stress", icon: "zap", color: "amber" },
+    { time: 21.91, text: "Continuous charging degrades cell → Turns into a 'Spicy Pillow'", icon: "flame", color: "red" },
+    { time: 29.54, text: "Decomposed electrolyte traps volatile flammable gas at 58.4 PSI!", icon: "alert-triangle", color: "red" }
   ],
   1: [
-    { time: 0, text: "20-Second Hardware Audit: Slide laptop onto a clear flat area...", icon: "scan", color: "emerald" },
-    { time: 3.8, text: "CHECK 1: Push opposite corners — Does the base rock or wobble?", icon: "help-circle", color: "amber" },
-    { time: 8.5, text: "CHECK 2: Click trackpad — Is mechanical travel blocked or stiff?", icon: "mouse-pointer-click", color: "amber" },
-    { time: 12.5, text: "CHECK 3: Inspect port seams — Are casing screws or plastic popping?", icon: "split", color: "red" }
+    { time: 0, text: "Live 20-Second Hardware Audit: Slide laptop onto a clear flat desk area...", icon: "scan", color: "emerald" },
+    { time: 8.59, text: "CHECK 1: Push opposite corners — Does the chassis rock or wobble?", icon: "help-circle", color: "amber" },
+    { time: 18.35, text: "CHECK 2: Click down on trackpad — Is mechanical click travel stiff or mushy?", icon: "mouse-pointer-click", color: "amber" },
+    { time: 29.58, text: "CHECK 3: Inspect side USB ports — Are casing seams popping or screws bowing?", icon: "split", color: "red" },
+    { time: 34.95, text: "AUDIT COMPLETE: All 3 physical inspection checks verified!", icon: "check-circle", color: "emerald" }
   ],
   2: [
-    { time: 0, text: "Inside: pressurized pouch filled with volatile organic solvents...", icon: "flask-conical", color: "amber" },
-    { time: 4.5, text: "THERMAL RUNAWAY: Burning hotter than 1,000°F (Self-oxidizing)", icon: "flame", color: "red" },
-    { time: 9.0, text: "#1 REMOTE TRAP: Working on beds & blankets suffocates vents 100%", icon: "bed", color: "red" }
+    { time: 0, text: "Inside that pouch: pressurized volatile organic solvents...", icon: "flask-conical", color: "amber" },
+    { time: 8.16, text: "THERMAL RUNAWAY: Self-oxidizing fire burning hotter than 1,000°F!", icon: "flame", color: "red" },
+    { time: 16.0, text: "Releases toxic HF acid gas — Standard water will NOT extinguish!", icon: "skull", color: "red" },
+    { time: 23.04, text: "#1 REMOTE WORKER TRAP: Beds, couches, & blankets suffocate cooling vents 100%", icon: "bed", color: "red" }
   ],
   3: [
-    { time: 0, text: "ACTIVE EMERGENCY: Hissing, sweet chemical odor, white smoke popping...", icon: "siren", color: "red" },
-    { time: 4.5, text: "STEP 1: Move away from curtains & bedding → Granite or Tile (Use oven mitts)", icon: "shield-alert", color: "amber" },
-    { time: 11.0, text: "STEP 2: Never inhale toxic HF smoke — Never throw cups of water!", icon: "wind", color: "red" },
-    { time: 15.5, text: "STEP 3: Close room door to seal fire → Call 911 immediately", icon: "door-closed", color: "emerald" }
+    { time: 0, text: "ACTIVE EMERGENCY: Hissing, sweet chemical odor, or white smoke popping...", icon: "siren", color: "red" },
+    { time: 5.21, text: "PRIORITY 1: Move away from curtains & bedding → Granite, tile, or metal sheet", icon: "shield-alert", color: "amber" },
+    { time: 26.67, text: "Use oven mitts or tools if hot — Never touch a burning battery bare-handed!", icon: "shield-alert", color: "amber" },
+    { time: 32.57, text: "PRIORITY 2: Toxic HF smoke! Never throw small cups of water (steam flare-ups)", icon: "wind", color: "red" },
+    { time: 43.64, text: "PRIORITY 3: Close room door to contain fire, evacuate people & pets, call 911!", icon: "door-closed", color: "emerald" }
   ],
   4: [
-    { time: 0, text: "Routine Swelling: Unplug, quarantine on tile/metal, open IT ticket", icon: "ticket", color: "amber" },
-    { time: 5.0, text: "SAFETY AUDIT COMPLETE: Keep vents clear and have a great shift!", icon: "check-circle", color: "emerald" }
+    { time: 0, text: "Routine Swelling: Unplug charger, quarantine on tile/metal, submit IT ticket", icon: "ticket", color: "amber" },
+    { time: 13.73, text: "HARDWARE AUDIT COMPLETE: You know how to identify and isolate battery hazards", icon: "check-circle", color: "emerald" },
+    { time: 19.48, text: "Keep cooling vents clear, and have a safe, productive shift!", icon: "check-circle-2", color: "emerald" }
   ]
 };
 
@@ -159,9 +163,10 @@ class BroadcastPresentation {
     this.isPlaying = false;
     this.totalElapsedSeconds = 0;
     this.globalTimerInterval = null;
-    this.countdownInterval = null;
     this.currentAudio = null;
     this.lastCueIndex = -1;
+    this.lastAuditStep = -1;
+    this.lastTickSecond = -1;
 
     // DOM References
     this.startScreen = document.getElementById('start-screen');
@@ -182,13 +187,16 @@ class BroadcastPresentation {
     this.playPauseIcon = document.getElementById('play-pause-icon');
     this.fullscreenBtn = document.getElementById('fullscreen-btn');
 
-    // Slide 2 Viewfinder Elements
+    // Slide 2 Audit Elements
     this.countdownNumber = document.getElementById('countdown-number');
     this.countdownCircle = document.getElementById('countdown-circle');
     this.testStepIndicator = document.getElementById('test-step-indicator');
     this.viewStep1 = document.getElementById('view-step-1');
     this.viewStep2 = document.getElementById('view-step-2');
     this.viewStep3 = document.getElementById('view-step-3');
+    this.stepBadge1 = document.getElementById('step-badge-1');
+    this.stepBadge2 = document.getElementById('step-badge-2');
+    this.stepBadge3 = document.getElementById('step-badge-3');
 
     // Slide 3 Elements
     this.tempBarFill = document.getElementById('temp-bar-fill');
@@ -219,7 +227,7 @@ class BroadcastPresentation {
       replayBtn.addEventListener('click', () => this.restart());
     }
 
-    // PRECISION SCRUBBER: Click anywhere on ANY segment bar to scrub directly to that percentage!
+    // PRECISION SCRUBBER: Click anywhere on ANY segment bar to scrub directly to that percentage
     this.segTracks.forEach((bar, idx) => {
       bar.addEventListener('click', (e) => {
         e.stopPropagation();
@@ -247,7 +255,6 @@ class BroadcastPresentation {
     // Clicking the column label jumps to start of that chapter
     this.segTrackCols.forEach(col => {
       col.addEventListener('click', (e) => {
-        // Only if didn't click the track itself
         if (!e.target.closest('.seg-track')) {
           const chapterIdx = parseInt(col.getAttribute('data-chapter'), 10);
           if (!isNaN(chapterIdx)) {
@@ -265,7 +272,7 @@ class BroadcastPresentation {
       });
     });
 
-    // Keyboard Shortcuts: Space = Pause, F = Fullscreen, 1-5 = Direct Chapter Jumps
+    // Keyboard Shortcuts: Space = Pause/Resume, F = Fullscreen, 1-5 = Chapter Jumps
     window.addEventListener('keydown', (e) => {
       if (e.code === 'Space') {
         e.preventDefault();
@@ -305,16 +312,14 @@ class BroadcastPresentation {
     if (index < 0 || index >= chapters.length) return;
     this.currentChapterIndex = index;
     this.lastCueIndex = -1;
+    this.lastAuditStep = -1;
+    this.lastTickSecond = -1;
     const chapter = chapters[index];
 
-    // Stop existing audio and timers
+    // Stop existing audio
     if (this.currentAudio) {
       this.currentAudio.pause();
       this.currentAudio = null;
-    }
-    if (this.countdownInterval) {
-      clearInterval(this.countdownInterval);
-      this.countdownInterval = null;
     }
 
     // Slide visibility
@@ -348,7 +353,7 @@ class BroadcastPresentation {
     this.sound.playChime();
 
     // Trigger visual transitions
-    this.handleSlideAnimations(index);
+    this.handleSlideEntry(index);
 
     // Audio Playback with Precision Seeking
     const audio = new Audio(chapter.audioSrc);
@@ -366,6 +371,7 @@ class BroadcastPresentation {
       audio.addEventListener('loadedmetadata', applySeek, { once: true });
     }
 
+    // AUDIO TIMEUPDATE CONTROLLER: High-Precision Sync for Visuals, Steps & Countdown
     audio.addEventListener('timeupdate', () => {
       if (audio.duration) {
         const percent = Math.min(100, Math.round((audio.currentTime / audio.duration) * 100));
@@ -374,8 +380,19 @@ class BroadcastPresentation {
           const fill = activeBar.querySelector('.seg-fill');
           if (fill) fill.style.width = `${percent}%`;
         }
-        // Update Kinetic Typography for current time
+
+        // Kinetic typography synced to exact sentence milestones
         this.updateKineticTypography(index, audio.currentTime);
+
+        // Slide 2: Direct voice-synced audit controller
+        if (index === 1) {
+          this.syncSlide2Audit(audio.currentTime);
+        }
+
+        // Slide 3: Thermal runaway temperature spike
+        if (index === 2) {
+          this.syncSlide3Heat(audio.currentTime);
+        }
       }
     });
 
@@ -414,7 +431,6 @@ class BroadcastPresentation {
       const iconWrap = document.getElementById(`kinetic-icon-wrap-${chapterIdx + 1}`);
 
       if (calloutBox && textElem) {
-        // Trigger subtle animation
         calloutBox.classList.remove('kinetic-callout-box', 'border-glow-emerald', 'border-glow-amber', 'border-glow-red');
         void calloutBox.offsetWidth; // Force reflow
         calloutBox.classList.add('kinetic-callout-box', `border-glow-${cue.color}`);
@@ -422,138 +438,213 @@ class BroadcastPresentation {
         textElem.innerText = cue.text;
 
         if (iconWrap) {
-          iconWrap.className = `w-8 h-8 rounded-xl bg-${cue.color}-500/20 text-${cue.color}-400 flex items-center justify-center shrink-0`;
-          iconWrap.innerHTML = `<i data-lucide="${cue.icon}" class="w-4 h-4"></i>`;
+          iconWrap.className = `w-9 h-9 rounded-xl bg-${cue.color}-500/20 text-${cue.color}-400 flex items-center justify-center shrink-0`;
+          iconWrap.innerHTML = `<i data-lucide="${cue.icon}" class="w-5 h-5"></i>`;
           this.initLucide();
         }
       }
     }
   }
 
-  handleSlideAnimations(index) {
-    // Chapter 1: Pressure Alert Tone
-    if (index === 0) {
-      setTimeout(() => {
-        if (this.currentChapterIndex === 0) {
-          this.sound.playWarning();
-        }
-      }, 9500);
-    }
-
-    // Chapter 2: Hardware Audit Viewfinder Timeline
-    if (index === 1) {
-      this.resetCountdownUI();
-      setTimeout(() => {
-        if (this.currentChapterIndex === 1 && this.isPlaying) {
-          this.runCountdown20s();
-        }
-      }, 4200);
-    }
-
-    // Chapter 3: Heat Gauge Spikes at 7.5s mark
-    if (index === 2) {
-      setTimeout(() => {
-        if (this.currentChapterIndex === 2) {
-          if (this.tempBarFill) this.tempBarFill.style.width = '95%';
-          if (this.tempGaugeVal) {
-            this.tempGaugeVal.innerText = '1,000°F+ THERMAL RUNAWAY';
-            this.tempGaugeVal.className = 'text-red-400 font-extrabold animate-pulse';
-          }
-          this.sound.playWarning();
-        }
-      }, 7500);
-    }
-
-    // Chapter 4: Emergency Alarm Tone on active thermal runaway slide
-    if (index === 3) {
-      this.sound.playWarning();
-    }
-
-    // Chapter 5: Completion
-    if (index === 4) {
-      this.sound.playSuccess();
-    }
-  }
-
-  resetCountdownUI() {
-    if (this.countdownNumber) {
-      this.countdownNumber.innerText = '20';
-      this.countdownNumber.className = 'absolute text-xl font-black font-mono text-amber-400';
-    }
-    if (this.countdownCircle) {
-      this.countdownCircle.style.strokeDashoffset = '0';
-      this.countdownCircle.classList.remove('text-emerald-400');
-      this.countdownCircle.classList.add('text-amber-400');
-    }
-    if (this.testStepIndicator) {
-      this.testStepIndicator.innerText = 'Get Ready...';
-      this.testStepIndicator.className = 'text-base font-black text-amber-300';
-    }
-    this.highlightStep(1);
-  }
-
-  runCountdown20s() {
-    let timeLeft = 20;
+  /**
+   * EXACT SLIDE 2 VOICE SYNCHRONIZATION
+   * Timings derived directly from edge-tts sentence boundaries of chapter2.mp3:
+   * [ 0.05s -  3.55s] Let's do a live 20-second hardware audit together right now.
+   * [ 3.55s -  8.59s] Undock or slide your laptop onto a clear flat desk area, and follow the screen.
+   * [ 8.59s - 18.35s] First: push down on opposite corners. Wobble test.
+   * [18.35s - 29.58s] Second: click down on your trackpad. Stiff/mushy mechanical travel.
+   * [29.58s - 34.95s] And third: glance along your side USB ports. Popping seams.
+   * [34.95s - 36.16s] Wrap up your check now.
+   */
+  syncSlide2Audit(currentTime) {
     const totalCountdown = 20;
-    const circumference = 2 * Math.PI * 24;
+    const circumference = 2 * Math.PI * 24; // ~150.8
 
-    if (this.testStepIndicator) this.testStepIndicator.innerText = '1. The Wobble Test';
-    this.highlightStep(1);
-
-    this.countdownInterval = setInterval(() => {
-      if (!this.isPlaying) return;
-
-      timeLeft--;
-      if (this.countdownNumber) this.countdownNumber.innerText = Math.max(0, timeLeft);
-
-      this.sound.playTick();
-
-      const offset = circumference - (timeLeft / totalCountdown) * circumference;
-      if (this.countdownCircle) {
-        this.countdownCircle.style.strokeDashoffset = offset;
+    // Tick sound every integer second during active audit
+    const currentIntSec = Math.floor(currentTime);
+    if (currentTime >= 8.59 && currentTime < 34.95 && currentIntSec !== this.lastTickSecond) {
+      this.lastTickSecond = currentIntSec;
+      if (this.isPlaying) {
+        this.sound.playTick();
       }
+    }
 
-      if (timeLeft <= 13 && timeLeft > 6) {
-        this.highlightStep(2);
-        if (this.testStepIndicator) this.testStepIndicator.innerText = '2. Trackpad Mechanical Click';
-      } else if (timeLeft <= 6 && timeLeft > 0) {
-        this.highlightStep(3);
-        if (this.testStepIndicator) this.testStepIndicator.innerText = '3. Chassis Seams & USB Ports';
-      } else if (timeLeft <= 0) {
-        clearInterval(this.countdownInterval);
-        this.countdownInterval = null;
-        if (this.testStepIndicator) {
-          this.testStepIndicator.innerText = 'Hardware Audit Finished!';
-          this.testStepIndicator.className = 'text-base font-black text-emerald-400';
-        }
-        if (this.countdownNumber) {
-          this.countdownNumber.innerText = '✓';
-          this.countdownNumber.className = 'absolute text-xl font-black font-mono text-emerald-400';
-        }
-        if (this.countdownCircle) {
-          this.countdownCircle.classList.remove('text-amber-400');
-          this.countdownCircle.classList.add('text-emerald-400');
-        }
+    if (currentTime < 8.59) {
+      // PREPARE STAGE
+      if (this.countdownNumber) {
+        this.countdownNumber.innerText = '20';
+        this.countdownNumber.className = 'absolute text-2xl font-black font-mono text-amber-400';
+      }
+      if (this.countdownCircle) {
+        this.countdownCircle.style.strokeDashoffset = '0';
+        this.countdownCircle.className = 'text-amber-400 transition-all duration-300';
+      }
+      if (this.testStepIndicator) {
+        this.testStepIndicator.innerText = 'Prepare: Place Laptop Flat on Desk';
+        this.testStepIndicator.className = 'text-sm sm:text-base font-extrabold text-amber-300';
+      }
+      this.setStepStatus(1, 'ready');
+      this.setStepStatus(2, 'standby');
+      this.setStepStatus(3, 'standby');
+      this.lastAuditStep = 0;
+    }
+    else if (currentTime >= 8.59 && currentTime < 18.35) {
+      // STEP 1 ACTIVE: WOBBLE TEST
+      if (this.lastAuditStep !== 1) {
+        this.lastAuditStep = 1;
+        this.sound.playChime();
+      }
+      const remaining = Math.max(0, Math.ceil(20 * (1 - (currentTime - 8.59) / (34.95 - 8.59))));
+      if (this.countdownNumber) {
+        this.countdownNumber.innerText = remaining;
+        this.countdownNumber.className = 'absolute text-2xl font-black font-mono text-amber-400';
+      }
+      if (this.countdownCircle) {
+        const offset = circumference - (remaining / totalCountdown) * circumference;
+        this.countdownCircle.style.strokeDashoffset = offset;
+        this.countdownCircle.className = 'text-amber-400 transition-all duration-150';
+      }
+      if (this.testStepIndicator) {
+        this.testStepIndicator.innerText = 'Step 1 of 3: Opposite Corner Wobble Check';
+        this.testStepIndicator.className = 'text-sm sm:text-base font-extrabold text-amber-300';
+      }
+      this.setStepStatus(1, 'active');
+      this.setStepStatus(2, 'standby');
+      this.setStepStatus(3, 'standby');
+    }
+    else if (currentTime >= 18.35 && currentTime < 29.58) {
+      // STEP 2 ACTIVE: TRACKPAD CLICK
+      if (this.lastAuditStep !== 2) {
+        this.lastAuditStep = 2;
+        this.sound.playChime();
+      }
+      const remaining = Math.max(0, Math.ceil(20 * (1 - (currentTime - 8.59) / (34.95 - 8.59))));
+      if (this.countdownNumber) {
+        this.countdownNumber.innerText = remaining;
+        this.countdownNumber.className = 'absolute text-2xl font-black font-mono text-amber-400';
+      }
+      if (this.countdownCircle) {
+        const offset = circumference - (remaining / totalCountdown) * circumference;
+        this.countdownCircle.style.strokeDashoffset = offset;
+        this.countdownCircle.className = 'text-amber-400 transition-all duration-150';
+      }
+      if (this.testStepIndicator) {
+        this.testStepIndicator.innerText = 'Step 2 of 3: Trackpad Mechanical Travel';
+        this.testStepIndicator.className = 'text-sm sm:text-base font-extrabold text-amber-300';
+      }
+      this.setStepStatus(1, 'passed');
+      this.setStepStatus(2, 'active');
+      this.setStepStatus(3, 'standby');
+    }
+    else if (currentTime >= 29.58 && currentTime < 34.95) {
+      // STEP 3 ACTIVE: SEAMS & PORTS
+      if (this.lastAuditStep !== 3) {
+        this.lastAuditStep = 3;
+        this.sound.playChime();
+      }
+      const remaining = Math.max(0, Math.ceil(20 * (1 - (currentTime - 8.59) / (34.95 - 8.59))));
+      if (this.countdownNumber) {
+        this.countdownNumber.innerText = remaining;
+        this.countdownNumber.className = 'absolute text-2xl font-black font-mono text-amber-400';
+      }
+      if (this.countdownCircle) {
+        const offset = circumference - (remaining / totalCountdown) * circumference;
+        this.countdownCircle.style.strokeDashoffset = offset;
+        this.countdownCircle.className = 'text-amber-400 transition-all duration-150';
+      }
+      if (this.testStepIndicator) {
+        this.testStepIndicator.innerText = 'Step 3 of 3: Chassis Seams & USB Ports';
+        this.testStepIndicator.className = 'text-sm sm:text-base font-extrabold text-amber-300';
+      }
+      this.setStepStatus(1, 'passed');
+      this.setStepStatus(2, 'passed');
+      this.setStepStatus(3, 'active');
+    }
+    else {
+      // AUDIT COMPLETE (currentTime >= 34.95)
+      if (this.lastAuditStep !== 4) {
+        this.lastAuditStep = 4;
         this.sound.playSuccess();
       }
-    }, 1000);
+      if (this.countdownNumber) {
+        this.countdownNumber.innerText = '✓';
+        this.countdownNumber.className = 'absolute text-2xl font-black font-mono text-emerald-400';
+      }
+      if (this.countdownCircle) {
+        this.countdownCircle.style.strokeDashoffset = '0';
+        this.countdownCircle.className = 'text-emerald-400 transition-all duration-300';
+      }
+      if (this.testStepIndicator) {
+        this.testStepIndicator.innerText = 'Hardware Audit Finished: All 3 Checks Verified!';
+        this.testStepIndicator.className = 'text-sm sm:text-base font-extrabold text-emerald-400';
+      }
+      this.setStepStatus(1, 'passed');
+      this.setStepStatus(2, 'passed');
+      this.setStepStatus(3, 'passed');
+    }
   }
 
-  highlightStep(stepNum) {
-    if (this.viewStep1) {
-      this.viewStep1.className = stepNum === 1 
-        ? 'p-3 rounded-xl bg-amber-950/70 border-2 border-amber-500 transition-all shadow-lg shadow-amber-500/10'
-        : 'p-3 rounded-xl bg-slate-950/80 border border-slate-800 transition-all opacity-40';
+  setStepStatus(stepNum, status) {
+    const elem = this[`viewStep${stepNum}`];
+    const badge = this[`stepBadge${stepNum}`];
+    if (!elem) return;
+
+    if (status === 'active') {
+      elem.className = 'p-4 rounded-2xl bg-amber-950/80 border-2 border-amber-500 shadow-xl shadow-amber-500/20 transition-all duration-200 transform scale-[1.01]';
+      if (badge) {
+        badge.innerText = 'TESTING NOW';
+        badge.className = 'text-[10px] font-mono px-2.5 py-0.5 rounded-full font-bold uppercase bg-amber-500 text-black shadow animate-pulse';
+      }
+    } else if (status === 'ready') {
+      elem.className = 'p-4 rounded-2xl bg-slate-900/90 border border-amber-500/40 transition-all duration-200';
+      if (badge) {
+        badge.innerText = 'READY';
+        badge.className = 'text-[10px] font-mono px-2.5 py-0.5 rounded-full font-bold uppercase bg-amber-950 text-amber-300 border border-amber-800';
+      }
+    } else if (status === 'passed') {
+      elem.className = 'p-4 rounded-2xl bg-slate-950/90 border border-emerald-500/60 shadow-md shadow-emerald-500/10 transition-all duration-200';
+      if (badge) {
+        badge.innerText = '✓ CHECKED';
+        badge.className = 'text-[10px] font-mono px-2.5 py-0.5 rounded-full font-bold uppercase bg-emerald-950 text-emerald-400 border border-emerald-700';
+      }
+    } else { // standby
+      elem.className = 'p-4 rounded-2xl bg-slate-950/50 border border-slate-800/80 opacity-40 transition-all duration-200';
+      if (badge) {
+        badge.innerText = 'STANDBY';
+        badge.className = 'text-[10px] font-mono px-2.5 py-0.5 rounded-full font-bold uppercase bg-slate-900 text-slate-400 border border-slate-800';
+      }
     }
-    if (this.viewStep2) {
-      this.viewStep2.className = stepNum === 2 
-        ? 'p-3 rounded-xl bg-amber-950/70 border-2 border-amber-500 transition-all shadow-lg shadow-amber-500/10'
-        : 'p-3 rounded-xl bg-slate-950/80 border border-slate-800 transition-all opacity-40';
+  }
+
+  syncSlide3Heat(currentTime) {
+    if (currentTime >= 8.16) {
+      if (this.tempBarFill) this.tempBarFill.style.width = '96%';
+      if (this.tempGaugeVal) {
+        this.tempGaugeVal.innerText = '1,000°F+ THERMAL RUNAWAY';
+        this.tempGaugeVal.className = 'text-red-400 font-extrabold animate-pulse';
+      }
+    } else {
+      if (this.tempBarFill) this.tempBarFill.style.width = '35%';
+      if (this.tempGaugeVal) {
+        this.tempGaugeVal.innerText = '135°F NORMAL DOCKED';
+        this.tempGaugeVal.className = 'text-amber-400 font-bold';
+      }
     }
-    if (this.viewStep3) {
-      this.viewStep3.className = stepNum === 3 
-        ? 'p-3 rounded-xl bg-amber-950/70 border-2 border-amber-500 transition-all shadow-lg shadow-amber-500/10'
-        : 'p-3 rounded-xl bg-slate-950/80 border border-slate-800 transition-all opacity-40';
+  }
+
+  handleSlideEntry(index) {
+    if (index === 0) {
+      setTimeout(() => {
+        if (this.currentChapterIndex === 0) this.sound.playWarning();
+      }, 10000);
+    } else if (index === 1) {
+      this.syncSlide2Audit(0);
+    } else if (index === 2) {
+      this.syncSlide3Heat(0);
+    } else if (index === 3) {
+      this.sound.playWarning();
+    } else if (index === 4) {
+      this.sound.playSuccess();
     }
   }
 
