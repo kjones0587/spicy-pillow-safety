@@ -11,7 +11,7 @@
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
   
-  <link rel="stylesheet" href="styles.css?v=4.5.0">
+  <link rel="stylesheet" href="styles.css?v=4.6.0">
 </head>
 <body class="bg-[#06070c] text-slate-100 min-h-screen flex flex-col justify-between selection:bg-amber-500 selection:text-black font-sans antialiased tech-grid-bg overflow-x-hidden">
 
@@ -30,7 +30,7 @@
             </span>
             <!-- PROMINENT SIMPLE VERSION BADGE -->
             <span id="version-badge" class="text-[11px] font-mono font-bold text-emerald-400 bg-emerald-950/90 px-2.5 py-0.5 rounded border border-emerald-500/50 shadow-sm shadow-emerald-500/20">
-              v4.5
+              v4.6
             </span>
             <span id="live-indicator" class="hidden items-center gap-1.5 text-xs text-emerald-400 font-medium">
               <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
@@ -61,35 +61,35 @@
       </div>
     </div>
 
-    <!-- Clickable Interactive Chapter Progress Timeline -->
+    <!-- Scrubber-Enabled Clickable Timeline Bar -->
     <div class="max-w-6xl mx-auto mt-3">
-      <div class="grid grid-cols-5 gap-2.5">
-        <div class="seg-track-btn cursor-pointer group" data-chapter="0" title="Click to jump to Chapter 1: The Hook">
-          <div class="seg-track" data-seg="0"><div class="seg-fill"></div></div>
-          <span class="text-[10px] text-slate-400 font-semibold truncate block mt-1 group-hover:text-amber-300 transition">1. The Hook</span>
+      <div class="grid grid-cols-5 gap-3">
+        <div class="seg-track-col group" data-chapter="0">
+          <div class="seg-track" data-seg="0" title="Click anywhere to scrub or jump inside Chapter 1"><div class="seg-fill"></div></div>
+          <span class="text-[10px] text-slate-400 font-semibold truncate block mt-1.5 group-hover:text-amber-300 transition">1. The Hook</span>
         </div>
-        <div class="seg-track-btn cursor-pointer group" data-chapter="1" title="Click to jump to Chapter 2: Hardware Audit">
-          <div class="seg-track" data-seg="1"><div class="seg-fill"></div></div>
-          <span class="text-[10px] text-slate-400 font-semibold truncate block mt-1 group-hover:text-amber-300 transition">2. 20s Hardware Audit</span>
+        <div class="seg-track-col group" data-chapter="1">
+          <div class="seg-track" data-seg="1" title="Click anywhere to scrub or jump inside Chapter 2"><div class="seg-fill"></div></div>
+          <span class="text-[10px] text-slate-400 font-semibold truncate block mt-1.5 group-hover:text-amber-300 transition">2. 20s Hardware Audit</span>
         </div>
-        <div class="seg-track-btn cursor-pointer group" data-chapter="2" title="Click to jump to Chapter 3: The Science">
-          <div class="seg-track" data-seg="2"><div class="seg-fill"></div></div>
-          <span class="text-[10px] text-slate-400 font-semibold truncate block mt-1 group-hover:text-amber-300 transition">3. The Science</span>
+        <div class="seg-track-col group" data-chapter="2">
+          <div class="seg-track" data-seg="2" title="Click anywhere to scrub or jump inside Chapter 3"><div class="seg-fill"></div></div>
+          <span class="text-[10px] text-slate-400 font-semibold truncate block mt-1.5 group-hover:text-amber-300 transition">3. The Science</span>
         </div>
-        <div class="seg-track-btn cursor-pointer group" data-chapter="3" title="Click to jump to Chapter 4: Emergency Action">
-          <div class="seg-track" data-seg="3"><div class="seg-fill"></div></div>
-          <span class="text-[10px] text-red-400 font-bold truncate block mt-1 group-hover:text-red-300 transition">4. Emergency Action</span>
+        <div class="seg-track-col group" data-chapter="3">
+          <div class="seg-track" data-seg="3" title="Click anywhere to scrub or jump inside Chapter 4"><div class="seg-fill"></div></div>
+          <span class="text-[10px] text-red-400 font-bold truncate block mt-1.5 group-hover:text-red-300 transition">4. Emergency Action</span>
         </div>
-        <div class="seg-track-btn cursor-pointer group" data-chapter="4" title="Click to jump to Chapter 5: Prevention & Wrap">
-          <div class="seg-track" data-seg="4"><div class="seg-fill"></div></div>
-          <span class="text-[10px] text-slate-400 font-semibold truncate block mt-1 group-hover:text-amber-300 transition">5. Prevention & Wrap</span>
+        <div class="seg-track-col group" data-chapter="4">
+          <div class="seg-track" data-seg="4" title="Click anywhere to scrub or jump inside Chapter 5"><div class="seg-fill"></div></div>
+          <span class="text-[10px] text-slate-400 font-semibold truncate block mt-1.5 group-hover:text-amber-300 transition">5. Prevention & Wrap</span>
         </div>
       </div>
     </div>
   </header>
 
   <!-- CINEMATIC BROADCAST CANVAS -->
-  <main class="max-w-6xl mx-auto w-full px-6 py-6 flex-1 flex flex-col justify-center relative">
+  <main class="max-w-6xl mx-auto w-full px-6 py-5 flex-1 flex flex-col justify-center relative">
 
     <!-- SCREEN 0: BROADCAST LAUNCH SCREEN -->
     <section id="start-screen" class="broadcast-slide active flex flex-col items-center justify-center text-center py-10">
@@ -108,7 +108,7 @@
       </h2>
       
       <p class="mt-4 text-base sm:text-xl text-slate-300 max-w-xl leading-relaxed">
-        Why your puffy laptop battery is a silent chemical hazard—featuring a live 20-second hardware audit and emergency fire response drill.
+        Why your puffy laptop battery is a silent chemical hazard—featuring kinetic typography, real hardware visuals, and full scrubbing.
       </p>
 
       <div class="mt-8 flex flex-col sm:flex-row items-center gap-4">
@@ -121,30 +121,40 @@
       <div class="mt-8 flex items-center gap-5 text-xs text-slate-400 bg-slate-950/80 border border-slate-800 px-5 py-2.5 rounded-2xl shadow-lg">
         <span class="flex items-center gap-1.5"><i data-lucide="clock" class="w-4 h-4 text-amber-400"></i> ~2 min 20 sec</span>
         <span class="w-1 h-1 rounded-full bg-slate-700"></span>
-        <span class="flex items-center gap-1.5"><i data-lucide="navigation" class="w-4 h-4 text-cyan-400"></i> Click Timeline to Jump</span>
+        <span class="flex items-center gap-1.5"><i data-lucide="sliders" class="w-4 h-4 text-cyan-400"></i> Full Scrubbing Enabled</span>
         <span class="w-1 h-1 rounded-full bg-slate-700"></span>
-        <span class="flex items-center gap-1.5"><i data-lucide="flame" class="w-4 h-4 text-red-400"></i> Real Hardware Visuals</span>
+        <span class="flex items-center gap-1.5"><i data-lucide="type" class="w-4 h-4 text-emerald-400"></i> Kinetic Typography</span>
       </div>
     </section>
 
-    <!-- CHAPTER 1: THE HOOK (Real Realistic Laptop Cutaway & Pressure HUD) -->
-    <section id="slide-1" class="broadcast-slide hidden flex-col items-center justify-center text-center space-y-5">
+    <!-- CHAPTER 1: THE HOOK (With Kinetic Animated Key Phrases) -->
+    <section id="slide-1" class="broadcast-slide hidden flex-col items-center justify-center text-center space-y-4">
       <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-bold">
         <i data-lucide="cpu" class="w-3.5 h-3.5"></i> Act 1: The Hidden Reaction
       </div>
 
-      <h2 class="text-3xl sm:text-5xl font-black text-white tracking-tight">
+      <h2 class="text-3xl sm:text-4xl font-black text-white tracking-tight">
         Look Over at Your Work Laptop Right Now
       </h2>
 
-      <!-- Visual Stage with Real Laptop Cutaway Photo -->
+      <!-- DYNAMIC KINETIC CALLOUT BANNER (Transitions with Voice) -->
+      <div id="kinetic-callout-1" class="w-full max-w-4xl p-3 rounded-2xl bg-slate-900/90 border-2 border-emerald-500/60 shadow-xl flex items-center justify-center gap-3 transition-all duration-300">
+        <div id="kinetic-icon-wrap-1" class="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
+          <i data-lucide="laptop" class="w-4 h-4"></i>
+        </div>
+        <span id="kinetic-text-1" class="text-sm sm:text-base font-extrabold text-white tracking-wide">
+          Look over at your work laptop sitting on your desk...
+        </span>
+      </div>
+
+      <!-- Real Photo Cutaway & Pressure Telemetry -->
       <div class="w-full max-w-4xl bg-slate-900/90 border border-slate-800 rounded-3xl p-5 shadow-2xl backdrop-blur-xl grid grid-cols-1 md:grid-cols-12 gap-5 items-center">
-        
-        <!-- Left: Real Photo Cutaway with Scanning Overlay -->
+        <!-- Photo with Scanning Line -->
         <div class="md:col-span-8 relative rounded-2xl overflow-hidden border border-slate-700 shadow-xl group">
-          <img src="assets/swollen_laptop.jpg" alt="Realistic Laptop Cutaway showing Swollen Battery" class="w-full h-64 sm:h-72 object-cover transition-transform duration-700 group-hover:scale-105">
+          <img src="assets/swollen_laptop.jpg" alt="Realistic Laptop Cutaway showing Swollen Battery" class="w-full h-64 sm:h-72 object-cover">
+          <!-- Scanning Laser Line -->
+          <div class="absolute inset-x-0 h-1 bg-gradient-to-r from-transparent via-cyan-400 to-transparent animate-scanline opacity-75"></div>
           
-          <!-- Scanning Target HUD Overlay -->
           <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent flex flex-col justify-end p-4">
             <div class="flex items-center justify-between text-xs font-mono">
               <span class="flex items-center gap-2 text-red-400 font-bold bg-red-950/80 px-2.5 py-1 rounded-lg border border-red-700 animate-pulse">
@@ -157,11 +167,10 @@
           </div>
         </div>
 
-        <!-- Right: Telemetry & Pressure Dial -->
+        <!-- Telemetry Dial -->
         <div class="md:col-span-4 flex flex-col items-center justify-center p-4 bg-slate-950/80 border border-slate-800 rounded-2xl space-y-4">
           <span class="text-[10px] font-mono uppercase text-slate-400 font-bold tracking-wider">Internal Cell Pressure</span>
           
-          <!-- Dial -->
           <div class="relative w-28 h-28 flex items-center justify-center">
             <svg class="w-28 h-28 -rotate-90">
               <circle cx="56" cy="56" r="46" stroke="currentColor" stroke-width="7" class="text-slate-800" fill="transparent" />
@@ -177,23 +186,32 @@
             Docked 24/7 on continuous float charge, liquid electrolyte breaks down into pressurized flammable gas.
           </div>
         </div>
-
       </div>
     </section>
 
-    <!-- CHAPTER 2: THE 20-SECOND HARDWARE AUDIT (With Real Photo Target Viewfinder) -->
-    <section id="slide-2" class="broadcast-slide hidden flex-col items-center justify-center text-center space-y-5">
+    <!-- CHAPTER 2: THE 20-SECOND HARDWARE AUDIT -->
+    <section id="slide-2" class="broadcast-slide hidden flex-col items-center justify-center text-center space-y-4">
       <div>
-        <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-bold mb-1.5">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-bold mb-1">
           <i data-lucide="scan" class="w-3.5 h-3.5"></i> Act 2: Live Team Hardware Audit
         </div>
-        <h2 class="text-3xl sm:text-5xl font-black text-white">
+        <h2 class="text-3xl sm:text-4xl font-black text-white">
           Grab Your Laptop: 20-Second Check
         </h2>
       </div>
 
+      <!-- KINETIC CALLOUT BANNER -->
+      <div id="kinetic-callout-2" class="w-full max-w-4xl p-3 rounded-2xl bg-slate-900/90 border-2 border-emerald-500/60 shadow-xl flex items-center justify-center gap-3 transition-all duration-300">
+        <div id="kinetic-icon-wrap-2" class="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
+          <i data-lucide="scan" class="w-4 h-4"></i>
+        </div>
+        <span id="kinetic-text-2" class="text-sm sm:text-base font-extrabold text-white tracking-wide">
+          20-Second Hardware Audit: Slide laptop onto a clear flat area...
+        </span>
+      </div>
+
       <!-- Countdown Dial -->
-      <div class="flex items-center gap-5 bg-slate-900/90 border border-amber-500/50 px-8 py-3 rounded-2xl shadow-xl backdrop-blur-xl">
+      <div class="flex items-center gap-5 bg-slate-900/90 border border-amber-500/50 px-8 py-2.5 rounded-2xl shadow-xl backdrop-blur-xl">
         <div class="relative w-14 h-14 flex items-center justify-center">
           <svg class="w-14 h-14 -rotate-90">
             <circle cx="28" cy="28" r="24" stroke="currentColor" stroke-width="4.5" class="text-slate-800" fill="transparent" />
@@ -207,10 +225,8 @@
         </div>
       </div>
 
-      <!-- Real Photo Viewfinder with Target Overlays -->
+      <!-- Real Photo with 3 Spotlight Steps -->
       <div class="w-full max-w-4xl bg-slate-900/80 border border-slate-800 rounded-3xl p-4 shadow-2xl grid grid-cols-1 md:grid-cols-12 gap-5 items-center backdrop-blur-xl">
-        
-        <!-- Left: Real Macro Photo of Popped Trackpad & Warped Seam -->
         <div class="md:col-span-7 relative rounded-2xl overflow-hidden border border-slate-700 shadow-xl">
           <img src="assets/wobble_trackpad.jpg" alt="Real Macro Shot of Popped Trackpad and Seam Gap" class="w-full h-56 sm:h-64 object-cover">
           <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-transparent to-transparent flex items-end p-3">
@@ -220,7 +236,6 @@
           </div>
         </div>
 
-        <!-- Right: The 3 Physical Steps -->
         <div class="md:col-span-5 flex flex-col space-y-3 text-left">
           <div id="view-step-1" class="p-3 rounded-xl bg-amber-950/70 border-2 border-amber-500 transition-all">
             <span class="text-xs font-bold text-white flex items-center gap-1.5 mb-1">
@@ -246,24 +261,31 @@
             <p class="text-[11px] text-slate-300 leading-snug">Check along USB-C ports for plastic bowing, screw stripping, or gaps.</p>
           </div>
         </div>
-
       </div>
     </section>
 
-    <!-- CHAPTER 3: THE SCIENCE (Real Photo: Suffocating on Bed Blanket) -->
-    <section id="slide-3" class="broadcast-slide hidden flex-col items-center justify-center text-center space-y-5">
+    <!-- CHAPTER 3: THE SCIENCE -->
+    <section id="slide-3" class="broadcast-slide hidden flex-col items-center justify-center text-center space-y-4">
       <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-red-500/10 border border-red-500/30 text-red-400 text-xs font-bold">
         <i data-lucide="flame" class="w-3.5 h-3.5"></i> Act 3: Chemical Threat
       </div>
 
-      <h2 class="text-3xl sm:text-5xl font-black text-white tracking-tight">
+      <h2 class="text-3xl sm:text-4xl font-black text-white tracking-tight">
         Why Care? <span class="text-red-400">Thermal Runaway</span>
       </h2>
 
+      <!-- KINETIC CALLOUT BANNER -->
+      <div id="kinetic-callout-3" class="w-full max-w-4xl p-3 rounded-2xl bg-slate-900/90 border-2 border-red-500/60 shadow-xl flex items-center justify-center gap-3 transition-all duration-300">
+        <div id="kinetic-icon-wrap-3" class="w-8 h-8 rounded-xl bg-red-500/20 text-red-400 flex items-center justify-center shrink-0">
+          <i data-lucide="flame" class="w-4 h-4"></i>
+        </div>
+        <span id="kinetic-text-3" class="text-sm sm:text-base font-extrabold text-white tracking-wide">
+          Inside: pressurized pouch filled with volatile organic solvents...
+        </span>
+      </div>
+
       <!-- Split Layout with Real Bed Blanket Hazard Photo -->
       <div class="w-full max-w-4xl bg-slate-900/90 border border-red-900/40 rounded-3xl p-5 shadow-2xl backdrop-blur-xl grid grid-cols-1 md:grid-cols-12 gap-5 items-center">
-        
-        <!-- Left: Real Photo of Laptop Suffocating on Duvet -->
         <div class="md:col-span-7 relative rounded-2xl overflow-hidden border border-red-500/60 shadow-xl group">
           <img src="assets/bed_blanket_hazard.jpg" alt="Real Laptop Suffocating on Bed Blanket with Heat Smoke" class="w-full h-64 sm:h-72 object-cover">
           <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-transparent to-transparent flex items-end p-3">
@@ -273,7 +295,6 @@
           </div>
         </div>
 
-        <!-- Right: Telemetry & Exothermic Reaction Data -->
         <div class="md:col-span-5 flex flex-col space-y-4 text-left">
           <div>
             <div class="flex justify-between items-center text-xs font-mono mb-1.5">
@@ -301,28 +322,32 @@
             </div>
           </div>
         </div>
-
       </div>
     </section>
 
-    <!-- CHAPTER 4: EMERGENCY DRILL (Real Photo: Granite Countertop Isolation) -->
-    <section id="slide-4" class="broadcast-slide hidden flex-col items-center justify-center text-center space-y-5">
+    <!-- CHAPTER 4: EMERGENCY DRILL -->
+    <section id="slide-4" class="broadcast-slide hidden flex-col items-center justify-center text-center space-y-4">
       <div>
-        <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-red-600/20 border border-red-500/50 text-red-400 text-xs font-black uppercase tracking-wider mb-1.5 animate-pulse">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-red-600/20 border border-red-500/50 text-red-400 text-xs font-black uppercase tracking-wider mb-1 animate-pulse">
           <i data-lucide="siren" class="w-4 h-4 text-red-400"></i> Emergency Response Protocol
         </div>
-        <h2 class="text-3xl sm:text-5xl font-black text-white">
+        <h2 class="text-3xl sm:text-4xl font-black text-white">
           Active Thermal Runaway Protocol
         </h2>
-        <p class="text-sm text-slate-300 mt-1 max-w-xl">
-          If you hear <strong class="text-amber-300">hissing/whistling</strong>, smell sweet chemicals, or see <strong class="text-red-400">white smoke popping</strong>:
-        </p>
+      </div>
+
+      <!-- KINETIC CALLOUT BANNER -->
+      <div id="kinetic-callout-4" class="w-full max-w-5xl p-3 rounded-2xl bg-slate-900/90 border-2 border-red-500/60 shadow-xl flex items-center justify-center gap-3 transition-all duration-300">
+        <div id="kinetic-icon-wrap-4" class="w-8 h-8 rounded-xl bg-red-500/20 text-red-400 flex items-center justify-center shrink-0">
+          <i data-lucide="siren" class="w-4 h-4"></i>
+        </div>
+        <span id="kinetic-text-4" class="text-sm sm:text-base font-extrabold text-white tracking-wide">
+          ACTIVE EMERGENCY: Hissing, sweet chemical odor, white smoke popping...
+        </span>
       </div>
 
       <!-- Real Photo Layout with Granite Isolation -->
       <div class="w-full max-w-5xl bg-slate-900/90 border border-slate-800 rounded-3xl p-5 shadow-2xl grid grid-cols-1 md:grid-cols-12 gap-5 items-center backdrop-blur-xl">
-        
-        <!-- Left: Real Photo of Quarantine on Granite Counter -->
         <div class="md:col-span-6 relative rounded-2xl overflow-hidden border-2 border-amber-500/60 shadow-xl">
           <img src="assets/granite_quarantine.jpg" alt="Real Laptop Quarantined on Granite Island Countertop" class="w-full h-64 sm:h-72 object-cover">
           <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-transparent to-transparent flex items-end p-3">
@@ -332,7 +357,6 @@
           </div>
         </div>
 
-        <!-- Right: 3 Life Safety Directives -->
         <div class="md:col-span-6 flex flex-col space-y-3 text-left">
           <div class="p-3 rounded-2xl bg-amber-950/60 border-2 border-amber-500/70 shadow-lg space-y-1">
             <h3 class="text-xs font-black text-amber-300 uppercase tracking-wider flex items-center gap-1.5">
@@ -361,12 +385,11 @@
             </p>
           </div>
         </div>
-
       </div>
     </section>
 
     <!-- CHAPTER 5: SUMMARY & SIGN-OFF -->
-    <section id="slide-5" class="broadcast-slide hidden flex-col items-center justify-center text-center space-y-6">
+    <section id="slide-5" class="broadcast-slide hidden flex-col items-center justify-center text-center space-y-5">
       <div class="w-20 h-20 rounded-full bg-emerald-500/20 border-2 border-emerald-500/50 text-emerald-400 flex items-center justify-center mx-auto shadow-2xl shadow-emerald-500/30">
         <i data-lucide="check-circle-2" class="w-10 h-10"></i>
       </div>
@@ -383,7 +406,16 @@
         </p>
       </div>
 
-      <!-- Checklist Grid -->
+      <!-- KINETIC CALLOUT BANNER -->
+      <div id="kinetic-callout-5" class="w-full max-w-xl p-3 rounded-2xl bg-slate-900/90 border-2 border-emerald-500/60 shadow-xl flex items-center justify-center gap-3 transition-all duration-300">
+        <div id="kinetic-icon-wrap-5" class="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
+          <i data-lucide="check-circle" class="w-4 h-4"></i>
+        </div>
+        <span id="kinetic-text-5" class="text-sm sm:text-base font-extrabold text-white tracking-wide">
+          Routine Swelling: Unplug, quarantine on tile/metal, open IT ticket...
+        </span>
+      </div>
+
       <div class="w-full max-w-xl bg-slate-900/80 border border-slate-800 p-4 rounded-2xl text-left grid grid-cols-2 gap-3 text-xs text-slate-300">
         <div class="flex items-center gap-2">
           <i data-lucide="check" class="w-4 h-4 text-emerald-400 shrink-0"></i>
@@ -428,7 +460,7 @@
       <!-- Presenter Controls & Simple Version Badge -->
       <div class="flex items-center gap-2.5 shrink-0">
         <span class="text-[11px] font-mono font-bold text-emerald-400 bg-emerald-950/90 px-2.5 py-1 rounded-xl border border-emerald-500/50 shadow-sm shadow-emerald-500/20">
-          v4.5
+          v4.6
         </span>
         <button id="prev-slide-btn" class="p-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 transition" title="Previous Slide">
           <i data-lucide="chevron-left" class="w-4 h-4"></i>
@@ -440,6 +472,6 @@
     </div>
   </footer>
 
-  <script src="app.js?v=4.5.0"></script>
+  <script src="app.js?v=4.6.0"></script>
 </body>
 </html>

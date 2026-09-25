@@ -1,4 +1,4 @@
-/* v4.4 High-Impact Motion Graphics & Visual Animation Styles */
+/* v4.6 Kinetic Typography & Full Scrubbing Styles */
 
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700&display=swap');
 
@@ -7,17 +7,17 @@ body {
   background-color: #06070c;
 }
 
-/* Subtle tech grid background */
+/* Tech grid background */
 .tech-grid-bg {
   background-image: 
-    radial-gradient(circle at 50% 15%, rgba(245, 158, 11, 0.09) 0%, transparent 65%),
-    radial-gradient(circle at 80% 80%, rgba(239, 68, 68, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 50% 15%, rgba(245, 158, 11, 0.1) 0%, transparent 65%),
+    radial-gradient(circle at 80% 80%, rgba(239, 68, 68, 0.06) 0%, transparent 50%),
     linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
   background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px;
 }
 
-/* Slide visibility and fluid transitions */
+/* Slide visibility and transitions */
 .broadcast-slide {
   transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -34,19 +34,24 @@ body {
   transform: scale(1) translateY(0);
 }
 
-/* Clickable Timeline Segment Bars */
+/* =========================================================
+   CLICKABLE & SCRUBBABLE TIMELINE BARS
+   ========================================================= */
+
 .seg-track {
-  background-color: rgba(30, 41, 59, 0.7);
-  height: 7px;
+  background-color: rgba(30, 41, 59, 0.8);
+  height: 9px;
   border-radius: 9999px;
   overflow: hidden;
   cursor: pointer;
+  position: relative;
   transition: all 0.2s ease;
 }
 
 .seg-track:hover {
-  background-color: rgba(51, 65, 85, 0.9);
-  transform: translateY(-1px);
+  background-color: rgba(51, 65, 85, 0.95);
+  transform: scaleY(1.35);
+  box-shadow: 0 0 12px rgba(245, 158, 11, 0.3);
 }
 
 .seg-fill {
@@ -54,7 +59,8 @@ body {
   height: 100%;
   width: 0%;
   border-radius: 9999px;
-  transition: width 0.2s linear;
+  pointer-events: none;
+  transition: width 0.15s linear;
 }
 
 .seg-track.completed .seg-fill {
@@ -63,176 +69,63 @@ body {
 }
 
 .seg-track.active .seg-fill {
-  box-shadow: 0 0 14px rgba(245, 158, 11, 0.8);
+  box-shadow: 0 0 16px rgba(245, 158, 11, 0.9);
 }
 
 /* =========================================================
-   ACT 1: SWELLING & PRESSURE GAUGE ANIMATIONS
+   KINETIC TYPOGRAPHY / MOTION PHRASES OVERLAYS
    ========================================================= */
 
-@keyframes batteryInflateLarge {
+@keyframes kineticFadeSlideIn {
   0% {
-    transform: scale(1);
-    box-shadow: 0 0 10px rgba(16, 185, 129, 0.2);
-  }
-  50% {
-    transform: scale(1.15) scaleY(1.35);
-    box-shadow: 0 0 35px rgba(245, 158, 11, 0.5);
+    opacity: 0;
+    transform: translateY(12px) scale(0.96);
   }
   100% {
-    transform: scale(1.22) scaleY(1.55);
-    box-shadow: 0 0 60px rgba(239, 68, 68, 0.8);
+    opacity: 1;
+    transform: translateY(0) scale(1);
   }
 }
 
-.animate-battery-inflate-active {
-  animation: batteryInflateLarge 2.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+.kinetic-callout-box {
+  animation: kineticFadeSlideIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-@keyframes needleSweep {
-  0% { transform: rotate(-70deg); }
-  40% { transform: rotate(-10deg); }
-  100% { transform: rotate(70deg); }
+/* Highlight border glows */
+.border-glow-emerald {
+  border-color: rgba(16, 185, 129, 0.8) !important;
+  box-shadow: 0 0 25px rgba(16, 185, 129, 0.25);
 }
 
-.animate-gauge-needle {
-  animation: needleSweep 2.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  transform-origin: 50% 90%;
+.border-glow-amber {
+  border-color: rgba(245, 158, 11, 0.85) !important;
+  box-shadow: 0 0 30px rgba(245, 158, 11, 0.3);
 }
 
-/* Floating gas/heat aura */
-@keyframes gasPuff {
-  0%, 100% { opacity: 0.3; transform: scale(1); }
-  50% { opacity: 0.75; transform: scale(1.12); }
+.border-glow-red {
+  border-color: rgba(239, 68, 68, 0.9) !important;
+  box-shadow: 0 0 35px rgba(239, 68, 68, 0.4);
 }
 
-.animate-gas-cloud {
-  animation: gasPuff 1.8s infinite ease-in-out;
+/* Scanning line animation across hero image */
+@keyframes scanlineSweep {
+  0% { transform: translateY(-100%); opacity: 0; }
+  30% { opacity: 0.8; }
+  70% { opacity: 0.8; }
+  100% { transform: translateY(250%); opacity: 0; }
 }
 
-/* =========================================================
-   ACT 2: HARDWARE AUDIT DYNAMIC MOTIONS
-   ========================================================= */
-
-/* Corner push force indicators */
-@keyframes pushLeftCorner {
-  0%, 100% { transform: translateY(0); opacity: 0.3; }
-  50% { transform: translateY(6px); opacity: 1; }
+.animate-scanline {
+  animation: scanlineSweep 3.5s infinite ease-in-out;
 }
 
-@keyframes pushRightCorner {
-  0%, 100% { transform: translateY(6px); opacity: 1; }
-  50% { transform: translateY(0); opacity: 0.3; }
+/* Pulse alert ring */
+@keyframes pulseRing {
+  0% { transform: scale(0.95); opacity: 0.6; }
+  50% { transform: scale(1.05); opacity: 1; filter: drop-shadow(0 0 15px rgba(239, 68, 68, 0.8)); }
+  100% { transform: scale(0.95); opacity: 0.6; }
 }
 
-.animate-push-left {
-  animation: pushLeftCorner 0.65s infinite ease-in-out;
-}
-
-.animate-push-right {
-  animation: pushRightCorner 0.65s infinite ease-in-out;
-}
-
-@keyframes rockingChassisPhysics {
-  0% { transform: rotate(0deg); }
-  25% { transform: rotate(-5deg) translateY(-4px); }
-  50% { transform: rotate(0deg); }
-  75% { transform: rotate(5deg) translateY(-4px); }
-  100% { transform: rotate(0deg); }
-}
-
-.animate-chassis-rocking {
-  animation: rockingChassisPhysics 0.65s ease-in-out infinite;
-  transform-origin: 50% 90%;
-}
-
-/* Trackpad collision travel */
-@keyframes trackpadClickDown {
-  0%, 100% { transform: translateY(0); }
-  40% { transform: translateY(4px); }
-  55% { transform: translateY(0); }
-}
-
-.animate-trackpad-click-action {
-  animation: trackpadClickDown 1.2s infinite cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-/* Seam opening animation */
-@keyframes seamPryApart {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-5px); }
-}
-
-.animate-seam-gap-open {
-  animation: seamPryApart 1.4s infinite ease-in-out;
-}
-
-/* =========================================================
-   ACT 3: BED BLANKET TRAP & THERMAL RUNAWAY
-   ========================================================= */
-
-@keyframes thermalSpike {
-  0% { width: 25%; }
-  100% { width: 95%; }
-}
-
-.animate-thermal-gauge-fill {
-  animation: thermalSpike 2.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-@keyframes heatWavePulse {
-  0%, 100% { filter: drop-shadow(0 0 15px rgba(239, 68, 68, 0.3)); opacity: 0.8; }
-  50% { filter: drop-shadow(0 0 45px rgba(239, 68, 68, 0.95)); opacity: 1; }
-}
-
-.animate-heatwave {
-  animation: heatWavePulse 1.2s infinite ease-in-out;
-}
-
-@keyframes blockedAirflowBounce {
-  0%, 100% { transform: translateY(0); opacity: 0.4; }
-  50% { transform: translateY(-8px); opacity: 1; }
-}
-
-.animate-blocked-air {
-  animation: blockedAirflowBounce 0.9s infinite ease-in-out;
-}
-
-/* =========================================================
-   ACT 4: EMERGENCY RESPONSE MOTIONS
-   ========================================================= */
-
-@keyframes emergencySlideToGranite {
-  0% { transform: translateX(-40px); }
-  100% { transform: translateX(20px); }
-}
-
-.animate-slide-isolate {
-  animation: emergencySlideToGranite 2s ease-in-out infinite alternate;
-}
-
-@keyframes emergencyRedStrobe {
-  0%, 100% { border-color: rgba(239, 68, 68, 0.4); box-shadow: 0 0 15px rgba(239, 68, 68, 0.2); }
-  50% { border-color: rgba(239, 68, 68, 0.95); box-shadow: 0 0 35px rgba(239, 68, 68, 0.6); }
-}
-
-.animate-emergency-strobe {
-  animation: emergencyRedStrobe 1s infinite ease-in-out;
-}
-
-/* Viewfinder card transitions */
-.viewfinder-card {
-  transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.viewfinder-card.inactive {
-  display: none;
-  opacity: 0;
-  transform: scale(0.95);
-}
-
-.viewfinder-card.active {
-  display: flex;
-  opacity: 1;
-  transform: scale(1);
+.animate-pulse-ring {
+  animation: pulseRing 1.5s infinite ease-in-out;
 }

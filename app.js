@@ -1,5 +1,5 @@
 /**
- * Spicy Pillow Safety Briefing v4.5 (Real Hardware Visual Edition)
+ * Spicy Pillow Safety Briefing v4.6 (Kinetic Typography & Scrubber Edition)
  * Optimized for Microsoft Teams Screen Sharing
  * Narrator: en-US-AndrewMultilingualNeural
  */
@@ -121,6 +121,37 @@ const chapters = [
   }
 ];
 
+// Kinetic Typography Cues (Time-synchronized dynamic text highlights)
+const kineticCues = {
+  0: [
+    { time: 0, text: "Look over at your work laptop sitting on your desk...", icon: "laptop", color: "emerald" },
+    { time: 3.5, text: "Docked 24/7 on continuous float charge & electrical stress", icon: "zap", color: "amber" },
+    { time: 7.8, text: "Internal electrolyte breakdown into volatile trapped gas", icon: "flame", color: "red" },
+    { time: 11.2, text: "THE 'SPICY PILLOW' — Expanding under 58.4 PSI pressure!", icon: "alert-triangle", color: "red" }
+  ],
+  1: [
+    { time: 0, text: "20-Second Hardware Audit: Slide laptop onto a clear flat area...", icon: "scan", color: "emerald" },
+    { time: 3.8, text: "CHECK 1: Push opposite corners — Does the base rock or wobble?", icon: "help-circle", color: "amber" },
+    { time: 8.5, text: "CHECK 2: Click trackpad — Is mechanical travel blocked or stiff?", icon: "mouse-pointer-click", color: "amber" },
+    { time: 12.5, text: "CHECK 3: Inspect port seams — Are casing screws or plastic popping?", icon: "split", color: "red" }
+  ],
+  2: [
+    { time: 0, text: "Inside: pressurized pouch filled with volatile organic solvents...", icon: "flask-conical", color: "amber" },
+    { time: 4.5, text: "THERMAL RUNAWAY: Burning hotter than 1,000°F (Self-oxidizing)", icon: "flame", color: "red" },
+    { time: 9.0, text: "#1 REMOTE TRAP: Working on beds & blankets suffocates vents 100%", icon: "bed", color: "red" }
+  ],
+  3: [
+    { time: 0, text: "ACTIVE EMERGENCY: Hissing, sweet chemical odor, white smoke popping...", icon: "siren", color: "red" },
+    { time: 4.5, text: "STEP 1: Move away from curtains & bedding → Granite or Tile (Use oven mitts)", icon: "shield-alert", color: "amber" },
+    { time: 11.0, text: "STEP 2: Never inhale toxic HF smoke — Never throw cups of water!", icon: "wind", color: "red" },
+    { time: 15.5, text: "STEP 3: Close room door to seal fire → Call 911 immediately", icon: "door-closed", color: "emerald" }
+  ],
+  4: [
+    { time: 0, text: "Routine Swelling: Unplug, quarantine on tile/metal, open IT ticket", icon: "ticket", color: "amber" },
+    { time: 5.0, text: "SAFETY AUDIT COMPLETE: Keep vents clear and have a great shift!", icon: "check-circle", color: "emerald" }
+  ]
+};
+
 class BroadcastPresentation {
   constructor() {
     this.sound = new SoundFX();
@@ -130,6 +161,7 @@ class BroadcastPresentation {
     this.globalTimerInterval = null;
     this.countdownInterval = null;
     this.currentAudio = null;
+    this.lastCueIndex = -1;
 
     // DOM References
     this.startScreen = document.getElementById('start-screen');
@@ -141,7 +173,7 @@ class BroadcastPresentation {
       document.getElementById('slide-5')
     ];
     this.segTracks = document.querySelectorAll('.seg-track');
-    this.segTrackBtns = document.querySelectorAll('.seg-track-btn');
+    this.segTrackCols = document.querySelectorAll('.seg-track-col');
     this.liveCaptionText = document.getElementById('live-caption-text');
     this.liveIndicator = document.getElementById('live-indicator');
     this.timerDisplay = document.getElementById('timer-display');
@@ -187,20 +219,48 @@ class BroadcastPresentation {
       replayBtn.addEventListener('click', () => this.restart());
     }
 
-    // CLICKABLE TIMELINE JUMPS
-    this.segTrackBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const chapterIdx = parseInt(btn.getAttribute('data-chapter'), 10);
-        if (!isNaN(chapterIdx)) {
-          if (!this.isPlaying) {
-            this.startScreen.classList.add('hidden');
-            this.startScreen.classList.remove('active');
-            this.liveIndicator.classList.remove('hidden');
-            this.liveIndicator.classList.add('inline-flex');
-            this.isPlaying = true;
-            this.startGlobalTimer();
+    // PRECISION SCRUBBER: Click anywhere on ANY segment bar to scrub directly to that percentage!
+    this.segTracks.forEach((bar, idx) => {
+      bar.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const rect = bar.getBoundingClientRect();
+        const clickX = e.clientX - rect.left;
+        const ratio = Math.max(0, Math.min(1, clickX / rect.width));
+
+        if (!this.isPlaying) {
+          this.startScreen.classList.add('hidden');
+          this.startScreen.classList.remove('active');
+          this.liveIndicator.classList.remove('hidden');
+          this.liveIndicator.classList.add('inline-flex');
+          this.isPlaying = true;
+          this.startGlobalTimer();
+        }
+
+        if (this.currentChapterIndex === idx && this.currentAudio && this.currentAudio.duration) {
+          this.currentAudio.currentTime = this.currentAudio.duration * ratio;
+        } else {
+          this.loadChapter(idx, ratio);
+        }
+      });
+    });
+
+    // Clicking the column label jumps to start of that chapter
+    this.segTrackCols.forEach(col => {
+      col.addEventListener('click', (e) => {
+        // Only if didn't click the track itself
+        if (!e.target.closest('.seg-track')) {
+          const chapterIdx = parseInt(col.getAttribute('data-chapter'), 10);
+          if (!isNaN(chapterIdx)) {
+            if (!this.isPlaying) {
+              this.startScreen.classList.add('hidden');
+              this.startScreen.classList.remove('active');
+              this.liveIndicator.classList.remove('hidden');
+              this.liveIndicator.classList.add('inline-flex');
+              this.isPlaying = true;
+              this.startGlobalTimer();
+            }
+            this.loadChapter(chapterIdx, 0);
           }
-          this.loadChapter(chapterIdx);
         }
       });
     });
@@ -214,7 +274,7 @@ class BroadcastPresentation {
         this.toggleFullscreen();
       } else if (e.key >= '1' && e.key <= '5') {
         const chapterIdx = parseInt(e.key, 10) - 1;
-        this.loadChapter(chapterIdx);
+        this.loadChapter(chapterIdx, 0);
       }
     });
   }
@@ -238,12 +298,13 @@ class BroadcastPresentation {
     this.liveIndicator.classList.add('inline-flex');
 
     this.startGlobalTimer();
-    this.loadChapter(0);
+    this.loadChapter(0, 0);
   }
 
-  loadChapter(index) {
+  loadChapter(index, seekRatio = 0) {
     if (index < 0 || index >= chapters.length) return;
     this.currentChapterIndex = index;
+    this.lastCueIndex = -1;
     const chapter = chapters[index];
 
     // Stop existing audio and timers
@@ -276,7 +337,7 @@ class BroadcastPresentation {
         fill.style.width = '100%';
       } else if (idx === index) {
         bar.classList.add('active');
-        fill.style.width = '0%';
+        fill.style.width = `${Math.round(seekRatio * 100)}%`;
       } else {
         fill.style.width = '0%';
       }
@@ -289,9 +350,21 @@ class BroadcastPresentation {
     // Trigger visual transitions
     this.handleSlideAnimations(index);
 
-    // Audio Playback
+    // Audio Playback with Precision Seeking
     const audio = new Audio(chapter.audioSrc);
     this.currentAudio = audio;
+
+    const applySeek = () => {
+      if (seekRatio > 0 && audio.duration) {
+        audio.currentTime = audio.duration * seekRatio;
+      }
+    };
+
+    if (audio.readyState >= 1) {
+      applySeek();
+    } else {
+      audio.addEventListener('loadedmetadata', applySeek, { once: true });
+    }
 
     audio.addEventListener('timeupdate', () => {
       if (audio.duration) {
@@ -301,6 +374,8 @@ class BroadcastPresentation {
           const fill = activeBar.querySelector('.seg-fill');
           if (fill) fill.style.width = `${percent}%`;
         }
+        // Update Kinetic Typography for current time
+        this.updateKineticTypography(index, audio.currentTime);
       }
     });
 
@@ -317,6 +392,42 @@ class BroadcastPresentation {
     }
 
     this.initLucide();
+  }
+
+  updateKineticTypography(chapterIdx, currentTime) {
+    const cues = kineticCues[chapterIdx];
+    if (!cues) return;
+
+    let activeCueIndex = 0;
+    for (let i = 0; i < cues.length; i++) {
+      if (currentTime >= cues[i].time) {
+        activeCueIndex = i;
+      }
+    }
+
+    if (activeCueIndex !== this.lastCueIndex) {
+      this.lastCueIndex = activeCueIndex;
+      const cue = cues[activeCueIndex];
+
+      const calloutBox = document.getElementById(`kinetic-callout-${chapterIdx + 1}`);
+      const textElem = document.getElementById(`kinetic-text-${chapterIdx + 1}`);
+      const iconWrap = document.getElementById(`kinetic-icon-wrap-${chapterIdx + 1}`);
+
+      if (calloutBox && textElem) {
+        // Trigger subtle animation
+        calloutBox.classList.remove('kinetic-callout-box', 'border-glow-emerald', 'border-glow-amber', 'border-glow-red');
+        void calloutBox.offsetWidth; // Force reflow
+        calloutBox.classList.add('kinetic-callout-box', `border-glow-${cue.color}`);
+
+        textElem.innerText = cue.text;
+
+        if (iconWrap) {
+          iconWrap.className = `w-8 h-8 rounded-xl bg-${cue.color}-500/20 text-${cue.color}-400 flex items-center justify-center shrink-0`;
+          iconWrap.innerHTML = `<i data-lucide="${cue.icon}" class="w-4 h-4"></i>`;
+          this.initLucide();
+        }
+      }
+    }
   }
 
   handleSlideAnimations(index) {
@@ -470,7 +581,7 @@ class BroadcastPresentation {
 
   nextChapter() {
     if (this.currentChapterIndex < chapters.length - 1) {
-      this.loadChapter(this.currentChapterIndex + 1);
+      this.loadChapter(this.currentChapterIndex + 1, 0);
     } else {
       this.isPlaying = false;
       this.liveIndicator.classList.add('hidden');
@@ -481,7 +592,7 @@ class BroadcastPresentation {
 
   prevChapter() {
     if (this.currentChapterIndex > 0) {
-      this.loadChapter(this.currentChapterIndex - 1);
+      this.loadChapter(this.currentChapterIndex - 1, 0);
     }
   }
 
@@ -493,7 +604,7 @@ class BroadcastPresentation {
     this.playPauseIcon.className = 'w-4 h-4 text-emerald-400';
     this.liveIndicator.classList.remove('hidden');
     this.startGlobalTimer();
-    this.loadChapter(0);
+    this.loadChapter(0, 0);
     this.initLucide();
   }
 
